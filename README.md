@@ -142,7 +142,7 @@ Once it completes, it should have built 4 DEB files under ```kernel_compile```
 
 Copy (or move) these DEB files to ```remaster/chroot/kernel-debs/```
 
-### Remaster Ubuntu ISO
+## Remaster Ubuntu ISO
 The steps below assume that you have a directory structure like this:
 (only most relevant dir / files are shown)
 
@@ -202,16 +202,16 @@ Top-level dir
             └── commands
 ```
 
-#### Create required dirs
+### Create required dirs
 ```
 mkdir -p ISO/in ISO/out ISO/extract
 ```
-#### Get source ISO
+### Get source ISO
 Grab your favorite Ubuntu flavor ISO (**only Ubuntu ISO images can be remastered for now**)
 
 Put it under ISO/in
 
-#### Start
+### Start remaster
 Assuming working dir is `Top-level dir`. Change paths if your layout is different
 Assuming your source ISO filename is **source.iso** and output ISO name is **modified.iso**
 
@@ -226,7 +226,7 @@ OUTPUT_ISO=${TOP_DIR}/ISO/out/modified.iso
 sudo REMASTER_CMDS_DIR=${R_DIR} ${TOP_DIR}/bootutils/scripts/ubuntu_remaster_iso.sh ${INPUT_ISO} ${EXTRACT_DIR} ${OUTPUT_ISO}
 ```
 
-It will take a while (takes about 10 mins or less for me), and it should create ```ISO/out/modified.iso```
+It will take a while (takes about 30 mins for me including updating all packages), and it should create ```ISO/out/modified.iso```
 
 ## Write ISO to USB drive
 Assuming that your USB drive is ```/dev/sdk```
