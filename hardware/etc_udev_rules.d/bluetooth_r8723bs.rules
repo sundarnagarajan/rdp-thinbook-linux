@@ -1,1 +1,0 @@
-SUBSYSTEM=="rfkill", RUN+="/root/hardware/scripts/bluetooth_udev_rules.sh hci0"
