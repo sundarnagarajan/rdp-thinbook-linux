@@ -223,7 +223,7 @@ INPUT_ISO=${TOP_DIR}/ISO/in/source.iso
 EXTRACT_DIR=${TOP_DIR}/ISO/extract
 OUTPUT_ISO=${TOP_DIR}/ISO/out/modified.iso
 
-REMASTER_CMDS_DIR=${R_DIR} ${TOP_DIR}/bootutils/scripts/ubuntu_remaster_iso.sh ${INPUT_ISO} ${EXTRACT_DIR} ${OUTPUT_ISO}
+sudo REMASTER_CMDS_DIR=${R_DIR} ${TOP_DIR}/bootutils/scripts/ubuntu_remaster_iso.sh ${INPUT_ISO} ${EXTRACT_DIR} ${OUTPUT_ISO}
 ```
 
 It will take a while (takes about 10 mins or less for me), and it should create ```ISO/out/modified.iso```
@@ -234,7 +234,7 @@ Assuming that your USB drive is ```/dev/sdk```
 ```
 # Change next line:
 DEV=/dev/sdk
-dd if=${TOP_DIR}/ISO/out/modified.iso of=$DEV bs=128k status=progress oflag=direct
+sudo dd if=${TOP_DIR}/ISO/out/modified.iso of=$DEV bs=128k status=progress oflag=direct
 sync
 ```
 
