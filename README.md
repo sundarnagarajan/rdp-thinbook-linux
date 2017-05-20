@@ -124,7 +124,7 @@ sync
 
 Now boot into the new ISO. In the live session, everything (except sound) should just work!
 
-To know more about the steps involved, read (DetailedSteps.md)
+To know more about the steps involved, read [DetailedSteps.md](docs/DetailedSteps.md)
 
 # What do you get
 - Everything listed as working above **WORK IN THE LIVE SESSION**
