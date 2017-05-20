@@ -143,6 +143,8 @@ Once it completes, it should have built 4 DEB files under ```kernel_compile```
 Copy (or move) these DEB files to ```remaster/chroot/kernel-debs/```
 
 ## Remaster Ubuntu ISO
+Read the documentation on the [ISO remastering model](docs/ubuntu_iso_remaster.md)
+
 The steps below assume that you have a directory structure like this:
 (only most relevant dir / files are shown)
 
