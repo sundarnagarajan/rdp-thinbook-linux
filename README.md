@@ -85,7 +85,7 @@ Only additional step to boot was to turn secure boot off.
     - With JUST the one change above, suspend / resume works perfectly
     - Have tried with Wifi and Bluetooth audio active, on resume Wifi reconnects and audio stream resumes
 
-    - Have **NOT** tried with USb 3.0 peripherals plugged while suspending
+    - Have **NOT** tried with USB 3.0 peripherals plugged while suspending
 
 ### Things that needed work, but which work perfectly now
 - Wifi:
@@ -101,7 +101,19 @@ Only additional step to boot was to turn secure boot off.
     - Also see [kernel bug 115531](https://bugzilla.kernel.org/show_bug.cgi?id=115531)
 
 # Getting Linux to rock on the RDP Thinbook
+You will need about 10 GB+ free space.
 
+## Simplified single-script method
+- Download make_rdp_iso.sh from this repository
+- Login to a root shell using ```sudo -i```
+- Create a new directory and copy ```do_all.sh``` from this repository inside the new empty directory
+- cd to the new directory
+- mkdir -p ISO/in ISO/out
+- Copy your favorite Ubuntu flavor ISO to ISO/in/source.iso (**filename is important**)
+- run sudo ./make_rdp_iso.sh
+- Continue to **Write ISO to USB drive** step at the bottom
+
+# Detailed steps
 ## Disk space requirements
 You need quite a lot of disk space, because you are going to:
 - Compile an upstream kernel - 3 GB or more
@@ -110,22 +122,9 @@ You need quite a lot of disk space, because you are going to:
     - Extracted ISO 3 GB+
     - Modified ISO: 1.6 GB
 
-So you will need about 10 GB+ free space.
-
 ## Install required packages
 Run ```required_pkgs.sh``` to get a list of required packages that are missing and need to be installed.
 
-## Simplified single-script method
-- Download do_all.sh from this repository
-- Login to a root shell using ```sudo -i```
-- Create a new directory and copy ```do_all.sh``` from this repository inside the new empty directory
-- cd to the new directory
-- mkdir -p ISO/in ISO/out
-- Copy your favorite Ubuntu flavor ISO to ISO/in/source.iso (**filename is important**)
-- run sudo ./do_all.sh
-- Continue to **Write ISO to USB drive** step at the bottom
-
-# Detailed steps
 ## Clone two of my github repos:
 ```
 git clone --depth 1 https://github.com/sundarnagarajan/bootutils.git
