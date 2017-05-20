@@ -35,7 +35,7 @@ modules.builtin
 *.rej
 *.porig
 *.orig
-rtk_hciattach
+
 
 #
 # Top-level generic files
