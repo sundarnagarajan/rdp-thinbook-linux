@@ -112,6 +112,20 @@ You need quite a lot of disk space, because you are going to:
 
 So you will need about 10 GB+ free space.
 
+## Install required packages
+Run ```required_pkgs.sh``` to get a list of required packages that are missing and need to be installed.
+
+## Simplified single-script method
+- Download do_all.sh from this repository
+- Login to a root shell using ```sudo -i```
+- Create a new directory and copy ```do_all.sh``` from this repository inside the new empty directory
+- cd to the new directory
+- mkdir -p ISO/in ISO/out
+- Copy your favorite Ubuntu flavor ISO to ISO/in/source.iso (**filename is important**)
+- run sudo ./do_all.sh
+- Continue to **Write ISO to USB drive** step at the bottom
+
+# Detailed steps
 ## Clone two of my github repos:
 ```
 git clone --depth 1 https://github.com/sundarnagarajan/bootutils.git
@@ -230,7 +244,7 @@ sudo REMASTER_CMDS_DIR=${R_DIR} ${TOP_DIR}/bootutils/scripts/ubuntu_remaster_iso
 
 It will take a while (takes about 30 mins for me including updating all packages), and it should create ```ISO/out/modified.iso```
 
-## Write ISO to USB drive
+# Write ISO to USB drive
 Assuming that your USB drive is ```/dev/sdk```
 
 ```
