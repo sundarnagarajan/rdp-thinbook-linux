@@ -34,7 +34,7 @@ You need this (unreleased) kernel to get:
     - PATCH_FILE
 - Run ```kernel_compile/patch_linux-next_build.sh```
 
-It should take a while - go get a coffee. It takes about 12 mins on my 32-core 112GB RAM 2 GB/sec NVME HDD machine. It may take a little less or more depending on your machine and network speed.
+It should take a while - go get a coffee. Time will depend on your machine configuration (CPU, memory, disk speed) and network speeds.
 
 Once it completes, it should have built 4 DEB files under ```kernel_compile```
 
@@ -126,7 +126,7 @@ OUTPUT_ISO=${TOP_DIR}/ISO/out/modified.iso
 sudo REMASTER_CMDS_DIR=${R_DIR} ${TOP_DIR}/bootutils/scripts/ubuntu_remaster_iso.sh ${INPUT_ISO} ${EXTRACT_DIR} ${OUTPUT_ISO}
 ```
 
-It will take a while (takes about 30 mins for me including updating all packages), and it should create ```ISO/out/modified.iso```
+It will take a while and it should create ```ISO/out/modified.iso```
 
 # Write ISO to USB drive
 Assuming that your USB drive is ```/dev/sdk```
