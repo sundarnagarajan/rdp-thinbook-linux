@@ -22,5 +22,7 @@ cd $TOP_DIR/kernel_compile
 mv *.deb $TOP_DIR/rdp-thinbook-linux/remaster/chroot/kernel-debs/
 
 cd $TOP_DIR
+rm -rf kernel_compile
+
 sudo REMASTER_CMDS_DIR=${R_DIR} ${TOP_DIR}/bootutils/scripts/ubuntu_remaster_iso.sh ${INPUT_ISO} ${EXTRACT_DIR} ${OUTPUT_ISO}
 echo "Start: $START_TIME" ; echo "Ended: $(date)"
