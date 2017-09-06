@@ -100,6 +100,7 @@ Only additional step to boot was to turn secure boot off.
     - Not working (yet)
     - Seems to be fixed [kernel bug 98001](https://bugzilla.kernel.org/show_bug.cgi?id=98001)
     - Also see [kernel bug 115531](https://bugzilla.kernel.org/show_bug.cgi?id=115531)
+    - This was the bug that held up sound support - fixed with es8316 driver: [Bug 189261 - Chuwi hi10/hi12 (Cherry Trail tablet) soundcard not recognised - rt5640](https://bugzilla.kernel.org/show_bug.cgi?id=189261)
 
 # Getting Linux to rock on the RDP Thinbook
 You will need about 10 GB+ free space.
