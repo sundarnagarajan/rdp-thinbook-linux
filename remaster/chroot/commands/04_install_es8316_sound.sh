@@ -26,4 +26,4 @@ if [ ! -x /root/hardware/sound/install.sh ]; then
     exit 0
 fi
 
-/root/hardware/bluetooth/install.sh
+/root/hardware/sound/install.sh
