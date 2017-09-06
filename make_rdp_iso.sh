@@ -39,7 +39,6 @@ OUTPUT_ISO=${TOP_DIR}/ISO/out/modified.iso
 
 check_required_pkgs
 check_avail_disk_space
-read a
 if [ ! -f "$INPUT_ISO" ]; then
     echo "INPUT_ISO not found: $INPUT_ISO"
     exit 1
