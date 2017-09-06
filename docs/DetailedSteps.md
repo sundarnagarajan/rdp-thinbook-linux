@@ -28,7 +28,7 @@ You need this (unreleased) kernel to get:
 - Realtek RTL8723bs Wifi available to enable under staging drivers - needed for Wifi as well as Bluetooth
 
 ### Steps
-- Read [how to download, patch and compile kernel](docs/kernel_compile.md)
+- Read [how to download, patch and compile kernel](kernel_compile.md)
 - Edit ```kernel_compile/patch_linux-next_build.sh``` to check (should be OK):
     - CONFIG_FILE
     - PATCH_FILE
