@@ -132,4 +132,4 @@ To know more about the steps involved, read [DetailedSteps.md](docs/DetailedStep
 - Everything listed as working above **WORK IN THE LIVE SESSION**
 - If you install from the Ubuntu ISO created, everything listed as working will work in the installed image also
 - You get a copy of all the scripts under ```/root/remaster/scripts```
-- The log of all steps during remasterin is in ```/root/remaster/remaster.log```
+- The log of all steps during remastering is in ```/root/remaster/remaster.log```
