@@ -51,8 +51,11 @@ git clone --depth 1 https://github.com/sundarnagarajan/rdp-thinbook-linux.git
 
 cp -rv rdp-thinbook-linux/kernel_compile $TOP_DIR/
 cd $TOP_DIR/kernel_compile
-./patch_linux-next_build.sh
-mv *.deb $TOP_DIR/rdp-thinbook-linux/remaster/chroot/kernel-debs/
+./patch_and_build_kernel.sh
+if [ $? -ne 0 ]; then
+    exit 1
+fi
+mv debs/*.deb $TOP_DIR/rdp-thinbook-linux/remaster/chroot/kernel-debs/
 
 cd $TOP_DIR
 rm -rf kernel_compile
