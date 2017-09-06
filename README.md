@@ -95,7 +95,7 @@ Only additional step to boot was to turn secure boot off.
 - Battery time-to-full and time-to-empty calculation
 
 ### What is not working yet
-- UPDATE (20170905): With kernel 4.13 (released on 2017-09-03), SOUND ALSO WORKS! Everything on the RDP Thinbook now works perfectly in Linux. Watch this repository for updated script
+- **UPDATE (20170905): With kernel 4.13 (released on 2017-09-03), SOUND ALSO WORKS! Everything on the RDP Thinbook now works perfectly in Linux. Watch this repository for updated script**
 - Sound:
     - Not working (yet)
     - Seems to be fixed [kernel bug 98001](https://bugzilla.kernel.org/show_bug.cgi?id=98001)
