@@ -46,6 +46,8 @@ Only additional step to boot was to turn secure boot off.
     - Right-click and drag (click lower right corner): works perfectly
     - Left button double-click (one finger double tap): works perfectly
 
+- Webcam: works (tested with Cheese)
+
 - USB 3.0 port: works. detected as USB 3.0. Have not tested speeds
 - USB 2.0 port: works
 
@@ -92,14 +94,16 @@ Only additional step to boot was to turn secure boot off.
         Set to ```LPE Audio ACPI mode`` (default setting)
 
 ### Things that needed work, but which work perfectly now
-- Wifi:
-- Bluetooth:
+- Wifi
+- Bluetooth
 - Battery level sensing
 - Battery charge / discharge rate sensing
 - Battery time-to-full and time-to-empty calculation
+- Sound: Speakers and headphone jack both work. Microphone (sound recording) works
 
 ### What is not working yet
 **Everything on the RDP Thinbook now works perfectly in Linux.**
+
 All files, scripts and documentation on this repository have been updated and tested.
 
 This was the bug that held up sound support - fixed with es8316 driver: [Bug 189261 - Chuwi hi10/hi12 (Cherry Trail tablet) soundcard not recognised - rt5640](https://bugzilla.kernel.org/show_bug.cgi?id=189261)
