@@ -14,10 +14,7 @@ function check_required_pkgs {
     else
         echo "All required packages are already installed"
         echo "Required packages:"
-        for p in $REQD_PKGS
-        do
-            echo "    $p"
-        done
+        echo "$REQD_PKGS" | fmt -w 70 | sed -e 's/^/    /'
         echo ""
     fi
 }
