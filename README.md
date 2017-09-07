@@ -111,6 +111,19 @@ This was the bug that held up sound support - fixed with es8316 driver: [Bug 189
 # Getting Linux to rock on the RDP Thinbook
 You will need about 10 GB+ free space.
 
+# Make UEFI (BIOS) changes
+## Entering UEFI
+- Reboot the RDP Thinbook
+- When the RDP symbol appears on screen, press **ESCAPE**
+## UEFI (BIOS) changes required
+- UEFI --> Security --> Secure Boot menu --> Secure Boot
+    Change Enabled --> Disabled
+
+- UEFI --> Advanced --> ACPI Settings --> Enable ACPI Auto Configuration
+    Change from Enabled --> Disabled
+- UEFI --> Chipset --> Audio Configuration --> LPE Audio Support
+    Set to ```LPE Audio ACPI mode`` (default setting)
+
 ## Simplified single-script method
 - Download make_rdp_iso.sh from this repository
 - Login to a root shell using ```sudo -i```
