@@ -111,11 +111,11 @@ This was the bug that held up sound support - fixed with es8316 driver: [Bug 189
 # Getting Linux to rock on the RDP Thinbook
 You will need about 10 GB+ free space.
 
-# Make UEFI (BIOS) changes
-## Entering UEFI
+## Make UEFI (BIOS) changes
+### Entering UEFI
 - Reboot the RDP Thinbook
 - When the RDP symbol appears on screen, press **ESCAPE**
-## UEFI (BIOS) changes required
+### UEFI (BIOS) changes required
 - UEFI --> Security --> Secure Boot menu --> Secure Boot
     Change Enabled --> Disabled
 
