@@ -1,6 +1,6 @@
 # Download, patch and compile the kernel
 
-# Packages required
+## Packages required
 The following list is for ubuntu. It should be very similar or identical on
 Ubuntu flavours like Mint and very similar on other Debian distributions
 
@@ -12,10 +12,10 @@ Copy and paste the script below and save it as ane executable shell script
 in the directory where you wish to compile the kernel and build the DEB
 packages.
 
-# Edit kernel source URL
+## Edit kernel source URL
 Edit the file named ```get_kernel_source_url.sh``` to **echo** the full URL of the kernel source. See this file for examples
 
-# Edit kernel config if desired / required
+## Edit kernel config if desired / required
 Edit/ replace the file named config.kernel
 
 
