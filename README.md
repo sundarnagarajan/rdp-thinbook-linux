@@ -154,3 +154,138 @@ To know more about the steps involved, read [DetailedSteps.md](docs/DetailedStep
 - If you install from the Ubuntu ISO created, everything listed as working will work in the installed image also
 - You get a copy of all the scripts under ```/root/remaster/scripts```
 - The log of all steps during remastering is in ```/root/remaster/remaster.log```
+
+# Sample output of make_rdp_iso.sh
+```
+All required packages are already installed
+Required packages:
+    grub-efi-ia32-bin grub-efi-amd64-bin grub-pc-bin grub2-common
+    grub-common util-linux parted gdisk mount xorriso genisoimage
+    squashfs-tools rsync git build-essential kernel-package fakeroot
+    libncurses5-dev libssl-dev ccache libfile-fcntllock-perl
+
+Required space: 10000000000
+Available space: 17490198528
+
+Cloning bootutils...
+Cloning rdp-thinbook-linux...
+INFO: Using 32 threads
+INFO: Hiding stderr output from kernel build
+Retrieve kernel source start           : Wed Sep  6 20:34:58 PDT 2017
+Retrieve kernel source finished        : Wed Sep  6 20:35:25 PDT 2017 (00:00:27)
+INFO: Building kernel 4.13.0 in /home/sundar/rdp/kernel_compile/debs/linux-4.13
+Applying patches from /home/sundar/rdp/kernel_compile/./all_rdp_patches.patch
+    patching file net/rfkill/rfkill-gpio.c
+    Hunk #1 succeeded at 160 (offset -3 lines).
+INFO: Restored config: seems to be from version 4.13.0
+Kernel build start                     : Wed Sep  6 20:35:27 PDT 2017
+Kernel bzImage build finished          : Wed Sep  6 20:36:44 PDT 2017 (00:01:17)
+Kernel modules build finished          : Wed Sep  6 20:42:46 PDT 2017 (00:06:02)
+Kernel deb build finished              : Wed Sep  6 20:46:10 PDT 2017 (00:03:24)
+-------------------------- Kernel compile time -------------------------------
+Retrieve kernel source start           : Wed Sep  6 20:34:58 PDT 2017
+Retrieve kernel source finished        : Wed Sep  6 20:35:25 PDT 2017 (00:00:27)
+Kernel build start                     : Wed Sep  6 20:35:27 PDT 2017
+Kernel bzImage build finished          : Wed Sep  6 20:36:44 PDT 2017 (00:01:17)
+Kernel modules build start             : Wed Sep  6 20:36:44 PDT 2017
+Kernel modules build finished          : Wed Sep  6 20:42:46 PDT 2017 (00:06:02)
+Kernel deb build start                 : Wed Sep  6 20:42:46 PDT 2017
+Kernel deb build finished              : Wed Sep  6 20:46:10 PDT 2017 (00:03:24)
+Kernel build finished                  : Wed Sep  6 20:46:10 PDT 2017
+------------------------------------------------------------------------------
+Kernel DEBS: (in /home/sundar/rdp/kernel_compile/debs)
+    linux-firmware-image-4.13.0_4.13.0-1_amd64.deb
+    linux-headers-4.13.0_4.13.0-1_amd64.deb
+    linux-image-4.13.0_4.13.0-1_amd64.deb
+    linux-libc-dev_4.13.0-1_amd64.deb
+------------------------------------------------------------------------------
+(extract_iso): Extracting ISO ... source.iso
+(extract_iso): Completed
+(extract_squashfs): Extracting squashfs <-- filesystem.squashfs
+(extract_squashfs): Completed
+01_install_firmware.sh [chroot]: Starting
+    '/remaster_tmp/firmware/./rtlwifi/rtl8723bs_nic.bin' -> '/lib/firmware/./rtlwifi/rtl8723bs_nic.bin'
+01_install_firmware.sh [chroot]: Completed
+02_install_kernels.sh [chroot]: Starting
+    update-initramfs: Generating /boot/initrd.img-4.13.0
+    New kernel packages installed:
+        linux-firmware-image-4.13.0
+        linux-headers-4.13.0
+        linux-image-4.13.0
+        linux-libc-dev
+02_install_kernels.sh [chroot]: Completed
+03_remove_old_kernels.sh [chroot]: Starting
+    Removing following packages:
+        linux-image-4.4.0-31-generic
+        linux-image-extra-4.4.0-31-generic
+        linux-image-generic
+        linux-headers-4.4.0-31
+        linux-headers-4.4.0-31-generic
+        linux-headers-generic
+        linux-signed-image-generic
+        linux-generic
+    Kernel-related packages remaining:
+        linux-headers-4.13.0
+        linux-image-4.13.0
+03_remove_old_kernels.sh [chroot]: Completed
+04_install_es8316_sound.sh [chroot]: Starting
+    '/root/hardware/sound/bytcht-es8316' -> '/usr/share/alsa/ucm/bytcht-es8316'
+    '/root/hardware/sound/bytcht-es8316/HiFi' -> '/usr/share/alsa/ucm/bytcht-es8316/HiFi'
+    '/root/hardware/sound/bytcht-es8316/bytcht-es8316.conf' -> '/usr/share/alsa/ucm/bytcht-es8316/bytcht-es8316.conf'
+    '/root/hardware/sound/rdp-es8316.conf' -> '/etc/modprobe.d/rdp-es8316.conf'
+04_install_es8316_sound.sh [chroot]: Completed
+05_install_r8723_bluetooth.sh [chroot]: Starting
+    
+    ---------------------------------------------------------------------------
+    Making r8723bs Bluetooth work
+    
+    Most of this is from https://github.com/lwfinger/rtl8723bs_bt.git
+    This source is licensed under the same terms as the original.
+    If there is no LICENSE specified by the original author, this
+    source is hereby licensed under the GNU General Public License version 2.
+    
+    See /root/hardware/LICENSE and for license details
+    See /root/hardware/bluetooth/rtl8723bs_bt/LICENSE and for license details
+    ---------------------------------------------------------------------------
+    
+    '/root/hardware/bluetooth/scripts/bluetooth_r8723bs.rules' -> '/etc/udev/rules.d/bluetooth_r8723bs.rules'
+    '/root/hardware/bluetooth/scripts/r8723bs_bluetooth.service' -> '/etc/systemd/system/r8723bs_bluetooth.service'
+    '/etc/systemd/system/bluetooth.service.wants/r8723bs_bluetooth.service' -> '/etc/systemd/system/r8723bs_bluetooth.service'
+05_install_r8723_bluetooth.sh [chroot]: Completed
+06_update_all_packages.sh [chroot]: Starting
+Extracting templates from packages: 100%
+06_update_all_packages.sh [chroot]: Completed
+07_install_grub_packages.sh [chroot]: Starting
+07_install_grub_packages.sh [chroot]: Completed
+08_apt_cleanup.sh [chroot]: Starting
+    Reading package lists...
+    Building dependency tree...
+    Reading state information...
+    Reading package lists...
+    Building dependency tree...
+    Reading state information...
+    0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+08_apt_cleanup.sh [chroot]: Completed
+09_copy_scripts.sh [chroot]: Starting
+09_copy_scripts.sh [chroot]: Completed
+01_update_iso_kernel.sh [iso_post]: Starting
+01_update_iso_kernel.sh [iso_post]: Completed
+02_update_efi.sh [iso_post]: Starting
+02_update_efi.sh [iso_post]: Completed
+(run_remaster_commands): Completed
+(update_squashfs): Creating squashfs --> filesystem.squashfs
+(update_squashfs): Completed
+(update_iso): Creating ISO ... /home/sundar/rdp/ISO/out/modified.iso
+(update_iso): Creating MBR- and EFI-compatible ISO
+(update_iso): Completed
+
+--------------------------------------------------------------------------
+Source ISO=/home/sundar/rdp/ISO/in/source.iso
+Output ISO=/home/sundar/rdp/ISO/out/modified.iso
+VolID=Ubuntu-MATE 16.04.1 LTS amd64
+
+--------------------------------------------------------------------------
+
+Start: Wed Sep  6 20:34:54 PDT 2017
+Ended: Wed Sep  6 20:57:21 PDT 2017
+```
