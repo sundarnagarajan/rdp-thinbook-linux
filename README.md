@@ -3,7 +3,7 @@ Linux on the [RDP Thinbook](http://www.rdp.in/thinbook/)
 
 The RDP Thinbook is a new ultra-portable laptop produced by RDP Workstations Pvt. Ltd. in India. It is marketed as India's most affordable laptop, and is sold for around US$ 140 - 160 (when you choose the option of buying it without Windows installed).
 
-#**EVERYTHING on this laptop works perfectly in Linux**
+#EVERYTHING on this laptop works perfectly in Linux
 
 It has [impressive specs](http://www.rdp.in/thinbook/technical-features.html):
 - Intel Atom X5-Z8300 1.84 GHz CPU (Cherry Trail)
