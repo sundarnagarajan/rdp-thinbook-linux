@@ -58,12 +58,12 @@ Only additional step to boot was to turn secure boot off.
 - Blue FN button capabilities:
     - ESC: Sleep / suspend: Works to suspend
     - F2: Disable / enable touchpad: works perfectly
-    - F3: Volume down: detected, OSD works. See sound card driver issue below
-    - F4: Volume up: detected, OSD works. See sound card driver issue below
-    - F5: Mute/Unmute: detected, OSD works. See sound card driver issue below
-    - F6: Play/Pause: Not tested. See sound card driver issue below
-    - F7: Previous track: Not tested. See sound card driver issue below
-    - F8: Next track: Not tested. See sound card driver issue below
+    - F3: Volume down: works perfectly
+    - F4: Volume up: works perfectly
+    - F5: Mute/Unmute: works perfectly
+    - F6: Play/Pause: works perfectly
+    - F7: Previous track: works perfectly
+    - F8: Next track: works perfectly
     - F9: Pause: Works (tested with xev)
     - F10: Insert: Works perfectly
     - F11: PrtSc: Works
@@ -86,6 +86,10 @@ Only additional step to boot was to turn secure boot off.
     - Have tried with Wifi and Bluetooth audio active, on resume Wifi reconnects and audio stream resumes
 
     - Have **NOT** tried with USB 3.0 peripherals plugged while suspending
+
+- Sound
+    - UEFI --> Chipset --> Audio Configuration --> LPE Audio Support
+        Set to ```LPE Audio ACPI mode`` (default setting)
 
 ### Things that needed work, but which work perfectly now
 - Wifi:
