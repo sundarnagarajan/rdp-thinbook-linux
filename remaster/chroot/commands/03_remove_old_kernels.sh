@@ -61,7 +61,11 @@ do
 done
 
 if [ -n "$REMOVE_LIST" ]; then
-    echo "Removing following packages: $REMOVE_LIST"
+    echo "Removing following packages:"
+    for p in $REMOVE_LIST
+    do
+        echo $p | sed -e 's/^/    /'
+    done
     sudo apt-get autoremove -y --purge $REMOVE_LIST 2>/dev/null 1>/dev/null
 else
     echo "No kernel packages to remove"
