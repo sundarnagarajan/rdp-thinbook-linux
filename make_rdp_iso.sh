@@ -12,7 +12,12 @@ function check_required_pkgs {
         echo "sudo apt-get install $MISSING_PKGS"
         exit 1
     else
-        echo "All required packages are already installed\nRequired packages: $REQD_PKGS"
+        echo "All required packages are already installed"
+        echo "Required packages:"
+        for p in $REQD_PKGS
+        do
+            echo "    $p"
+        done
         echo ""
     fi
 }
