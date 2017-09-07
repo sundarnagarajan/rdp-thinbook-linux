@@ -99,12 +99,9 @@ Only additional step to boot was to turn secure boot off.
 - Battery time-to-full and time-to-empty calculation
 
 ### What is not working yet
-- **UPDATE (20170905): With kernel 4.13 (released on 2017-09-03), SOUND ALSO WORKS! Everything on the RDP Thinbook now works perfectly in Linux. Watch this repository for updated script**
-- Sound:
-    - Not working (yet)
-    - Seems to be fixed [kernel bug 98001](https://bugzilla.kernel.org/show_bug.cgi?id=98001)
-    - Also see [kernel bug 115531](https://bugzilla.kernel.org/show_bug.cgi?id=115531)
-    - This was the bug that held up sound support - fixed with es8316 driver: [Bug 189261 - Chuwi hi10/hi12 (Cherry Trail tablet) soundcard not recognised - rt5640](https://bugzilla.kernel.org/show_bug.cgi?id=189261)
+**UPDATE (20170905): With kernel 4.13 (released on 2017-09-03), SOUND ALSO WORKS! Everything on the RDP Thinbook now works perfectly in Linux. All files, scripts and documentation on this repository have been updated and tested.
+
+This was the bug that held up sound support - fixed with es8316 driver: [Bug 189261 - Chuwi hi10/hi12 (Cherry Trail tablet) soundcard not recognised - rt5640](https://bugzilla.kernel.org/show_bug.cgi?id=189261)
 
 # Getting Linux to rock on the RDP Thinbook
 You will need about 10 GB+ free space.
