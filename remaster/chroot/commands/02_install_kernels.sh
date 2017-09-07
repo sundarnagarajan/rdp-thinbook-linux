@@ -24,7 +24,7 @@ KP_LIST=${KERNEL_DEB_DIR}/$KP_LIST
 if [ -x /etc/grub.d/30_os-prober ]; then
     chmod -x /etc/grub.d/30_os-prober
 fi
-dpkg -i ${KERNEL_DEB_DIR}/*.deb 2>/dev/null
+dpkg -i ${KERNEL_DEB_DIR}/*.deb 2>/dev/null 1>/dev/null
 echo overlay >> /etc/initramfs-tools/modules
 update-initramfs -u 2>/dev/null
 

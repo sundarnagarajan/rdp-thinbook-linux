@@ -62,7 +62,7 @@ done
 
 if [ -n "$REMOVE_LIST" ]; then
     echo "Removing following packages: $REMOVE_LIST"
-    sudo apt-get autoremove -y --purge $REMOVE_LIST 2>/dev/null
+    sudo apt-get autoremove -y --purge $REMOVE_LIST 2>/dev/null 2>/dev/null
 else
     echo "No kernel packages to remove"
 fi
