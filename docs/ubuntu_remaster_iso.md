@@ -75,11 +75,12 @@ ubuntu_remaster_iso.sh ISO_PATH EXTRACT_DIR OUTPUT_ISO
 | chroot | 01_install_firmware.sh | Install firmware required by RTL 8723bs Wifi chipset | Disabled |
 | chroot | 02_install_kernels.sh | Install custom kernels does nothing if kernel_debs dir is empty | Enabled |
 | chroot | 03_remove_old_kernels.sh | Removes all kernels **EXCEPT** kernels installed by ```02_install_kernels.sh```. Does nothing if ```02_install_kernels.sh``` did nothing | Enabled |
-| chroot | 04_install_r8723_bluetooth.sh | Install systemd service and udev rules to make Bluetooth work on RTL 8723bs chipset | Disabled |
-| chroot | 05_update_all_packages.sh | Update all packages | Enabled |
-| chroot | 06_install_grub_packages.sh | Install UEFI-i386 UEFI-amd64 and non-UEFI grub packages | Enabled |
-| chroot | 07_apt_cleanup.sh | apt autoremove and cleanup apt cache | Enabled |
-| chroot | 08_copy_scripts.sh | Copy scripts under /root/remaster | Enabled |
+| chroot | 04_install_es8316-sound.sh | Install systemd service and udev rules to make Bluetooth work on RTL 8723bs chipset | Enabled |
+| chroot | 05_install_r8723_bluetooth.sh | Install systemd service and udev rules to make Bluetooth work on RTL 8723bs chipset | Enabled |
+| chroot | 06_update_all_packages.sh | Update all packages | Enabled |
+| chroot | 07_install_grub_packages.sh | Install UEFI-i386 UEFI-amd64 and non-UEFI grub packages | Enabled |
+| chroot | 08_apt_cleanup.sh | apt autoremove and cleanup apt cache | Enabled |
+| chroot | 09_copy_scripts.sh | Copy scripts under /root/remaster | Enabled |
 | iso_post | 01_iso_kernel.sh | Update kernel in ISO (live session) if kernel was updated in chroot stage by ```02_install_kernels.sh```. Does nothing otherwise | Enabled |
 | iso_post | 02_update_efi.sh | Makes ISO bootable in 32-bit and 64-bit EFI loaders | Enabled |
 
@@ -99,10 +100,15 @@ bootutils  ---------- TOPLEVEL DIR
     │   │   ├── 01_install_firmware.sh
     │   │   ├── 02_install_kernels.sh
     │   │   ├── 03_remove_old_kernels.sh
-    │   │   ├── 04_install_r8723_bluetooth.sh
-    │   │   ├── 05_update_all_packages.sh
-    │   │   └── 06_copy_scripts.sh
+    │   │   ├── 04_install_es8316_sound.sh
+    │   │   ├── 05_install_r8723_bluetooth.sh
+    │   │   ├── 06_update_all_packages.sh
+    │   │   ├── 07_install_grub_packages.sh
+    │   │   ├── 08_apt_cleanup.sh
+    │   │   └── 09_copy_scripts.sh
     │   │
+    │   │
+    │   ├── es8316-sound - example (used by 04_install_es8316_sound.sh)
     │   │
     │   ├── firmware - example (used by 01_install_firmware.sh)
     │   │
