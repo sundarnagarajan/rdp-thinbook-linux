@@ -47,7 +47,9 @@ if [ ! -f "$INPUT_ISO" ]; then
 fi
 
 rm -rf bootutils rdp-thinbook-linux "$OUTPUT_ISO"
+echo "Cloning bootutils..."
 git clone --depth 1 https://github.com/sundarnagarajan/bootutils.git 2>/dev/null
+echo "Cloning rdp-thinbook-linux..."
 git clone --depth 1 https://github.com/sundarnagarajan/rdp-thinbook-linux.git 2>/dev/null
 
 cp -r rdp-thinbook-linux/kernel_compile $TOP_DIR/
