@@ -127,7 +127,7 @@ You will need about 10 GB+ free space.
     Set to ```LPE Audio ACPI mode`` (default setting)
 
 ## Simplified single-script method
-- Download make_rdp_iso.sh from this repository
+- Download [make_rdp_iso.sh](https://github.com/sundarnagarajan/rdp-thinbook-linux/blob/master/make_rdp_iso.sh) from this repository
 - Login to a root shell using ```sudo -i```
 - Create a new directory and copy ```do_all.sh``` from this repository inside the new empty directory
 - cd to the new directory
