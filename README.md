@@ -75,7 +75,7 @@ Only additional step to boot was to turn secure boot off.
     - Left: Home: Works perfectly
     - Right: End: Works perfectly
 
-### Things that needed BIOS settings
+### UEFI (BIOS) settings that need to be changed
 - Booting: Turn off secure boot:
     UEFI --> Security --> Secure Boot menu --> Secure Boot
         Change Enabled --> Disabled
