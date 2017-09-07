@@ -22,21 +22,21 @@ Further the steps below assume that:
 - You compile the kernel under ```rdp-thinbook-linux/kernel_compile```
 - You remaster the ISO under ```rdp-thinbook-linux/ISO``` - need to create this dir
 
-## Compile the 20170518 linux-next snapshot
-You need this (unreleased) kernel to get:
+## Compile kernel 4.13 from kernel.org
+You need this kernel to get:
 - Battery level and charging current sensing [Intel Whiskey Cove PMIC AXP288](https://lkml.org/lkml/2017/4/19/300)
 - Realtek RTL8723bs Wifi available to enable under staging drivers - needed for Wifi as well as Bluetooth
+- Get sound working with es8316 driver
 
 ### Steps
 - Read [how to download, patch and compile kernel](kernel_compile.md)
-- Edit ```kernel_compile/patch_linux-next_build.sh``` to check (should be OK):
-    - CONFIG_FILE
-    - PATCH_FILE
-- Run ```kernel_compile/patch_linux-next_build.sh```
+- Edit ```kernel_compile/get_kernel_source_url.sh``` to check (should be OK)
+- Edit / replace ```kernel_compile/config.kernel``` if required / desired - should not be required
+- Run ```kernel_compile/patch_and_build_kernel.sh```
 
 It should take a while - go get a coffee. Time will depend on your machine configuration (CPU, memory, disk speed) and network speeds.
 
-Once it completes, it should have built 4 DEB files under ```kernel_compile```
+Once it completes, it should have built 4 DEB files under ```kernel_compile/debs```
 
 Copy (or move) these DEB files to ```remaster/chroot/kernel-debs/```
 
@@ -78,11 +78,12 @@ Top-level dir
         │   │   ├── 01_install_firmware.sh
         │   │   ├── 02_install_kernels.sh
         │   │   ├── 03_remove_old_kernels.sh
-        │   │   ├── 04_install_r8723_bluetooth.sh
-        │   │   ├── 05_update_all_packages.sh
-        │   │   ├── 06_install_grub_packages.sh
-        │   │   ├── 07_apt_cleanup.sh
-        │   │   └── 08_copy_scripts.sh
+        │   │   ├── 04_install_es8316_sound.sh
+        │   │   ├── 05_install_r8723_bluetooth.sh
+        │   │   ├── 06_update_all_packages.sh
+        │   │   ├── 07_install_grub_packages.sh
+        │   │   ├── 08_apt_cleanup.sh
+        │   │   └── 09_copy_scripts.sh
         │   │
         │   └── kernel-debs
         │
