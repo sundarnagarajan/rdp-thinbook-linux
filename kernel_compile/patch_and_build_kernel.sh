@@ -176,8 +176,8 @@ function set_build_dir {
 
 function apply_patches {
     if [ -n "$PATCH_FILE" ]; then
-        echo "Applying patches"
         if [ -f "${CURDIR}/${PATCH_FILE}" ]; then
+            echo "Applying patches from ${CURDIR}/${PATCH_FILE}"
             cd "${BUILD_DIR}"
             patch -p1 < "${CURDIR}/${PATCH_FILE}" 2>&1 | sed -e "s/^/${INDENT}/"
             if [ $? -ne 0 ]; then
