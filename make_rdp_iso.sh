@@ -47,10 +47,10 @@ if [ ! -f "$INPUT_ISO" ]; then
 fi
 
 rm -rf bootutils rdp-thinbook-linux "$OUTPUT_ISO"
-git clone --depth 1 https://github.com/sundarnagarajan/bootutils.git
-git clone --depth 1 https://github.com/sundarnagarajan/rdp-thinbook-linux.git
+git clone --depth 1 https://github.com/sundarnagarajan/bootutils.git 2>/dev/null
+git clone --depth 1 https://github.com/sundarnagarajan/rdp-thinbook-linux.git 2>/dev/null
 
-cp -rv rdp-thinbook-linux/kernel_compile $TOP_DIR/
+cp -r rdp-thinbook-linux/kernel_compile $TOP_DIR/
 cd $TOP_DIR/kernel_compile
 ./patch_and_build_kernel.sh
 if [ $? -ne 0 ]; then
