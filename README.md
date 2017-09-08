@@ -145,7 +145,7 @@ sudo dd if=${TOP_DIR}/ISO/out/modified.iso of=$DEV bs=128k status=progress oflag
 sync
 ```
 
-Now boot into the new ISO. In the live session, everything (except sound) should just work!
+Now boot into the new ISO. In the live session, everything should just work!
 
 To know more about the steps involved, read [DetailedSteps.md](docs/DetailedSteps.md)
 
