@@ -23,9 +23,9 @@ If this is still not working (unlikely), you can fix it as follows:
 - Execute the following command as normal user (no sudo required):
       ```pactl set-default-sink alsa_output.platform-bytcht_es8316.HiFi__hw_bytchtes8316__sink```
   
-  Regardless of which method you choose, you need to do this only once inside your account 
-  (if you have installed to a hard disk) and **once each time you boot** if you are booting
-  to a Live session
+Regardless of which method you choose, you need to do this only once inside your account 
+(if you have installed to a hard disk) and **once each time you boot** if you are booting
+to a Live session
   
 ### Question: No sound output and Sound preferences output tab only shows 'Dummy output'
 Make sure you have this setting in UEFI:
