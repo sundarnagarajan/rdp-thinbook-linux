@@ -132,13 +132,29 @@ You will need about 10 GB+ free space.
 - Copy your favorite Ubuntu flavor ISO to ISO/in/source.iso (**filename is important**)
 - run sudo ./make_rdp_iso.sh
 
-## Write ISO to USB drive
+### Write ISO to USB drive
 Assuming that your USB drive is ```/dev/sdk```
 
 ```
+# DOUBLE CHECK that DEV is set to your removable devices' name
 # Change next line:
 DEV=/dev/sdk
 sudo dd if=${TOP_DIR}/ISO/out/modified.iso of=$DEV bs=128k status=progress oflag=direct
+sync
+```
+
+## Alternative - download pre-built Ubuntu Mate 16.04 remastered ISO for RDP Thinbook
+Use this method **ONLY** if you are willing to trust my pre-compiled kernel and remastered ISO (at least on a test machine). The latest remastered ISO can be downloaded [here](https://drive.google.com/open?id=0ByKDyYCckXqDY0VCU2lWMG0yMzQ). Download to your hard disk - you will need about 2 GB of free space (for the ISO). 
+
+### Write ISO to USB drive
+Assuming that your USB drive is ```/dev/sdk``` and you downloaded to a filenamed ```modified.iso```
+
+```
+# cd to the directory containing the ISO
+# DOUBLE CHECK that DEV is set to your removable devices' name
+# Change next line:
+DEV=/dev/sdk
+sudo dd if=modified.iso of=$DEV bs=128k status=progress oflag=direct
 sync
 ```
 
