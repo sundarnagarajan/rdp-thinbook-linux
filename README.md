@@ -79,12 +79,10 @@ Only additional step to boot was to turn secure boot off.
 
 ### UEFI (BIOS) settings that need to be changed
 - Booting: Turn off secure boot:
-    UEFI --> Security --> Secure Boot menu --> Secure Boot
-        Change Enabled --> Disabled
+    UEFI --> Security --> Secure Boot menu --> Secure Boot: Change Enabled --> Disabled
 
 - Suspend / resume
-    - UEFI --> Advanced --> ACPI Settings --> Enable ACPI Auto Configuration
-        Change from Enabled --> Disabled
+    - UEFI --> Advanced --> ACPI Settings --> Enable ACPI Auto Configuration: Change from Enabled --> Disabled
 
     - With JUST the one change above, suspend / resume works perfectly
     - Have tried with Wifi and Bluetooth audio active, on resume Wifi reconnects and audio stream resumes
@@ -92,8 +90,7 @@ Only additional step to boot was to turn secure boot off.
     - Have **NOT** tried with USB 3.0 peripherals plugged while suspending
 
 - Sound
-    - UEFI --> Chipset --> Audio Configuration --> LPE Audio Support
-        Set to ```LPE Audio ACPI mode`` (default setting)
+    - UEFI --> Chipset --> Audio Configuration --> LPE Audio Support: Set to ```LPE Audio ACPI mode`` (default setting)
 
 ### Things that needed work, but which work perfectly now
 - Wifi
