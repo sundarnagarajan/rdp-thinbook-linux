@@ -156,7 +156,7 @@ To know more about the steps involved, read [DetailedSteps.md](docs/DetailedStep
 - The log of all steps during remastering is in ```/root/remaster/remaster.log```
 
 # Problems?
-- Read the [FAQ)(faq.md)
+- Read the [FAQ](faq.md)
 - Open an issue
 
 # Sample output of make_rdp_iso.sh
