@@ -9,6 +9,9 @@ Follow the following procedure to boot a disk created with ```make_rdp_iso.sh```
 - Again: **ONLY when the RDP symbol appears**, press F7
 I have always seen it work the first or second time. **This is a limitation with the RDP Thinbook firmware and there is nothing that can be done to fix it**
 
+### Question: Why are there TWO sound cards listed in the Sound applet on the Hardware tab?
+The card named ```Intel HDMI/DP LPE Audio``` **presumably** controls sound going out over HDMI. I have not tested this (yet), since I don't have a HDMI speaker / receiver that I can easily connect the RDP Thinbook to
+
 ### Question:Everything seems to work, but there is no sound output
 This should now be fixed - in the remastered ISO (and in an install derived from it), I now explicitly
 set the default output (sink) for Pulseaudio to be ```alsa_output.platform-bytcht_es8316.HiFi__hw_bytchtes8316__sink```
