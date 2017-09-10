@@ -44,8 +44,8 @@ if [ -f /etc/pulse/default.pa ]; then
         echo "# On RDP Thinbook, set the default output (sink)"
         echo "# Sinks are tried IN ORDER. If only ONE of these sinks are available,"
         echo "# then that sink will be the default output"
-        echo "If more than one of these sinks are available, then the LAST one"
-        echo "will be the default output"
+        echo "# If more than one of these sinks are available, then the LAST one"
+        echo "# will be the default output"
         echo "#"
         for output in $OUTPUTS
         do
