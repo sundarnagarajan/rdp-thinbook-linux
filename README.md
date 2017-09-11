@@ -69,7 +69,7 @@ That said, many people provide pre-built ISOs for users to eaily try / use, and 
 
 Remastering your own ISO can take a while. It takes about 30 mins on a 32 x Intel Xeon e5-2670 server with 112GB of RAM and a Sansung 960 EVO NVME disk. On a more 'standard desktop' machine it could take several hours. You will need about 10 GB+ free space to build the kernel and remaster the ISO. 
 
-### Simplified single-script method
+### Simplified single-script method to build your own remastered ISO
 You will need about 10 GB+ free space to build the kernel and remaster the ISO.
 
 Download [make_rdp_iso.sh](https://github.com/sundarnagarajan/rdp-thinbook-linux/blob/master/make_rdp_iso.sh) from this repository
