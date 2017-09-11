@@ -33,7 +33,7 @@ It has [impressive specs](http://www.rdp.in/thinbook/technical-features.html):
     - Weight: 1.45 kgs
 
 ## Other cool features:
-- Power supply is 5V/2A, so (if) you can make your own USB cable with a compatible barrel adapter, you can charge / power it from a 2A USB wall power supply, or even a good Power Bank! I plan to do this, so wahct this repo for results and instructions once I do
+- Power supply is 5V/2A, so (if) you can make your own USB cable with a compatible barrel adapter, you can charge / power it from a 2A USB wall power supply, or even a good Power Bank! I plan to do this, so watch this repo for results and instructions once I do
 - TPM 2.0 - haven't played with it yet
 
 ## Limitations
