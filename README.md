@@ -159,8 +159,11 @@ gpg: Signature made Sun 10 Sep 2017 08:49:50 PM PDT using RSA key ID 857CADBD
 ```
 
 You can find my GPG public key [here](https://pgp.mit.edu/pks/lookup?op=get&search=0xDF2AC095857CADBD). If you want to add my public key to your GPG keychain, use the following command:
-```gpg --recv-keys df2ac095857cadbd```
-Once you have imported my public key witht he command above (note: you are **not TRUSTING** my public key for anything), if you rerun the ```gpg --verify``` command above, the output should look like:
+```
+gpg --recv-keys df2ac095857cadbd
+```
+
+Once you have imported my public key with the command above (note: you are **not TRUSTING** my public key for anything), if you rerun the ```gpg --verify``` command above, the output should look like:
 ```
 gpg: Signature made Sun 10 Sep 2017 08:49:50 PM PDT using RSA key ID 857CADBD
 gpg: Good signature from "Sundar Nagarajan <sun.nagarajan@gmail.com>"
