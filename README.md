@@ -41,7 +41,7 @@ It has [impressive specs](http://www.rdp.in/thinbook/technical-features.html):
 I bought the original 14.1 inch RDP Thinbook in Nov-2016 without Windows installed, with the intention of using Linux on it (I use Linux on **EVERYTHNIG**).
 
 # Getting Linux to rock on the RDP Thinbook
-You will need a machine running a recent version of Ubuntu (tested on Ubuntu 16.04.2 Xenial Xerus LTS). 
+You will need a machine running a recent version of Ubuntu (tested on Ubuntu 16.04.3 Xenial Xerus LTS). 
 
 ## Make UEFI (BIOS) changes
 ### Entering UEFI
