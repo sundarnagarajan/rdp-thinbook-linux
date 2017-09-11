@@ -113,6 +113,7 @@ Note: **DO NOT** rely on the **same** ISO being available and linked from this g
 | --- | --------- |
 | [Ubuntu Mate 16.04 with kernel 4.13.1](https://drive.google.com/file/d/0ByKDyYCckXqDUk9GRlJJM3NsREU/view?usp=sharing) | [GPG Signature](https://drive.google.com/file/d/0ByKDyYCckXqDTDAyREZIRVRtWEE/view?usp=sharing) |
 | [Ubuntu 16.04.3 with kernel 4.13.1](https://drive.google.com/open?id=0ByKDyYCckXqDbFV2X3lydVYzdzQ) | [GPG Signature](https://drive.google.com/open?id=0ByKDyYCckXqDQjhfbHEyZ3FhSnM) |
+| [xubuntu 16.04.3 with kernel 4.13.1](https://drive.google.com/open?id=0ByKDyYCckXqDamNoazNIVm5JYU0) | [GPG Signature](https://drive.google.com/open?id=0ByKDyYCckXqDdXpVbGpjNDQxTXc) |
 
     
 Download both the ISO and the signature (```.sign``` file). Use the following command to verify the GPG signature **BEFORE** using the ISO
@@ -181,6 +182,7 @@ If you have tested a distribution-model not listed here, open an issue, and I wi
 | Ubuntu Mate 16.04 | New 14.1-inch RDP Thinbook (X5-Z8350) | None | RDP staff |
 | Ubuntu Mate 16.04 | 11.6-inch RDP Thinbook (X5-Z8350) | None | RDP staff |
 | Ubuntu 16.04.3 | Original 14.1-inch RDP Thinbook (X5-Z8300) | Bluetooth issues - investigating | Me |
+| xubuntu 16.04.3 | Original 14.1-inch RDP Thinbook (X5-Z8300) | None | Me |
 
 # Problems?
 - Read the [FAQ](faq.md)
