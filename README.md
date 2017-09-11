@@ -29,18 +29,7 @@ It has [impressive specs](http://www.rdp.in/thinbook/technical-features.html):
 I bought the original 14.1 inch RDP Thinbook in Nov-2016 without Windows installed, with the intention of using Linux on it (I use Linux on **EVERYTHNIG**).
 
 # Getting Linux to rock on the RDP Thinbook
-You will need a machine running a recent version of Ubuntu (tested on Ubuntu 16.04.2 Xenial Xerus LTS). You will need about 10 GB+ free space to build the kernel and remaster the ISO. See below for downloading a remastered ISO.
-
-## Packages required
-    grub-efi-ia32-bin grub-efi-amd64-bin grub-pc-bin grub2-common
-    grub-common util-linux parted gdisk mount xorriso genisoimage
-    squashfs-tools rsync git build-essential kernel-package fakeroot
-    libncurses5-dev libssl-dev ccache libfile-fcntllock-perl
-
-For the most up-to-date list of required packages:
-    - Download make_rdp_iso.sh from this directory
-    - Run './make_rdp_iso.sh' (no need to be root)
-    - Follow the instructions to install missing packages, if any
+You will need a machine running a recent version of Ubuntu (tested on Ubuntu 16.04.2 Xenial Xerus LTS). 
 
 ## Make UEFI (BIOS) changes
 ### Entering UEFI
@@ -60,14 +49,46 @@ I highly recommend you use the **Simplified single-script method** below to down
 
 That said, many people provide pre-built ISOs for users to eaily try / use, and I have provided one too.
 
+Remastering your own ISO can take a while. It takes about 30 mins on a 32 x Intel Xeon e5-2670 server with 112GB of RAM. On a more 'standard desktop' machine it could take several hours. You will need about 10 GB+ free space to build the kernel and remaster the ISO. 
+
 ### Simplified single-script method
-- Download [make_rdp_iso.sh](https://github.com/sundarnagarajan/rdp-thinbook-linux/blob/master/make_rdp_iso.sh) from this repository
+You will need about 10 GB+ free space to build the kernel and remaster the ISO.
+
+Download [make_rdp_iso.sh](https://github.com/sundarnagarajan/rdp-thinbook-linux/blob/master/make_rdp_iso.sh) from this repository
+
+#### Packages required
+    grub-efi-ia32-bin grub-efi-amd64-bin grub-pc-bin grub2-common
+    grub-common util-linux parted gdisk mount xorriso genisoimage
+    squashfs-tools rsync git build-essential kernel-package fakeroot
+    libncurses5-dev libssl-dev ccache libfile-fcntllock-perl
+
+For the most up-to-date list of required packages:
+    - Download make_rdp_iso.sh from this directory
+    - Run './make_rdp_iso.sh' (no need to be root)
+    - Follow the instructions to install missing packages, if any
+
 - Login to a root shell using ```sudo -i```
 - Create a new directory and copy ```make_rdp_iso.sh``` from this repository inside the new empty directory
 - cd to the new directory
 - mkdir -p ISO/in ISO/out
 - Copy your favorite Ubuntu flavor ISO to ISO/in/source.iso (**filename is important**)
-- run sudo ./make_rdp_iso.sh
+
+Your directory structure should look like this:
+```
+new_dir  ---------- TOPLEVEL DIR
+│
+├── make_rdp_iso.sh
+│
+└── ISO
+    ├── in
+    │   │
+    │   └── source.iso  - you need to rename source ISO to 'source.iso'
+    │
+    └─── out
+```
+Run sudo ./make_rdp_iso.sh
+Remastered ISO will be ```ISO/out/modified.iso```
+
 
 ### Alternative - download pre-built Ubuntu Mate 16.04 remastered ISO for RDP Thinbook
 Use this method **ONLY** if you are willing to trust my pre-compiled kernel and remastered ISO (at least on a test machine). 
