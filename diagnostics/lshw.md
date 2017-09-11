@@ -1,3 +1,4 @@
+## Output of sudo lshw
 ```
 rdp-sundar                
     description: Desktop Computer
