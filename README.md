@@ -29,8 +29,8 @@ It has [impressive specs](http://www.rdp.in/thinbook/technical-features.html):
     - 5V 2A power adapter
     - Rated at upto 8.5 hours battery life, 4-5 hours with Wifi connected
 - Size, weight:
-    - Dimensions: 233mm x 351mm x 20mm
-    - Weight: 1.45 kgs
+    - Dimensions: 233mm x 351mm x 20mm (9.1 in x 13.8 in x 0.8 in)
+    - Weight: 1.45 kgs (3.2 lbs)
 
 ## Other cool features:
 - Power supply is 5V/2A, so (if) you can make your own USB cable with a compatible barrel adapter, you can charge / power it from a 2A USB wall power supply, or even a good Power Bank! I plan to do this, so watch this repo for results and instructions once I do
