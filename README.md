@@ -144,7 +144,39 @@ sync
 ```
 
 ## Alternative - download pre-built Ubuntu Mate 16.04 remastered ISO for RDP Thinbook
-Use this method **ONLY** if you are willing to trust my pre-compiled kernel and remastered ISO (at least on a test machine). The latest remastered ISO can be downloaded [here](https://drive.google.com/open?id=0ByKDyYCckXqDY0VCU2lWMG0yMzQ). Download to your hard disk - you will need about 2 GB of free space (for the ISO). 
+Use this method **ONLY** if you are willing to trust my pre-compiled kernel and remastered ISO (at least on a test machine). The latest remastered ISO can be downloaded [here](https://drive.google.com/file/d/0ByKDyYCckXqDUk9GRlJJM3NsREU/view?usp=sharing). Download to your hard disk - you will need about 2 GB of free space (for the ISO). 
+
+Download the GPG signature for the ISO [here](https://drive.google.com/file/d/0ByKDyYCckXqDTDAyREZIRVRtWEE/view?usp=sharing). Download both the ISO and the signature (```.sign``` file). 
+
+Use the following command to verify the GPG signature **BEFORE** using the ISO
+
+```
+gpg --verify <signature_file> <ISO_file>
+```
+
+The output should be something like:
+
+```
+gpg: Signature made Sun 10 Sep 2017 08:49:50 PM PDT using RSA key ID 857CADBD
+```
+
+You can find my GPG public key [here](https://pgp.mit.edu/pks/lookup?op=get&search=0xDF2AC095857CADBD). If you want to add my public key to your GPG keychain, use the following command:
+```
+gpg --recv-keys df2ac095857cadbd
+```
+
+Once you have imported my public key with the command above (note: you are **not TRUSTING** my public key for anything), if you rerun the ```gpg --verify``` command above, the output should look like:
+```
+gpg: Signature made Sun 10 Sep 2017 08:49:50 PM PDT using RSA key ID 857CADBD
+gpg: Good signature from "Sundar Nagarajan <sun.nagarajan@gmail.com>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: F0C3 CE69 C8C0 0D1E 4D88  34F5 DF2A C095 857C ADBD
+```
+
+The message ```This key is not certified with a trusted signature!``` is because you have not attached any level of 'trust' to my public key. That should be OK for this purpose.
+
+For a **weak** indication that this key belongs to me, search for me on [pgp.mit.edu](https://pgp.mit.edu/). Enter my email ```sun.nagarajan@gmail.com``` in the ```Search string``` field, and you should find this key as one of the results.
 
 ### Write ISO to USB drive
 Assuming that your USB drive is ```/dev/sdk``` and you downloaded to a filenamed ```modified.iso```
