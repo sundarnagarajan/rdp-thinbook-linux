@@ -1,3 +1,0 @@
-[submodule "bootutils"]
-	path = bootutils
-	url = https://github.com/sundarnagarajan/bootutils.git
