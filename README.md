@@ -86,7 +86,11 @@ new_dir  ---------- TOPLEVEL DIR
     │
     └─── out
 ```
-Run sudo ./make_rdp_iso.sh
+Run the following command to create the remastered ISO:
+```
+sudo ./make_rdp_iso.sh
+```
+
 Remastered ISO will be ```ISO/out/modified.iso```
 
 
