@@ -7,8 +7,6 @@ PATCH_FILE=./all_rdp_patches.patch
 # KERNEL_SOURCE_SCRIPT should be in current dir and echo URL of kernel source
 KERNEL_SOURCE_SCRIPT=./get_kernel_source_url.sh
 IMAGE_NAME=bzImage
-# 'yes' means show, anything else means hide
-# SHOW_KERNEL_BUILD_STDERR=no
 
 #-------------------------------------------------------------------------
 # Probably don't have to change anything below this
@@ -21,9 +19,6 @@ if [ -z "$NUM_THREADS" ]; then
     NUM_THREADS=$(lscpu | grep '^CPU(s)' | awk '{print $2}')
 fi
 printf "INFO: Using %d threads\n" $NUM_THREADS
-if [ "$SHOW_KERNEL_BUILD_STDERR" != "yes" ]; then
-    echo "INFO: Hiding stderr output from kernel build"
-fi
 MAKE_THREADED="make -j$NUM_THREADS"
 INDENT="    "
 
@@ -209,33 +204,27 @@ function restore_kernel_config {
 
 function build_kernel {
     SECONDS=0
+    local COMPILE_OUT_FILE="${DEB_DIR}/compile.out"
+    \cp -f /dev/null "${COMPILE_OUT_FILE}"
     local elapsed=''
 
     show_timing_msg "Kernel build start" "yestee" ""
-    if [ "$SHOW_KERNEL_BUILD_STDERR" != "yes" ]; then
-        $MAKE_THREADED silentoldconfig 1>/dev/null 2>&1
-        $MAKE_THREADED $IMAGE_NAME 1>/dev/null 2>&1
-        show_timing_msg "Kernel $IMAGE_NAME build finished" "yestee" "$(get_hms)"
+    $MAKE_THREADED silentoldconfig 1>>"${COMPILE_OUT_FILE}" 2>&1
+    [ $? -ne 0 ] && (tail -20 "${COMPILE_OUT_FILE}"; echo ""; echo "See ${COMPILE_OUT_FILE}"; exit 1)
+    $MAKE_THREADED $IMAGE_NAME 1>>"${COMPILE_OUT_FILE}" 2>&1
+    [ $? -ne 0 ] && (tail -20 "${COMPILE_OUT_FILE}"; echo ""; echo "See ${COMPILE_OUT_FILE}"; exit 1)
+    show_timing_msg "Kernel $IMAGE_NAME build finished" "yestee" "$(get_hms)"
 
-        show_timing_msg "Kernel modules build start" "notee" ""; SECONDS=0
-        $MAKE_THREADED modules 1>/dev/null 2>&1
-        show_timing_msg "Kernel modules build finished" "yestee" "$(get_hms)"
-    else
-        ($MAKE_THREADED silentoldconfig 3>&2 2>&1 1>&3) 2>/dev/null | sed -e "s/^/${INDENT}/"
-        ($MAKE_THREADED $IMAGE_NAME 3>&2 2>&1 1>&3) 2>/dev/null | sed -e "s/^/${INDENT}/"
-        show_timing_msg "Kernel $IMAGE_NAME build finished" "yestee" "$(get_hms)"
-
-        show_timing_msg "Kernel modules build start" "notee" ""; SECONDS=0
-        ($MAKE_THREADED modules 3>&2 2>&1 1>&3) 2>/dev/null | sed -e "s/^/${INDENT}/"
-        show_timing_msg "Kernel modules build finished" "yestee" "$(get_hms)"
-    fi
+    show_timing_msg "Kernel modules build start" "notee" ""; SECONDS=0
+    $MAKE_THREADED modules 1>>"${COMPILE_OUT_FILE}" 2>&1
+    [ $? -ne 0 ] && (tail -20 "${COMPILE_OUT_FILE}"; echo ""; echo "See ${COMPILE_OUT_FILE}"; exit 1)
+    show_timing_msg "Kernel modules build finished" "yestee" "$(get_hms)"
 
     show_timing_msg "Kernel deb build start" "notee" ""; SECONDS=0
-    if [ "$SHOW_KERNEL_BUILD_STDERR" != "yes" ]; then
-        $MAKE_THREADED bindeb-pkg 1>/dev/null 2>&1
-    else
-        ($MAKE_THREADED bindeb-pkg 3>&2 2>&1 1>&3) 2>/dev/null | sed -e "s/^/${INDENT}/"
-    fi
+    $MAKE_THREADED bindeb-pkg 1>>"${COMPILE_OUT_FILE}" 2>&1
+    [ $? -ne 0 ] && (tail -20 "${COMPILE_OUT_FILE}"; echo ""; echo "See ${COMPILE_OUT_FILE}"; exit 1)
+
+    \rm -f "${COMPILE_OUT_FILE}"
     show_timing_msg "Kernel deb build finished" "yestee" "$(get_hms)"
     show_timing_msg "Kernel build finished" "notee" ""
 
