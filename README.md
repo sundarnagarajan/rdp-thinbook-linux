@@ -6,10 +6,10 @@ The RDP Thinbook is a new ultra-portable laptop produced by RDP Workstations Pvt
 # EVERYTHING on this laptop works perfectly in Linux
 
 It has [impressive specs](http://www.rdp.in/thinbook/technical-features.html):
-- Intel Atom X5-Z8300 1.84 GHz CPU (Cherry Trail)
+- Original Thinbook shipped with Intel Atom X5-Z8300 1.84 GHz CPU (Cherry Trail). Later models ship with Intel Atom X5-Z8350 1.92 GHz CPU (Cherry Trail)
 - 2 GB DDR3L RAM
 - 32 GB SSD built in
-- 14.1 inch 1366x768 display (16x9)
+- Original Thinbook shipped with 14.1 inch 1366x768 display (16x9). Later the 11.6 inch 1366x768 display (16x9) model was added
 - Intel HD graphics with 12 cores (Linux-friendly)
 - Realtek Wifi and bluetooth (RTL 8723bs chipset)
 - 802.11 b/g/n (2.4 GHz) Wifi
@@ -26,7 +26,7 @@ It has [impressive specs](http://www.rdp.in/thinbook/technical-features.html):
 - Dimensions: 233mm x 351mm x 20mm
 - Weight: 1.45 kgs
 
-I bought this a few months ago without Windows installed, with the intention of using Linux on it (I use Linux on **EVERYTHNIG**).
+I bought the original 14.1 inch RDP Thinbook in Nov-2016 without Windows installed, with the intention of using Linux on it (I use Linux on **EVERYTHNIG**).
 
 ## Experience and journey so far in brief
 ### Booting
@@ -108,7 +108,18 @@ All files, scripts and documentation on this repository have been updated and te
 This was the bug that held up sound support - fixed with es8316 driver: [Bug 189261 - Chuwi hi10/hi12 (Cherry Trail tablet) soundcard not recognised - rt5640](https://bugzilla.kernel.org/show_bug.cgi?id=189261)
 
 # Getting Linux to rock on the RDP Thinbook
-You will need about 10 GB+ free space.
+You will need a machine running a recent version of Ubuntu (tested on Ubuntu 16.04.2 Xenial Xerus LTS). You will need about 10 GB+ free space to build the kernel and remaster the ISO. See below for downloading a remastered ISO.
+
+## Packages required
+    grub-efi-ia32-bin grub-efi-amd64-bin grub-pc-bin grub2-common
+    grub-common util-linux parted gdisk mount xorriso genisoimage
+    squashfs-tools rsync git build-essential kernel-package fakeroot
+    libncurses5-dev libssl-dev ccache libfile-fcntllock-perl
+
+For the most up-to-date list of required packages:
+    - Download make_rdp_iso.sh from this directory
+    - Run './make_rdp_iso.sh' (no need to be root)
+    - Follow the instructions to install missing packages, if any
 
 ## Make UEFI (BIOS) changes
 ### Entering UEFI
