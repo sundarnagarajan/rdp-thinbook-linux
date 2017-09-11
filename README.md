@@ -94,7 +94,7 @@ sudo ./make_rdp_iso.sh
 Remastered ISO will be ```ISO/out/modified.iso```
 
 
-### Alternative - download pre-built Ubuntu Mate 16.04 remastered ISO for RDP Thinbook
+### Alternative - download pre-built remastered ISO for RDP Thinbook
 Use this method **ONLY** if you are willing to trust my pre-compiled kernel and remastered ISO (at least on a test machine). You will need about 2GB free disk space to download the ISO. 
 
 Note: **DO NOT** rely on the **same** ISO being available and linked from this github repo. Periodically, as new kernels come out, I intend to test and update the ISOs I link to from here.
