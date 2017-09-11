@@ -144,7 +144,7 @@ sync
 ```
 
 ## Alternative - download pre-built Ubuntu Mate 16.04 remastered ISO for RDP Thinbook
-Use this method **ONLY** if you are willing to trust my pre-compiled kernel and remastered ISO (at least on a test machine). The latest remastered ISO can be downloaded [here](https://drive.google.com/open?id=0ByKDyYCckXqDY0VCU2lWMG0yMzQ). Download to your hard disk - you will need about 2 GB of free space (for the ISO). 
+Use this method **ONLY** if you are willing to trust my pre-compiled kernel and remastered ISO (at least on a test machine). The latest remastered ISO can be downloaded [here](https://drive.google.com/file/d/0ByKDyYCckXqDUk9GRlJJM3NsREU/view?usp=sharing). Download to your hard disk - you will need about 2 GB of free space (for the ISO). 
 
 ### Write ISO to USB drive
 Assuming that your USB drive is ```/dev/sdk``` and you downloaded to a filenamed ```modified.iso```
