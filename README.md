@@ -67,7 +67,9 @@ I highly recommend you use the **Simplified single-script method** below to down
 
 That said, many people provide pre-built ISOs for users to eaily try / use, and I have provided one too. I **try** to mitigate **some** of your risk by providing a GPG signature.
 
-Remastering your own ISO can take a while. It takes about 30 mins on a 32 x Intel Xeon e5-2670 server with 112GB of RAM and a Sansung 960 EVO NVME disk. On a more 'standard desktop' machine it could take several hours. You will need about 10 GB+ free space to build the kernel and remaster the ISO. 
+Remastering your own ISO can take a while. It takes about 30 mins on a 32 x Intel Xeon e5-2670 server with 112GB of RAM and a Sansung 960 EVO NVME disk. On a more 'standard desktop' machine it could take several hours. Don't even think about doing it on an RDP Thinbook unless you have a lot of patience or you have something to prove. 
+
+You will need about 10 GB+ free space to build the kernel and remaster the ISO. 
 
 ### Simplified single-script method to build your own remastered ISO
 You will need about 10 GB+ free space to build the kernel and remaster the ISO.
