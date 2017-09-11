@@ -146,7 +146,9 @@ sync
 ## Alternative - download pre-built Ubuntu Mate 16.04 remastered ISO for RDP Thinbook
 Use this method **ONLY** if you are willing to trust my pre-compiled kernel and remastered ISO (at least on a test machine). The latest remastered ISO can be downloaded [here](https://drive.google.com/file/d/0ByKDyYCckXqDUk9GRlJJM3NsREU/view?usp=sharing). Download to your hard disk - you will need about 2 GB of free space (for the ISO). 
 
-I have a GPG signature for the ISO in the same directory. Download both the ISO and the signature (```.sign``` file). Use the following command to verify the GPG signature **BEFORE** using the ISO
+Download the GPG signature for the ISO [here](https://drive.google.com/file/d/0ByKDyYCckXqDTDAyREZIRVRtWEE/view?usp=sharing). Download both the ISO and the signature (```.sign``` file). 
+
+Use the following command to verify the GPG signature **BEFORE** using the ISO
 
 ```
 gpg --verify <signature_file> <ISO_file>
