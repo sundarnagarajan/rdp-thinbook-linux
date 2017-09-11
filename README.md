@@ -6,25 +6,31 @@ The RDP Thinbook is a new ultra-portable laptop produced by RDP Workstations Pvt
 # EVERYTHING on this laptop works perfectly in Linux
 
 It has [impressive specs](http://www.rdp.in/thinbook/technical-features.html):
-- Original Thinbook shipped with Intel Atom X5-Z8300 1.84 GHz CPU (Cherry Trail). Later models ship with Intel Atom X5-Z8350 1.92 GHz CPU (Cherry Trail)
-- 2 GB DDR3L RAM
-- 32 GB SSD built in
-- Original Thinbook shipped with 14.1 inch 1366x768 display (16x9). Later the 11.6 inch 1366x768 display (16x9) model was added
-- Intel HD graphics with 12 cores (Linux-friendly)
-- Realtek Wifi and bluetooth (RTL 8723bs chipset)
-- 802.11 b/g/n (2.4 GHz) Wifi
-- Bluetooth 4.0
-- Micro-SD card slot
-- 1 x USB 3.0 port
-- 1x USB 2.0 port
-- Audio out (3.5 mm)
+- CPU, Memory, storage:
+    - Original Thinbook shipped with Intel Atom X5-Z8300 1.84 GHz CPU (Cherry Trail). Later models ship with Intel Atom X5-Z8350 1.92 GHz CPU (Cherry Trail)
+    - 2 GB DDR3L RAM
+    - 32 GB SSD built in
+    - Micro-SD card slot
+- Display:
+    - Original Thinbook shipped with 14.1 inch 1366x768 display (16x9). Later the 11.6 inch 1366x768 display (16x9) model was added
+    - Intel HD graphics with 12 cores (Linux-friendly)
+- Networking:
+    - 802.11 b/g/n (2.4 GHz) Wifi - Realtek Wifi and bluetooth (RTL 8723bs chipset)
+    - Bluetooth 4.0
+- USB:
+    - 1 x USB 3.0 port
+    - 1x USB 2.0 port
+- Audio:
+    - Audio out (3.5 mm)
+    - Dual HD speakers
 - Multitouch capacitative touchpad
-- Dual HD speakers
-- 10000 mAh Li-polymer battery
-- 5V 2A power adapter
-- Rated at upto 8.5 hours battery life, 4-5 hours with Wifi connected
-- Dimensions: 233mm x 351mm x 20mm
-- Weight: 1.45 kgs
+- Power:
+    - 10000 mAh Li-polymer battery
+    - 5V 2A power adapter
+    - Rated at upto 8.5 hours battery life, 4-5 hours with Wifi connected
+- Size, weight:
+    - Dimensions: 233mm x 351mm x 20mm
+    - Weight: 1.45 kgs
 
 ## Other cool features:
 - Power supply is 5V/2A, so (if) you can make your own USB cable with a compatible barrel adapter, you can charge / power it from a 2A USB wall power supply, or even a good Power Bank! I plan to do this, so wahct this repo for results and instructions once I do
