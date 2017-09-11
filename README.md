@@ -127,7 +127,7 @@ Note: **DO NOT** rely on the **same** ISO being available and linked from this g
 | [Ubuntu 16.04.3 with kernel 4.13.1](https://drive.google.com/open?id=0ByKDyYCckXqDbFV2X3lydVYzdzQ) | [GPG Signature](https://drive.google.com/open?id=0ByKDyYCckXqDQjhfbHEyZ3FhSnM) |
 | [xubuntu 16.04.3 with kernel 4.13.1](https://drive.google.com/open?id=0ByKDyYCckXqDamNoazNIVm5JYU0) | [GPG Signature](https://drive.google.com/open?id=0ByKDyYCckXqDdXpVbGpjNDQxTXc) |
 
-    
+#### Verifying GPG signature    
 Download both the ISO and the signature (```.sign``` file). Use the following command to verify the GPG signature **BEFORE** using the ISO
 
 ```
