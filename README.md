@@ -49,7 +49,7 @@ I highly recommend you use the **Simplified single-script method** below to down
 
 That said, many people provide pre-built ISOs for users to eaily try / use, and I have provided one too.
 
-Remastering your own ISO can take a while. It takes about 30 mins on a 32 x Intel Xeon e5-2670 server with 112GB of RAM. On a more 'standard desktop' machine it could take several hours. You will need about 10 GB+ free space to build the kernel and remaster the ISO. 
+Remastering your own ISO can take a while. It takes about 30 mins on a 32 x Intel Xeon e5-2670 server with 112GB of RAM and a Sansung 960 EVO NVME disk. On a more 'standard desktop' machine it could take several hours. You will need about 10 GB+ free space to build the kernel and remaster the ISO. 
 
 ### Simplified single-script method
 You will need about 10 GB+ free space to build the kernel and remaster the ISO.
@@ -95,7 +95,9 @@ Remastered ISO will be ```ISO/out/modified.iso```
 
 
 ### Alternative - download pre-built Ubuntu Mate 16.04 remastered ISO for RDP Thinbook
-Use this method **ONLY** if you are willing to trust my pre-compiled kernel and remastered ISO (at least on a test machine). 
+Use this method **ONLY** if you are willing to trust my pre-compiled kernel and remastered ISO (at least on a test machine). You will need about 2GB free disk space to download the ISO. 
+
+Note: **DO NOT** rely on the **same** ISO being available and linked from this github repo. Periodically, as new kernels come out, I intend to test and update the ISOs I link to from here.
 
 Available ISOs:
 
@@ -166,14 +168,14 @@ To know more about the steps involved, read [DetailedSteps.md](docs/DetailedStep
 - Open an issue
 
 # Journey so far in brief
-### Booting
+## Booting
 Out of the box it wouldn't boot any Linux distro. This is because, like many other newer low-priced Cherry Trail laptops, the UEFI firmware has a 32-bit EFI loader. Most (all that I could find) Linux distributions only provide 64-bit UEFI-compatible ISO images. This is a MISTAKE by the upstream Linux distributions, and one that I hope to influence.
 
 Getting it to boot wasn't very hard - it required making a multiboot disk image that was 32-bit and 64-bit EFI loader compatible.
 
 Only additional step to boot was to turn secure boot off.
 
-### What worked out of the box in Linux
+## What worked out of the box in Linux
 ----------------------------
 - Display (Intel i915 driver) 1366x768: Works perfectly
 - Touchpad:
@@ -214,7 +216,7 @@ Only additional step to boot was to turn secure boot off.
     - Left: Home: Works perfectly
     - Right: End: Works perfectly
 
-### UEFI (BIOS) settings that need to be changed
+## UEFI (BIOS) settings that needed to be changed
 - Booting: Turn off secure boot:
     UEFI --> Security --> Secure Boot menu --> Secure Boot: Change Enabled --> Disabled
 
@@ -229,7 +231,7 @@ Only additional step to boot was to turn secure boot off.
 - Sound
     - UEFI --> Chipset --> Audio Configuration --> LPE Audio Support: Set to ```LPE Audio ACPI mode`` (default setting)
 
-### Things that needed work, but which work perfectly now
+## Things that needed work, but which work perfectly now
 - Wifi
 - Bluetooth
 - Battery level sensing
@@ -237,7 +239,7 @@ Only additional step to boot was to turn secure boot off.
 - Battery time-to-full and time-to-empty calculation
 - Sound: Speakers and headphone jack both work. Microphone (sound recording) works
 
-### What is not working yet
+## What is not working yet
 **Everything on the RDP Thinbook now works perfectly in Linux.**
 
 All files, scripts and documentation on this repository have been updated and tested.
