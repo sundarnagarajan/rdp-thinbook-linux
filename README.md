@@ -172,6 +172,16 @@ To know more about the steps involved, read [DetailedSteps.md](docs/DetailedStep
 - You get a copy of all the scripts under ```/root/remaster/scripts```
 - The log of all steps during remastering is in ```/root/remaster/remaster.log```
 
+# Distributions, models, testing done
+If you have tested a distribution-model not listed here, open an issue, and I will list your observations here. If you had problems with a distribution (Ubuntu-based only for now), open an issue.
+
+| Distribution | RDP Thinbook Model | Issues, if any | Tested by |
+| ------------ | ------------------ | -------------- | --------- |
+| Ubuntu Mate 16.04 | Original 14.1-inch RDP Thinbook (X5-Z8300) | None | Me |
+| Ubuntu Mate 16.04 | New 14.1-inch RDP Thinbook (X5-Z8350) | None | RDP staff |
+| Ubuntu Mate 16.04 | 11.6-inch RDP Thinbook (X5-Z8350) | None | RDP staff |
+| Ubuntu 16.04.3 | Original 14.1-inch RDP Thinbook (X5-Z8300) | Bluetooth issues - investigating | Me |
+
 # Problems?
 - Read the [FAQ](faq.md)
 - Open an issue
