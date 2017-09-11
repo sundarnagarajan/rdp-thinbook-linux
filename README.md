@@ -27,12 +27,16 @@ It has [impressive specs](http://www.rdp.in/thinbook/technical-features.html):
 - Weight: 1.45 kgs
 
 ## Other cool features:
-- Power supply is 5V/2A, so (if) you can mek your own USB cable with a compatible barrel adapter, you can charge / power it from a 2A USB wall power supply, or even a good Power Bank!
-- TPM 2.0 - haven't played with that yet
+- Power supply is 5V/2A, so (if) you can mek your own USB cable with a compatible barrel adapter, you can charge / power it from a 2A USB wall power supply, or even a good Power Bank! I plan to do this, so wahct this repo for results and instructions once I do
+- TPM 2.0 - haven't played with it yet
 
 ## Limitations
 - RAM (2 GB) is soldered on, cannot be replaced / expanded
 - SSD (32 GB) is soldered on, cannot be replaced / expanded
+- Battery charging / charged and suspend state LED is not visible when the top is closed
+- Home, End, PgUp, PgDn keys are accessed using Fn-Arrow keys
+- No dedicated numeric keypad
+- No special keys to control screen brightness. BUT screen brightness applet in Ubuntu works **perfectly**
 
 I bought the original 14.1 inch RDP Thinbook in Nov-2016 without Windows installed, with the intention of using Linux on it (I use Linux on **EVERYTHNIG**).
 
