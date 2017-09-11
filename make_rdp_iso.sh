@@ -41,6 +41,10 @@ OUTPUT_ISO=${TOP_DIR}/ISO/out/modified.iso
 
 check_required_pkgs
 check_avail_disk_space
+if [ $(id -un) -ne 0 ]; then
+    echo "Must be run as root"
+    exit 1
+fi
 if [ ! -f "$INPUT_ISO" ]; then
     echo "INPUT_ISO not found: $INPUT_ISO"
     exit 1
