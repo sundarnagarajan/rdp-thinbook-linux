@@ -73,8 +73,8 @@ That said, many people provide pre-built ISOs for users to eaily try / use, and 
 Use this method **ONLY** if you are willing to trust my pre-compiled kernel and remastered ISO (at least on a test machine). 
 
 Available ISOs:
-|ISO|Signature|
-|[Ubuntu Mate 16.04](https://drive.google.com/file/d/0ByKDyYCckXqDUk9GRlJJM3NsREU/view?usp=sharing)|[GPG Signature](https://drive.google.com/file/d/0ByKDyYCckXqDTDAyREZIRVRtWEE/view?usp=sharing)|
+| ISO | Signature |
+| [Ubuntu Mate 16.04](https://drive.google.com/file/d/0ByKDyYCckXqDUk9GRlJJM3NsREU/view?usp=sharing) | [GPG Signature](https://drive.google.com/file/d/0ByKDyYCckXqDTDAyREZIRVRtWEE/view?usp=sharing) |
     
 Download both the ISO and the signature (```.sign``` file). Use the following command to verify the GPG signature **BEFORE** using the ISO
 
