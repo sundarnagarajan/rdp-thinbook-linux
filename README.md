@@ -26,6 +26,14 @@ It has [impressive specs](http://www.rdp.in/thinbook/technical-features.html):
 - Dimensions: 233mm x 351mm x 20mm
 - Weight: 1.45 kgs
 
+## Other cool features:
+- Power supply is 5V/2A, so (if) you can mek your own USB cable with a compatible barrel adapter, you can charge / power it from a 2A USB wall power supply, or even a good Power Bank!
+- TPM 2.0 - haven't played with that yet
+
+## Limitations
+- RAM (2 GB) is soldered on, cannot be replaced / expanded
+- SSD (32 GB) is soldered on, cannot be replaced / expanded
+
 I bought the original 14.1 inch RDP Thinbook in Nov-2016 without Windows installed, with the intention of using Linux on it (I use Linux on **EVERYTHNIG**).
 
 # Getting Linux to rock on the RDP Thinbook
@@ -99,7 +107,7 @@ Use this method **ONLY** if you are willing to trust my pre-compiled kernel and 
 
 Note: **DO NOT** rely on the **same** ISO being available and linked from this github repo. Periodically, as new kernels come out, I intend to test and update the ISOs I link to from here.
 
-Available ISOs:
+[Available ISOs](https://drive.google.com/drive/folders/0ByKDyYCckXqDQmN2emE4M1V1NlE):
 
 | ISO | Signature |
 | --- | --------- |
