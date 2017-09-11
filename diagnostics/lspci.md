@@ -1,4 +1,4 @@
-# PCI devices
+## PCI devices
 
 | B:D:F | VID:PID | ModUsed | ModAvail | Rev | Class | Description |
 | ----- | ------- | ------- | -------- | --- | ----- | ----------- |
@@ -7,7 +7,7 @@
 | 00:14.0 | 8086:22b5 | xhci_hcd | None | 22 | USB controller | Intel Device 22b5 |
 | 00:1a.0 | 8086:2298 | mei_txe |  | 22 | Encryption controller | Intel Device 2298 |
 
-# Raw lspci -nn output
+## Raw lspci -nn output
 ```
 00:00.0 Host bridge [0600]: Intel Corporation Device [8086:2280] (rev 22)
 00:02.0 VGA compatible controller [0300]: Intel Corporation Device [8086:22b0] (rev 22)
