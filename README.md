@@ -55,7 +55,12 @@ For the most up-to-date list of required packages:
 - UEFI --> Chipset --> Audio Configuration --> LPE Audio Support
     Set to ```LPE Audio ACPI mode`` (default setting)
 
-## Simplified single-script method
+## Get or build a remastered ISO with linux kernel 4.13 (or newer)
+I highly recommend you use the **Simplified single-script method** below to download and build your own kernel and remaster the ISO yourself. Downloading and using / installing ISOs created by people you do not know or trust is **BAD SERUCIRY PRACTICE**.
+
+That said, many people provide pre-built ISOs for users to eaily try / use, and I have provided one too.
+
+### Simplified single-script method
 - Download [make_rdp_iso.sh](https://github.com/sundarnagarajan/rdp-thinbook-linux/blob/master/make_rdp_iso.sh) from this repository
 - Login to a root shell using ```sudo -i```
 - Create a new directory and copy ```make_rdp_iso.sh``` from this repository inside the new empty directory
@@ -64,18 +69,7 @@ For the most up-to-date list of required packages:
 - Copy your favorite Ubuntu flavor ISO to ISO/in/source.iso (**filename is important**)
 - run sudo ./make_rdp_iso.sh
 
-### Write ISO to USB drive
-Assuming that your USB drive is ```/dev/sdk```
-
-```
-# DOUBLE CHECK that DEV is set to your removable devices' name
-# Change next line:
-DEV=/dev/sdk
-sudo dd if=${TOP_DIR}/ISO/out/modified.iso of=$DEV bs=128k status=progress oflag=direct
-sync
-```
-
-## Alternative - download pre-built Ubuntu Mate 16.04 remastered ISO for RDP Thinbook
+### Alternative - download pre-built Ubuntu Mate 16.04 remastered ISO for RDP Thinbook
 Use this method **ONLY** if you are willing to trust my pre-compiled kernel and remastered ISO (at least on a test machine). The latest remastered ISO can be downloaded [here](https://drive.google.com/file/d/0ByKDyYCckXqDUk9GRlJJM3NsREU/view?usp=sharing). Download to your hard disk - you will need about 2 GB of free space (for the ISO). 
 
 Download the GPG signature for the ISO [here](https://drive.google.com/file/d/0ByKDyYCckXqDTDAyREZIRVRtWEE/view?usp=sharing). Download both the ISO and the signature (```.sign``` file). 
@@ -94,7 +88,7 @@ gpg: Signature made Sun 10 Sep 2017 08:49:50 PM PDT using RSA key ID 857CADBD
 
 You can find my GPG public key [here](https://pgp.mit.edu/pks/lookup?op=get&search=0xDF2AC095857CADBD). If you want to add my public key to your GPG keychain, use the following command:
 ```
-gpg --recv-keys df2ac095857cadbd
+gpg --keyserver pgp.mit.edu --recv-keys F0C3CE69C8C00D1E4D8834F5DF2AC095857CADBD
 ```
 
 Once you have imported my public key with the command above (note: you are **not TRUSTING** my public key for anything), if you rerun the ```gpg --verify``` command above, the output should look like:
@@ -108,9 +102,14 @@ Primary key fingerprint: F0C3 CE69 C8C0 0D1E 4D88  34F5 DF2A C095 857C ADBD
 
 The message ```This key is not certified with a trusted signature!``` is because you have not attached any level of 'trust' to my public key. That should be OK for this purpose.
 
+Once you have verified the signature, you can delete my public key using the command, to avoid cluttering your keyring:
+```
+gpg --yes --delete-key F0C3CE69C8C00D1E4D8834F5DF2AC095857CADBD
+```
+
 For a **weak** indication that this key belongs to me, search for me on [pgp.mit.edu](https://pgp.mit.edu/). Enter my email ```sun.nagarajan@gmail.com``` in the ```Search string``` field, and you should find this key as one of the results.
 
-### Write ISO to USB drive
+## Write ISO to USB drive
 Assuming that your USB drive is ```/dev/sdk``` and you downloaded to a filenamed ```modified.iso```
 
 ```
@@ -136,7 +135,7 @@ To know more about the steps involved, read [DetailedSteps.md](docs/DetailedStep
 - Read the [FAQ](faq.md)
 - Open an issue
 
-## Experience and journey so far in brief
+# Journey so far in brief
 ### Booting
 Out of the box it wouldn't boot any Linux distro. This is because, like many other newer low-priced Cherry Trail laptops, the UEFI firmware has a 32-bit EFI loader. Most (all that I could find) Linux distributions only provide 64-bit UEFI-compatible ISO images. This is a MISTAKE by the upstream Linux distributions, and one that I hope to influence.
 
@@ -225,39 +224,38 @@ Required packages:
     libncurses5-dev libssl-dev ccache libfile-fcntllock-perl
 
 Required space: 10000000000
-Available space: 17490198528
+Available space: 17517789184
 
 Cloning bootutils...
 Cloning rdp-thinbook-linux...
 INFO: Using 32 threads
-INFO: Hiding stderr output from kernel build
-Retrieve kernel source start           : Wed Sep  6 20:34:58 PDT 2017
-Retrieve kernel source finished        : Wed Sep  6 20:35:25 PDT 2017 (00:00:27)
-INFO: Building kernel 4.13.0 in /home/sundar/rdp/kernel_compile/debs/linux-4.13
+Retrieve kernel source start           : Mon Sep 11 11:28:48 PDT 2017
+Retrieve kernel source finished        : Mon Sep 11 11:29:17 PDT 2017 (00:00:29)
+INFO: Building kernel 4.13.1 in /home/sundar/rdp/kernel_compile/debs/linux-4.13.1
 Applying patches from /home/sundar/rdp/kernel_compile/./all_rdp_patches.patch
     patching file net/rfkill/rfkill-gpio.c
     Hunk #1 succeeded at 160 (offset -3 lines).
 INFO: Restored config: seems to be from version 4.13.0
-Kernel build start                     : Wed Sep  6 20:35:27 PDT 2017
-Kernel bzImage build finished          : Wed Sep  6 20:36:44 PDT 2017 (00:01:17)
-Kernel modules build finished          : Wed Sep  6 20:42:46 PDT 2017 (00:06:02)
-Kernel deb build finished              : Wed Sep  6 20:46:10 PDT 2017 (00:03:24)
+Kernel build start                     : Mon Sep 11 11:29:19 PDT 2017
+Kernel bzImage build finished          : Mon Sep 11 11:30:43 PDT 2017 (00:01:24)
+Kernel modules build finished          : Mon Sep 11 11:36:54 PDT 2017 (00:06:11)
+Kernel deb build finished              : Mon Sep 11 11:40:28 PDT 2017 (00:03:34)
 -------------------------- Kernel compile time -------------------------------
-Retrieve kernel source start           : Wed Sep  6 20:34:58 PDT 2017
-Retrieve kernel source finished        : Wed Sep  6 20:35:25 PDT 2017 (00:00:27)
-Kernel build start                     : Wed Sep  6 20:35:27 PDT 2017
-Kernel bzImage build finished          : Wed Sep  6 20:36:44 PDT 2017 (00:01:17)
-Kernel modules build start             : Wed Sep  6 20:36:44 PDT 2017
-Kernel modules build finished          : Wed Sep  6 20:42:46 PDT 2017 (00:06:02)
-Kernel deb build start                 : Wed Sep  6 20:42:46 PDT 2017
-Kernel deb build finished              : Wed Sep  6 20:46:10 PDT 2017 (00:03:24)
-Kernel build finished                  : Wed Sep  6 20:46:10 PDT 2017
+Retrieve kernel source start           : Mon Sep 11 11:28:48 PDT 2017
+Retrieve kernel source finished        : Mon Sep 11 11:29:17 PDT 2017 (00:00:29)
+Kernel build start                     : Mon Sep 11 11:29:19 PDT 2017
+Kernel bzImage build finished          : Mon Sep 11 11:30:43 PDT 2017 (00:01:24)
+Kernel modules build start             : Mon Sep 11 11:30:43 PDT 2017
+Kernel modules build finished          : Mon Sep 11 11:36:54 PDT 2017 (00:06:11)
+Kernel deb build start                 : Mon Sep 11 11:36:54 PDT 2017
+Kernel deb build finished              : Mon Sep 11 11:40:28 PDT 2017 (00:03:34)
+Kernel build finished                  : Mon Sep 11 11:40:28 PDT 2017
 ------------------------------------------------------------------------------
 Kernel DEBS: (in /home/sundar/rdp/kernel_compile/debs)
-    linux-firmware-image-4.13.0_4.13.0-1_amd64.deb
-    linux-headers-4.13.0_4.13.0-1_amd64.deb
-    linux-image-4.13.0_4.13.0-1_amd64.deb
-    linux-libc-dev_4.13.0-1_amd64.deb
+    linux-firmware-image-4.13.1_4.13.1-1_amd64.deb
+    linux-headers-4.13.1_4.13.1-1_amd64.deb
+    linux-image-4.13.1_4.13.1-1_amd64.deb
+    linux-libc-dev_4.13.1-1_amd64.deb
 ------------------------------------------------------------------------------
 (extract_iso): Extracting ISO ... source.iso
 (extract_iso): Completed
@@ -267,11 +265,11 @@ Kernel DEBS: (in /home/sundar/rdp/kernel_compile/debs)
     '/remaster_tmp/firmware/./rtlwifi/rtl8723bs_nic.bin' -> '/lib/firmware/./rtlwifi/rtl8723bs_nic.bin'
 01_install_firmware.sh [chroot]: Completed
 02_install_kernels.sh [chroot]: Starting
-    update-initramfs: Generating /boot/initrd.img-4.13.0
+    update-initramfs: Generating /boot/initrd.img-4.13.1
     New kernel packages installed:
-        linux-firmware-image-4.13.0
-        linux-headers-4.13.0
-        linux-image-4.13.0
+        linux-firmware-image-4.13.1
+        linux-headers-4.13.1
+        linux-image-4.13.1
         linux-libc-dev
 02_install_kernels.sh [chroot]: Completed
 03_remove_old_kernels.sh [chroot]: Starting
@@ -285,15 +283,63 @@ Kernel DEBS: (in /home/sundar/rdp/kernel_compile/debs)
         linux-signed-image-generic
         linux-generic
     Kernel-related packages remaining:
-        linux-headers-4.13.0
-        linux-image-4.13.0
+        linux-headers-4.13.1
+        linux-image-4.13.1
 03_remove_old_kernels.sh [chroot]: Completed
-04_install_es8316_sound.sh [chroot]: Starting
-    '/root/hardware/sound/bytcht-es8316' -> '/usr/share/alsa/ucm/bytcht-es8316'
-    '/root/hardware/sound/bytcht-es8316/HiFi' -> '/usr/share/alsa/ucm/bytcht-es8316/HiFi'
-    '/root/hardware/sound/bytcht-es8316/bytcht-es8316.conf' -> '/usr/share/alsa/ucm/bytcht-es8316/bytcht-es8316.conf'
-    '/root/hardware/sound/rdp-es8316.conf' -> '/etc/modprobe.d/rdp-es8316.conf'
-04_install_es8316_sound.sh [chroot]: Completed
+04_install_sound.sh [chroot]: Starting
+    
+    UCM/bytcht-es8316 from https://github.com/kernins/linux-chwhi12/tree/master/configs/audio/ucm
+    Remaining files under UCM are from https://github.com/plbossart/UCM
+    
+    If the original author has specified a license, these files are licensed
+    under the respective licenses from the original author.
+    
+    If there is no LICENSE specified by the original author, these files are
+    licensed under the GNU General Public License version 2.
+    
+    '/root/hardware/sound/UCM/bytcht-da7213' -> '/usr/share/alsa/ucm/bytcht-da7213'
+    '/root/hardware/sound/UCM/bytcht-da7213/HiFi' -> '/usr/share/alsa/ucm/bytcht-da7213/HiFi'
+    '/root/hardware/sound/UCM/bytcht-da7213/README' -> '/usr/share/alsa/ucm/bytcht-da7213/README'
+    '/root/hardware/sound/UCM/bytcht-da7213/bytcht-da7213.conf' -> '/usr/share/alsa/ucm/bytcht-da7213/bytcht-da7213.conf'
+    '/root/hardware/sound/UCM/bytcht-es8316' -> '/usr/share/alsa/ucm/bytcht-es8316'
+    '/root/hardware/sound/UCM/bytcht-es8316/HiFi' -> '/usr/share/alsa/ucm/bytcht-es8316/HiFi'
+    '/root/hardware/sound/UCM/bytcht-es8316/bytcht-es8316.conf' -> '/usr/share/alsa/ucm/bytcht-es8316/bytcht-es8316.conf'
+    '/root/hardware/sound/UCM/bytcht-nocodec' -> '/usr/share/alsa/ucm/bytcht-nocodec'
+    '/root/hardware/sound/UCM/bytcht-nocodec/HiFi' -> '/usr/share/alsa/ucm/bytcht-nocodec/HiFi'
+    '/root/hardware/sound/UCM/bytcht-nocodec/README' -> '/usr/share/alsa/ucm/bytcht-nocodec/README'
+    '/root/hardware/sound/UCM/bytcht-nocodec/bytcht-nocodec.conf' -> '/usr/share/alsa/ucm/bytcht-nocodec/bytcht-nocodec.conf'
+    '/root/hardware/sound/UCM/bytcht-pcm512x' -> '/usr/share/alsa/ucm/bytcht-pcm512x'
+    '/root/hardware/sound/UCM/bytcht-pcm512x/HiFi' -> '/usr/share/alsa/ucm/bytcht-pcm512x/HiFi'
+    '/root/hardware/sound/UCM/bytcht-pcm512x/README' -> '/usr/share/alsa/ucm/bytcht-pcm512x/README'
+    '/root/hardware/sound/UCM/bytcht-pcm512x/bytcht-pcm512x.conf' -> '/usr/share/alsa/ucm/bytcht-pcm512x/bytcht-pcm512x.conf'
+    '/root/hardware/sound/UCM/bytcr-rt5640' -> '/usr/share/alsa/ucm/bytcr-rt5640'
+    '/root/hardware/sound/UCM/bytcr-rt5640/HiFi' -> '/usr/share/alsa/ucm/bytcr-rt5640/HiFi'
+    '/root/hardware/sound/UCM/bytcr-rt5640/README' -> '/usr/share/alsa/ucm/bytcr-rt5640/README'
+    '/root/hardware/sound/UCM/bytcr-rt5640/bytcr-rt5640.conf' -> '/usr/share/alsa/ucm/bytcr-rt5640/bytcr-rt5640.conf'
+    '/root/hardware/sound/UCM/bytcr-rt5651' -> '/usr/share/alsa/ucm/bytcr-rt5651'
+    '/root/hardware/sound/UCM/bytcr-rt5651/HiFi' -> '/usr/share/alsa/ucm/bytcr-rt5651/HiFi'
+    '/root/hardware/sound/UCM/bytcr-rt5651/README' -> '/usr/share/alsa/ucm/bytcr-rt5651/README'
+    '/root/hardware/sound/UCM/bytcr-rt5651/asound.state' -> '/usr/share/alsa/ucm/bytcr-rt5651/asound.state'
+    '/root/hardware/sound/UCM/bytcr-rt5651/bytcr-rt5651.conf' -> '/usr/share/alsa/ucm/bytcr-rt5651/bytcr-rt5651.conf'
+    '/root/hardware/sound/UCM/byt-max98090' -> '/usr/share/alsa/ucm/byt-max98090'
+    '/root/hardware/sound/UCM/byt-max98090/HiFi.conf' -> '/usr/share/alsa/ucm/byt-max98090/HiFi.conf'
+    '/root/hardware/sound/UCM/byt-max98090/byt-max98090.conf' -> '/usr/share/alsa/ucm/byt-max98090/byt-max98090.conf'
+    '/root/hardware/sound/UCM/byt-max98090/orco-bytmax98090.state' -> '/usr/share/alsa/ucm/byt-max98090/orco-bytmax98090.state'
+    '/root/hardware/sound/UCM/byt-rt5640' -> '/usr/share/alsa/ucm/byt-rt5640'
+    '/root/hardware/sound/UCM/byt-rt5640/HiFi' -> '/usr/share/alsa/ucm/byt-rt5640/HiFi'
+    '/root/hardware/sound/UCM/byt-rt5640/README' -> '/usr/share/alsa/ucm/byt-rt5640/README'
+    '/root/hardware/sound/UCM/byt-rt5640/byt-rt5640.conf' -> '/usr/share/alsa/ucm/byt-rt5640/byt-rt5640.conf'
+    '/root/hardware/sound/UCM/cht-bsw-rt5672' -> '/usr/share/alsa/ucm/cht-bsw-rt5672'
+    '/root/hardware/sound/UCM/cht-bsw-rt5672/HiFi' -> '/usr/share/alsa/ucm/cht-bsw-rt5672/HiFi'
+    '/root/hardware/sound/UCM/cht-bsw-rt5672/cht-bsw-rt5672.conf' -> '/usr/share/alsa/ucm/cht-bsw-rt5672/cht-bsw-rt5672.conf'
+    '/root/hardware/sound/UCM/chtmax98090' -> '/usr/share/alsa/ucm/chtmax98090'
+    '/root/hardware/sound/UCM/chtmax98090/HiFi.conf' -> '/usr/share/alsa/ucm/chtmax98090/HiFi.conf'
+    '/root/hardware/sound/UCM/chtmax98090/chtmax98090.conf' -> '/usr/share/alsa/ucm/chtmax98090/chtmax98090.conf'
+    '/root/hardware/sound/UCM/chtrt5645' -> '/usr/share/alsa/ucm/chtrt5645'
+    '/root/hardware/sound/UCM/chtrt5645/HiFi.conf' -> '/usr/share/alsa/ucm/chtrt5645/HiFi.conf'
+    '/root/hardware/sound/UCM/chtrt5645/chtrt5645.conf' -> '/usr/share/alsa/ucm/chtrt5645/chtrt5645.conf'
+    '/root/hardware/sound/rdp-sound-modules.conf' -> '/etc/modprobe.d/rdp-sound-modules.conf'
+04_install_sound.sh [chroot]: Completed
 05_install_r8723_bluetooth.sh [chroot]: Starting
     
     ---------------------------------------------------------------------------
@@ -304,8 +350,8 @@ Kernel DEBS: (in /home/sundar/rdp/kernel_compile/debs)
     If there is no LICENSE specified by the original author, this
     source is hereby licensed under the GNU General Public License version 2.
     
-    See /root/hardware/LICENSE and for license details
-    See /root/hardware/bluetooth/rtl8723bs_bt/LICENSE and for license details
+    For license detils, see /root/hardware/LICENSE and 
+    /root/hardware/bluetooth/rtl8723bs_bt/LICENSE
     ---------------------------------------------------------------------------
     
     '/root/hardware/bluetooth/scripts/bluetooth_r8723bs.rules' -> '/etc/udev/rules.d/bluetooth_r8723bs.rules'
@@ -313,18 +359,12 @@ Kernel DEBS: (in /home/sundar/rdp/kernel_compile/debs)
     '/etc/systemd/system/bluetooth.service.wants/r8723bs_bluetooth.service' -> '/etc/systemd/system/r8723bs_bluetooth.service'
 05_install_r8723_bluetooth.sh [chroot]: Completed
 06_update_all_packages.sh [chroot]: Starting
-Extracting templates from packages: 100%
+    Updating all packages - this may take quite a while
+    - depending on your network speed and machine configuration
 06_update_all_packages.sh [chroot]: Completed
 07_install_grub_packages.sh [chroot]: Starting
 07_install_grub_packages.sh [chroot]: Completed
 08_apt_cleanup.sh [chroot]: Starting
-    Reading package lists...
-    Building dependency tree...
-    Reading state information...
-    Reading package lists...
-    Building dependency tree...
-    Reading state information...
-    0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
 08_apt_cleanup.sh [chroot]: Completed
 09_copy_scripts.sh [chroot]: Starting
 09_copy_scripts.sh [chroot]: Completed
@@ -346,6 +386,6 @@ VolID=Ubuntu-MATE 16.04.1 LTS amd64
 
 --------------------------------------------------------------------------
 
-Start: Wed Sep  6 20:34:54 PDT 2017
-Ended: Wed Sep  6 20:57:21 PDT 2017
+Start: Mon Sep 11 11:28:44 PDT 2017
+Ended: Mon Sep 11 11:53:46 PDT 2017
 ```
