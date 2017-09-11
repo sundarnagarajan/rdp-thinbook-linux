@@ -45,9 +45,9 @@ You will need a machine running a recent version of Ubuntu (tested on Ubuntu 16.
     Set to ```LPE Audio ACPI mode`` (default setting)
 
 ## Get or build a remastered ISO with linux kernel 4.13 (or newer)
-I highly recommend you use the **Simplified single-script method** below to download and build your own kernel and remaster the ISO yourself. Downloading and using / installing ISOs created by people you do not know or trust is **BAD SERUCIRY PRACTICE**.
+I highly recommend you use the **Simplified single-script method** below to download and build your own kernel and remaster the ISO yourself. Downloading and using / installing ISOs created by people you do not know or trust is **BAD SECURITY PRACTICE**.
 
-That said, many people provide pre-built ISOs for users to eaily try / use, and I have provided one too.
+That said, many people provide pre-built ISOs for users to eaily try / use, and I have provided one too. I **try** to mitigate **some** of your risk by providing a GPG signature.
 
 Remastering your own ISO can take a while. It takes about 30 mins on a 32 x Intel Xeon e5-2670 server with 112GB of RAM and a Sansung 960 EVO NVME disk. On a more 'standard desktop' machine it could take several hours. You will need about 10 GB+ free space to build the kernel and remaster the ISO. 
 
