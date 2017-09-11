@@ -180,8 +180,8 @@ Now boot into the new ISO. In the live session, everything should just work!
 To know more about the steps involved, read [DetailedSteps.md](docs/DetailedSteps.md)
 
 # What do you get
-- Everything listed as working above **WORK IN THE LIVE SESSION**
-- If you install from the Ubuntu ISO created, everything listed as working will work in the installed image also
+- Everything on the RDP Thinbook **WILL WORK IN THE LIVE SESSION**
+- If you install from the Ubuntu ISO created, everything will work in the installed image also
 - You get a copy of all the scripts under ```/root/remaster/scripts```
 - The log of all steps during remastering is in ```/root/remaster/remaster.log```
 
