@@ -265,12 +265,15 @@ Only additional step to boot was to turn secure boot off.
     - UEFI --> Chipset --> Audio Configuration --> LPE Audio Support: Set to ```LPE Audio ACPI mode`` (default setting)
 
 ## Things that needed work, but which work perfectly now
-- Wifi
-- Bluetooth
-- Battery level sensing
-- Battery charge / discharge rate sensing
-- Battery time-to-full and time-to-empty calculation
-- Sound: Speakers and headphone jack both work. Microphone (sound recording) works
+- Wifi - required [r8723bs module](https://cateee.net/lkddb/web-lkddb/RTL8723BS.html) - available inkernel 4.12+ (in staging)
+- Bluetooth - required [r8723bs_bt by Larry Finger](https://github.com/lwfinger/rtl8723bs_bt) - also requried systemd script and udev script
+- Battery sensing - required [axp288_fuel_gauge](https://cateee.net/lkddb/web-lkddb/AXP288_FUEL_GAUGE.html) - critical bugs we fixed in kernel 4.12
+    - Battery level sensing
+    - Battery charge / discharge rate sensing
+    - Battery time-to-full and time-to-empty calculation
+- Sound - required [es8316 module](https://cateee.net/lkddb/web-lkddb/SND_SOC_ES8316.html) - available in kernel 4.13+
+    - Speakers and headphone jack both work.
+    - Microphone (sound recording) works
 
 ## What is not working yet
 **Everything on the RDP Thinbook now works perfectly in Linux.**
