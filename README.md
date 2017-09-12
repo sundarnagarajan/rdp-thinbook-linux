@@ -49,6 +49,16 @@ I bought the original 14.1 inch RDP Thinbook in Nov-2016 without Windows install
 # Getting Linux to rock on the RDP Thinbook
 You will need a machine running a recent version of Ubuntu (tested on Ubuntu 16.04.3 Xenial Xerus LTS). 
 
+## Copyright and License
+Except where otherwise indicated, all files in this repository are Copyright Sundar Nagarajan 2017.
+
+Except where otherwise indicated, all files in this repository are licensed under the terms of the GNU LESSER GENERAL PUBLIC LICENSE version 3 or a later version of the GNU LESSER GENERAL
+PUBLIC LICENSE as per your choice. You should have received a [copy of the GNU LESSER GENERAL PUBLIC LICENSE version 3](https://github.com/sundarnagarajan/rdp-thinbook-linux/blob/master/LICENSE-GPLv3.txt) in this repository.
+
+The software in this repository also uses software from the [bootutils repository](https://github.com/sundarnagarajan/bootutils). The software in that repository is also Copyright Sundar Nagarajan 2017 and is also licensed under the terms of the GNU LESSER GENERAL PUBLIC LICENSE version 3 or a later version of the GNU LESSER GENERAL PUBLIC LICENSE as per your choice.
+
+Please familiarize yourself with the terms of the GNU LESSER GENERAL PUBLIC LICENSE version 3 before you use, modify or distribute this software.
+
 ## Make UEFI (BIOS) changes
 ### Entering UEFI
 - Reboot the RDP Thinbook
@@ -91,7 +101,7 @@ For the most up-to-date list of required packages:
 - Create a new directory and copy ```make_rdp_iso.sh``` from this repository inside the new empty directory
 - cd to the new directory
 - mkdir -p ISO/in ISO/out
-- Copy your favorite Ubuntu flavor ISO to ISO/in/source.iso (**filename is important**)
+- Copy your favorite Ubuntu flavor ISO to ISO/in/source.iso (**filename is important**). You can also create a symlink named ```source.iso``` pointing at an ISO in a different location.
 
 Your directory structure should look like this:
 ```
