@@ -57,7 +57,7 @@ PUBLIC LICENSE as per your choice. You should have received a [copy of the GNU L
 
 The software in this repository also uses software from the [bootutils repository](https://github.com/sundarnagarajan/bootutils). The software in that repository is also Copyright Sundar Nagarajan 2017 and is also licensed under the terms of the GNU LESSER GENERAL PUBLIC LICENSE version 3 or a later version of the GNU LESSER GENERAL PUBLIC LICENSE as per your choice.
 
-Please familiarize yourself with the terms of the GNU LESSER GENERAL PUBLIC LICENSE version 3 before you use, modify or distribute this software.
+**Please familiarize yourself with the terms of the GNU LESSER GENERAL PUBLIC LICENSE version 3 before you use, modify or distribute this software.**
 
 ## Make UEFI (BIOS) changes
 ### Entering UEFI
