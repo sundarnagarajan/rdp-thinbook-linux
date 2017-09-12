@@ -43,6 +43,7 @@ It has [impressive specs](http://www.rdp.in/thinbook/technical-features.html):
 - Home, End, PgUp, PgDn keys are accessed using Fn-Arrow keys
 - No dedicated numeric keypad
 - No special keys to control screen brightness. BUT screen brightness applet in Ubuntu works **perfectly**
+- I believe this UEFI firmware **CANNOT** boot from micro-SD card. It appears to be a limitation of the firmware itself - since it does not even show the **option**
 
 I bought the original 14.1 inch RDP Thinbook in Nov-2016 without Windows installed, with the intention of using Linux on it (I use Linux on **EVERYTHNIG**).
 
@@ -235,8 +236,7 @@ Only additional step to boot was to turn secure boot off.
 - USB 2.0 port: works
 
 - SD Card reader: 
-    - Read, write works. 
-    - I believe this UEFI firmware **CANNOT** boot from miceo-SD card. It appears to be a limitation of the firmware itself - since it does not even show the **option**
+    - Read, write works
 
 - SSD: Works fine. Was seen by linux
 
