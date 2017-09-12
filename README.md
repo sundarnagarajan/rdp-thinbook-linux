@@ -259,6 +259,7 @@ Only additional step to boot was to turn secure boot off.
     - Suspend on closing lid, resume on opening lid works
     - Wifi reconnects automatically on resume
     - Bluetooth audio stream resumes automatically on resume
+    - Have **NOT** tried with USB 3.0 peripherals plugged while suspending
 
 ## UEFI (BIOS) settings that needed to be changed
 - Booting: Turn off secure boot:
@@ -266,11 +267,6 @@ Only additional step to boot was to turn secure boot off.
 
 - Suspend / resume
     - UEFI --> Advanced --> ACPI Settings --> Enable ACPI Auto Configuration: Change from Enabled --> Disabled
-
-    - With JUST the one change above, suspend / resume works perfectly
-    - Have tried with Wifi and Bluetooth audio active, on resume Wifi reconnects and audio stream resumes
-
-    - Have **NOT** tried with USB 3.0 peripherals plugged while suspending
 
 - Sound
     - UEFI --> Chipset --> Audio Configuration --> LPE Audio Support: Set to ```LPE Audio ACPI mode`` (default setting)
