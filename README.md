@@ -259,6 +259,12 @@ Only additional step to boot was to turn secure boot off.
     - Left: Home: Works perfectly
     - Right: End: Works perfectly
 
+- Suspend / resume - See UEFI change requried below:
+    - Basic suspend / resume: works perfectly
+    - Suspend on closing lid, resume on opening lid works
+    - Wifi reconnects automatically on resume
+    - Bluetooth audio stream resumes automatically on resume
+
 ## UEFI (BIOS) settings that needed to be changed
 - Booting: Turn off secure boot:
     UEFI --> Security --> Secure Boot menu --> Secure Boot: Change Enabled --> Disabled
