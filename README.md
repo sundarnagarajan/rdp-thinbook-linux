@@ -219,7 +219,6 @@ Getting it to boot wasn't very hard - it required making a multiboot disk image 
 Only additional step to boot was to turn secure boot off.
 
 ## What worked out of the box in Linux
-----------------------------
 - Display (Intel i915 driver) 1366x768: Works perfectly
 - Touchpad:
     - Mouse pointer: Works perfectly
