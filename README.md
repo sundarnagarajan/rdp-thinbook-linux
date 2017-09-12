@@ -193,7 +193,7 @@ If you have tested a distribution-model not listed here, open an issue, and I wi
 | Ubuntu Mate 16.04 | Original 14.1-inch RDP Thinbook (X5-Z8300) | None | Me |
 | Ubuntu Mate 16.04 | New 14.1-inch RDP Thinbook (X5-Z8350) | None | RDP staff |
 | Ubuntu Mate 16.04 | 11.6-inch RDP Thinbook (X5-Z8350) | None | RDP staff |
-| Ubuntu 16.04.3 | Original 14.1-inch RDP Thinbook (X5-Z8300) | Bluetooth issues - investigating | Me |
+| Ubuntu 16.04.3 | Original 14.1-inch RDP Thinbook (X5-Z8300) | **Bluetooth issues - investigating** | Me |
 | xubuntu 16.04.3 | Original 14.1-inch RDP Thinbook (X5-Z8300) | None | Me |
 
 # Problems?
