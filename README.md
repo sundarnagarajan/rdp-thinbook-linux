@@ -244,20 +244,15 @@ Only additional step to boot was to turn secure boot off.
 - Blue FN button capabilities:
     - ESC: Sleep / suspend: Works to suspend
     - F2: Disable / enable touchpad: works perfectly
-    - F3: Volume down: works perfectly
-    - F4: Volume up: works perfectly
+    - F3 (Volume down), F4 (Volume Up): work perfectly
     - F5: Mute/Unmute: works perfectly
     - F6: Play/Pause: works perfectly
-    - F7: Previous track: works perfectly
-    - F8: Next track: works perfectly
+    - F7 (Previous track), F8 (Next Track): work perfectly
     - F9: Pause: Works (tested with xev)
     - F10: Insert: Works perfectly
     - F11: PrtSc: Works
     - F12: NumLock: works
-    - Up: PgUp: Works perfectly
-    - Down: PgDown: Works perfectly
-    - Left: Home: Works perfectly
-    - Right: End: Works perfectly
+    - Up (PgUp), Down(PgDn), Left(Home), Right(End) : Work perfectly
 
 - Suspend / resume - See UEFI change requried below:
     - Basic suspend / resume: works perfectly
