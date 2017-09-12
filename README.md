@@ -271,7 +271,7 @@ Only additional step to boot was to turn secure boot off.
     - Battery level sensing
     - Battery charge / discharge rate sensing
     - Battery time-to-full and time-to-empty calculation
-- Sound - required [es8316 module](https://cateee.net/lkddb/web-lkddb/SND_SOC_ES8316.html) - available in kernel 4.13+
+- Sound - required [es8316 module](https://cateee.net/lkddb/web-lkddb/SND_SOC_ES8316.html) - available in kernel 4.13+. Also needed [bytcht-es8316 UCM files](https://github.com/kernins/linux-chwhi12/tree/master/configs/audio/ucm). For the newer RDP Thinbooks shipping with the with Intel Atom X5-Z8350, sound required [bytcr-rt5651 UCM files](https://github.com/plbossart/UCM)
     - Speakers and headphone jack both work.
     - Microphone (sound recording) works
 
