@@ -243,7 +243,7 @@ Only additional step to boot was to turn secure boot off.
 - Blue FN button capabilities:
     - ESC: Sleep / suspend: Works to suspend
     - F2: Disable / enable touchpad: works perfectly
-    - F3 (Volume down), F4 (Volume Up): work perfectly
+    - F3 (Volume down), F4 (Volume Up): keys are detected, but do not increase / decrease volume (on Ubuntu Mate 16.04.3). This is a distribution problem **not a driver issue**. See [media keys](media_keys.md)
     - F5: Mute/Unmute: works perfectly
     - F6: Play/Pause: works perfectly
     - F7 (Previous track), F8 (Next Track): work perfectly
