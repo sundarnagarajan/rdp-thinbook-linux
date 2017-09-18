@@ -5,7 +5,7 @@ The RDP Thinbook is a new ultra-portable laptop produced by RDP Workstations Pvt
 
 # Open issues
 
-All the FN-Fx keys are **detected**, and out of the box after a fresh boot (or in live session) work perfectly - see below. **However**, sometimes, **some** of the keys - in particular F3 (Volume down), F4 (Volume Up), F5: Mute/Unmute stop working. This could manifest as one or more of the following:
+All the FN-Fx keys are **detected**, and out of the box after a fresh boot (or in live session) work perfectly - see below. **However**, sometimes (e.g. after a suspend + resume), **some** of the keys - in particular F3 (Volume down), F4 (Volume Up), F5: Mute/Unmute stop working. This could manifest as one or more of the following:
 - Key appears to work and produces OSD, but has no effect
 - Key does not produce OSD or have any effect, but can be key combination can be detected under System --> Preferences --> Hardware --> Keyboard Shortcuts (in Ubuntu Mate) as a candidate for a key binding - often appearing as something like ```Mod4 + XF86AudioLowerVolume``` rather than ```XF86AudioLowerVolume```. See [media_keys](media_keys.md) for some solutions explored. However, the actual problem is probably something related to suspend / resume or internals of mate-settings-daemon.
 
