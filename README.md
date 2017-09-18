@@ -287,3 +287,11 @@ Only additional step to boot was to turn secure boot off.
 All files, scripts and documentation on this repository have been updated and tested.
 
 This was the bug that held up sound support - fixed with es8316 driver: [Bug 189261 - Chuwi hi10/hi12 (Cherry Trail tablet) soundcard not recognised - rt5640](https://bugzilla.kernel.org/show_bug.cgi?id=189261)
+
+# Diagnostics, accessories
+- [dmesg output](diagnostics/dmesg.md)
+- [lshw output](diagnostics/lshw.md)
+- [lsmod output](diagnostics/lsmod.md)
+- [lspci output](diagnostics/lspci.md)
+- [hciconfig output](diagnostics/hciconfig.md)
+- [Recommended accessories](accessories.md)
