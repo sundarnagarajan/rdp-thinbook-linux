@@ -8,7 +8,7 @@
 - [Volume buttons not working on lubuntu 16.04 fresh install on askubuntu.com Sep-07-2016](https://askubuntu.com/a/922795)
 
 ## Solution / workaround
-- Open System --> Hardware --> Keyboard Shortcuts
+- Open System --> Preferences --> Hardware --> Keyboard Shortcuts
 - VolumeUp
     - Click on ```Add``` (new keyboard shortcut)
     - Give it a name like 'VolumeUp'
