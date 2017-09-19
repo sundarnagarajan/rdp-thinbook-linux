@@ -3,6 +3,11 @@ Linux on the [RDP Thinbook](http://www.rdp.in/thinbook/)
 
 The RDP Thinbook is a new ultra-portable laptop produced by RDP Workstations Pvt. Ltd. in India. It is marketed as India's most affordable laptop, and is sold for around US$ 140 - 160 (when you choose the option of buying it without Windows installed).
 
+# Open issues
+
+[FN keys and backspace stop working after suspend-resume #7](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/7)
+
+
 # EVERYTHING on this laptop works perfectly in Linux
 
 It has [impressive specs](http://www.rdp.in/thinbook/technical-features.html):
@@ -243,8 +248,8 @@ Only additional step to boot was to turn secure boot off.
 - Blue FN button capabilities:
     - ESC: Sleep / suspend: Works to suspend
     - F2: Disable / enable touchpad: works perfectly
-    - F3 (Volume down), F4 (Volume Up): work perfectly
-    - F5: Mute/Unmute: works perfectly
+    - F3 (Volume down), F4 (Volume Up): work perfectly - see [Issue 7](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/7)
+    - F5: Mute/Unmute: works perfectly - see [Issue 7](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/7)
     - F6: Play/Pause: works perfectly
     - F7 (Previous track), F8 (Next Track): work perfectly
     - F9: Pause: Works (tested with xev)
@@ -287,3 +292,11 @@ Only additional step to boot was to turn secure boot off.
 All files, scripts and documentation on this repository have been updated and tested.
 
 This was the bug that held up sound support - fixed with es8316 driver: [Bug 189261 - Chuwi hi10/hi12 (Cherry Trail tablet) soundcard not recognised - rt5640](https://bugzilla.kernel.org/show_bug.cgi?id=189261)
+
+# Diagnostics, accessories
+- [dmesg output](diagnostics/dmesg.md)
+- [lshw output](diagnostics/lshw.md)
+- [lsmod output](diagnostics/lsmod.md)
+- [lspci output](diagnostics/lspci.md)
+- [hciconfig output](diagnostics/hciconfig.md)
+- [Recommended accessories](accessories.md)
