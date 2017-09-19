@@ -209,7 +209,8 @@ function build_kernel {
     local elapsed=''
 
     show_timing_msg "Kernel build start" "yestee" ""
-    $MAKE_THREADED silentoldconfig 1>>"${COMPILE_OUT_FILE}" 2>&1
+    # $MAKE_THREADED silentoldconfig 1>>"${COMPILE_OUT_FILE}" 2>&1
+    $MAKE_THREADED allmodconfig 1>>"${COMPILE_OUT_FILE}" 2>&1
     [ $? -ne 0 ] && (tail -20 "${COMPILE_OUT_FILE}"; echo ""; echo "See ${COMPILE_OUT_FILE}"; exit 1)
     $MAKE_THREADED $IMAGE_NAME 1>>"${COMPILE_OUT_FILE}" 2>&1
     [ $? -ne 0 ] && (tail -20 "${COMPILE_OUT_FILE}"; echo ""; echo "See ${COMPILE_OUT_FILE}"; exit 1)
