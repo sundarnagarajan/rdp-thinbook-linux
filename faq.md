@@ -40,4 +40,4 @@ Confirmed to be an issue on Ubuntu Mate 16.04.3 LTS. All the FN-Fx keys are dete
 
 Key does not produce OSD or have any effect, but the key combination can be detected under System --> Preferences --> Hardware --> Keyboard Shortcuts (in Ubuntu Mate) as a candidate for a key binding - often appearing as something like Mod4 + XF86AudioLowerVolume rather than XF86AudioLowerVolume. In such cases, even the Backspace key stops working
 
-Permanent solution is underway. Until then, after **every** resume, press ```Super_L + Delete``` (```Win + Delete```). The problem will immediately be resolved
+Permanent solution is underway. Until then, after **every** resume, press ```Super_L + Delete``` (```Win + Delete```). The problem will immediately be resolved. This is technically an upstream bug - I have just found a workaround.
