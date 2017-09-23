@@ -34,3 +34,10 @@ to a Live session
 Make sure you have this setting in UEFI:
 
 UEFI --> Chipset --> Audio Configuration --> LPE Audio Support: Set to ```LPE Audio ACPI mode`` (default setting)
+
+### FN keys and backspace stop working after suspend-resume
+Confirmed to be an issue on Ubuntu Mate 16.04.3 LTS. All the FN-Fx keys are detected, and out of the box after a fresh boot (or in live session) work perfectly - see below. However, after a suspend + resume, some of the keys - in particular F3 (Volume down), F4 (Volume Up), F5: Mute/Unmute stop working. This will manifest as:
+
+Key does not produce OSD or have any effect, but the key combination can be detected under System --> Preferences --> Hardware --> Keyboard Shortcuts (in Ubuntu Mate) as a candidate for a key binding - often appearing as something like Mod4 + XF86AudioLowerVolume rather than XF86AudioLowerVolume. In such cases, even the Backspace key stops working
+
+Permanent solution is underway. Until then, after **every** resume, press ```Super_L + Delete``` (```Win + Delete```). The problem will immediately be resolved
