@@ -5,7 +5,7 @@ The RDP Thinbook is a new ultra-portable laptop produced by RDP Workstations Pvt
 
 # Open issues
 
-[FN keys and backspace stop working after suspend-resume #7](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/7)
+[FN keys and backspace stop working after suspend-resume on Ubuntu Mate 16.04.3 #7](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/7) - see [temporary workaround](faq.md#fn-keys-and-backspace-stop-working-after-suspend-resume)
 
 
 # EVERYTHING on this laptop works perfectly in Linux
