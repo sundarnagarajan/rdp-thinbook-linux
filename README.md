@@ -5,7 +5,7 @@ The RDP Thinbook is a new ultra-portable laptop produced by RDP Workstations Pvt
 
 # Open issues
 
-[FN keys and backspace stop working after suspend-resume #7](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/7)
+[FN keys and backspace stop working after suspend-resume on Ubuntu Mate 16.04.3 #7](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/7) - see [temporary workaround](faq.md#fn-keys-and-backspace-stop-working-after-suspend-resume)
 
 
 # EVERYTHING on this laptop works perfectly in Linux
@@ -215,6 +215,15 @@ If you have tested a distribution-model not listed here, open an issue, and I wi
 # Problems?
 - Read the [FAQ](faq.md)
 - Open an issue
+- See [How to report a problem](faq.md#how-to-report-a-problem)
+
+**AT LEAST** provide the following information when you open an issue:
+1. Did you use one of the pre-compiled remastered ISOs? If so, which one?
+2. If you remastered your own ISO, what was the source ISO (distribution, version, 32-bit or 64-bit)?
+3. Did you install on to the main SSD or to an external (USB) medium?
+4. While partitioning your target disk during installation, did you create (and use) a **GPT** partition table and an EFI partition?
+5. What was the **EXACT** error message you saw, if any, and **at what stage** of install etc
+
 
 # Journey so far in brief
 ## Booting

@@ -1,3 +1,14 @@
+### How to report a problem
+- Open an issue on github
+- You will need a github account
+
+**AT LEAST** provide the following information when you open an issue:
+1. Did you use one of the pre-compiled remastered ISOs? If so, which one?
+2. If you remastered your own ISO, what was the source ISO (distribution, version, 32-bit or 64-bit)?
+3. Did you install on to the main SSD or to an external (USB) medium?
+4. While partitioning your target disk during installation, did you create (and use) a **GPT** partition table and an EFI partition?
+5. What was the **EXACT** error message you saw, if any, and **at what stage** of install etc
+
 ### Question: My bootable medium is not detected and the RDP Thinbook boots directly into the UEFI firmware (or alternate OS)
 The UEFI Firmware on the RDP Thinbook is not always reliable at detecting the presence of a removable UEFI-compatible boot disk. 
 Follow the following procedure to boot a disk created with ```make_rdp_iso.sh```:
@@ -34,3 +45,10 @@ to a Live session
 Make sure you have this setting in UEFI:
 
 UEFI --> Chipset --> Audio Configuration --> LPE Audio Support: Set to ```LPE Audio ACPI mode`` (default setting)
+
+### FN keys and backspace stop working after suspend-resume
+Confirmed to be an issue on Ubuntu Mate 16.04.3 LTS. All the FN-Fx keys are detected, and out of the box after a fresh boot (or in live session) work perfectly - see below. However, after a suspend + resume, some of the keys - in particular F3 (Volume down), F4 (Volume Up), F5: Mute/Unmute stop working. This will manifest as:
+
+Key does not produce OSD or have any effect, but the key combination can be detected under System --> Preferences --> Hardware --> Keyboard Shortcuts (in Ubuntu Mate) as a candidate for a key binding - often appearing as something like Mod4 + XF86AudioLowerVolume rather than XF86AudioLowerVolume. In such cases, even the Backspace key stops working
+
+Permanent solution is underway. Until then, after **every** resume, press ```Super_L + Delete``` (```Win + Delete```). The problem will immediately be resolved. This is technically an upstream bug - I have just found a workaround.
