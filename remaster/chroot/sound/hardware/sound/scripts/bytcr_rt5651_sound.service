@@ -1,0 +1,8 @@
+[Unit]
+
+[Service]
+ExecStart=/root/hardware/sound/setup_bytcr_rt5651_asound_state.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=alsa-state.service

@@ -12,6 +12,16 @@ if [ ! -f ${PROG_DIR}/rdp-sound-modules.conf ]; then
     exit 1
 fi
 
+if [ ! -f ${SCRIPTS_DIR}/bytcr_rt5651_sound.service ]; then
+    echo "Missing file: ${SCRIPTS_DIR}/bytcr_rt5651_sound.service"
+    exit 1
+fi
+
+if [ ! -f ${PROG_DIR}/setup_bytcr_rt5651_asound_state.sh ]; then
+    echo "Missing file: ${PROG_DIR}/setup_bytcr_rt5651_asound_state.sh"
+    exit 1
+fi
+
 \cp -frv ${PROG_DIR}/UCM/* /usr/share/alsa/ucm/
 \cp -frv ${PROG_DIR}/rdp-sound-modules.conf /etc/modprobe.d/
 
@@ -36,3 +46,8 @@ if [ -f /etc/pulse/default.pa ]; then
 else
     echo "Missing file: /etc/pulse/default.pa"
 fi
+
+\cp -fv ${SCRIPTS_DIR}/bytcr_rt5651_sound.service /etc/systemd/system/
+mkdir -p /etc/systemd/system/alsa-state.wants
+\rm -fv /etc/systemd/system/alsa-state.wants/bytcr_rt5651_sound.service
+ln -sv /etc/systemd/system/bytcr_rt5651_sound.service /etc/systemd/system/alsa-state.wants/
