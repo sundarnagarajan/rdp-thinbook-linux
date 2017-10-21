@@ -33,5 +33,5 @@ fi
 
 # If we got here ASOUND_TARGET is not present OR we got the -f option
 \cp -f ${ASOUND_SOURCE} ${ASOUND_TARGET}
-/usr/bin/alsactl restore 2>&1 | $LOGCMD
+/usr/sbin/alsactl restore 2>&1 | $LOGCMD
 exit $?
