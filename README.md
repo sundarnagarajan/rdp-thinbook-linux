@@ -140,7 +140,8 @@ Note: **DO NOT** rely on the **same** ISO being available and linked from this g
 | ISO | Signature |
 | --- | --------- |
 | [Ubuntu Mate 16.04 with kernel 4.13.1](https://drive.google.com/file/d/0ByKDyYCckXqDUk9GRlJJM3NsREU/view?usp=sharing) | [GPG Signature](https://drive.google.com/file/d/0ByKDyYCckXqDTDAyREZIRVRtWEE/view?usp=sharing) |
-| [Ubuntu 16.04.3 with kernel 4.13.1](https://drive.google.com/open?id=0ByKDyYCckXqDbFV2X3lydVYzdzQ) | [GPG Signature](https://drive.google.com/open?id=0ByKDyYCckXqDQjhfbHEyZ3FhSnM) |
+| [Ubuntu 16.04.3 with kernel 4.13.1](https://drive.google.com/open?id=0ByKDyYCckXqDbFV2X3lydVYzdzQ) |[GPG Signature](https://drive.google.com/open?id=0ByKDyYCckXqDQjhfbHEyZ3FhSnM) |
+| [Ubuntu 16.04.3 with kernel 4.13.8](https://drive.google.com/open?id=0ByKDyYCckXqDTlNmY2hlYnBhOVU) |[GPG Signature](https://drive.google.com/open?id=0ByKDyYCckXqDYXRDMU5UUl84cXM) |
 | [xubuntu 16.04.3 with kernel 4.13.1](https://drive.google.com/open?id=0ByKDyYCckXqDamNoazNIVm5JYU0) | [GPG Signature](https://drive.google.com/open?id=0ByKDyYCckXqDdXpVbGpjNDQxTXc) |
 
 #### Verifying GPG signature    
