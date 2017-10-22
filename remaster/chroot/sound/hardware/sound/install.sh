@@ -48,7 +48,7 @@ else
 fi
 
 \cp -fv ${SCRIPTS_DIR}/bytcr_rt5651_sound.service /etc/systemd/system/
-# mkdir -p /etc/systemd/system/multi-user.target.wants
-# \rm -fv /etc/systemd/system/multi-user.target.wants/bytcr_rt5651_sound.service
+mkdir -p /etc/systemd/system/rc-local.target.wants
+\rm -fv /etc/systemd/system/rc-local.target.wants/bytcr_rt5651_sound.service
 
-# ln -sv /etc/systemd/system/bytcr_rt5651_sound.service /etc/systemd/system/multi-user.target.wants/
+ln -sv /etc/systemd/system/bytcr_rt5651_sound.service /etc/systemd/system/rc-local.target.wants/

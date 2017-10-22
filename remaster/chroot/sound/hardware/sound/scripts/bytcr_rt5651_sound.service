@@ -1,6 +1,5 @@
 [Unit]
 After=sound.target
-After=alsa-restore.service
 After=default.target
 
 [Service]
