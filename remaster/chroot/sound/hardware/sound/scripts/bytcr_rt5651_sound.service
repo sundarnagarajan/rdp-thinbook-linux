@@ -3,7 +3,8 @@ After=sound.target
 After=alsa-restore.service
 
 [Service]
-Type=simple
+Type=oneshot
+RemainAfterExit=true
 ExecStart=/root/hardware/sound/setup_bytcr_rt5651_asound_state.sh
 
 [Install]
