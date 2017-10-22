@@ -10,6 +10,9 @@ ASOUND_SOURCE=${ASOUND_STATE_DIR}/asound.state
 ASOUND_TARGET=/var/lib/alsa/asound.state
 
 
+# Sleep a few secs - let rest of the system finish booting
+sleep 10
+
 # If there is no source file existing, cannot do anything anyway!
 if [ ! -f ${ASOUND_SOURCE} ]; then
     $LOGCMD "Source asound.state not found: ${ASOUND_SOURCE}"

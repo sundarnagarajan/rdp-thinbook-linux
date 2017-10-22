@@ -1,6 +1,6 @@
 [Unit]
 After=sound.target
-After=default.target
+ConditionPathExistsGlob=/dev/snd/control*
 
 [Service]
 Type=oneshot
