@@ -85,7 +85,7 @@ else
     REINSTALLED=no
     for f in ${KERNEL_DEB_DIR}/*.deb
     do
-        PKG_VER=$(dpkg-deb --info --showformat '${Package}___${Version}\n' $f)
+        PKG_VER=$(dpkg-deb -W --showformat '${Package}___${Version}\n' $f)
         dpkg-query -W --showformat '${Package}___${Version}\n' | fgrep "${PKG_VER}"
         if [ $? -ne 0 ]; then
             echo "Reinstalling ${PKG_VER}"
