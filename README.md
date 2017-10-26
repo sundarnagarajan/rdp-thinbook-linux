@@ -3,6 +3,12 @@ Linux on the [RDP Thinbook](http://www.rdp.in/thinbook/)
 
 The RDP Thinbook is a new ultra-portable laptop produced by RDP Workstations Pvt. Ltd. in India. It is marketed as India's most affordable laptop, and is sold for around US$ 140 - 160 (when you choose the option of buying it without Windows installed).
 
+# News
+
+[RDP](www.rdp.in) was kind enough to send me one of their new 11.6 inch models. With this, I have updated the [Ubuntu 16.04.3 with kernel 4.13.1](https://drive.google.com/open?id=0ByKDyYCckXqDbFV2X3lydVYzdzQ) ISO with the required changes to make sound work perfectly on the 11.6 inch RDP Thinbook. - Give it a spin!
+
+The 11.6 inch RDP Thinbook ships with a 64-bit UEFI loader - so 64-bit Linux ISOs on USB drives will be detected and can boot (although you will need some drivers enabled and some userspace tools / settings to make Bluetooth and sound work).
+
 # Open issues
 
 [FN keys and backspace stop working after suspend-resume on Ubuntu Mate 16.04.3 #7](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/7) - see [temporary workaround](faq.md#fn-keys-and-backspace-stop-working-after-suspend-resume)
@@ -140,7 +146,8 @@ Note: **DO NOT** rely on the **same** ISO being available and linked from this g
 | ISO | Signature |
 | --- | --------- |
 | [Ubuntu Mate 16.04 with kernel 4.13.1](https://drive.google.com/file/d/0ByKDyYCckXqDUk9GRlJJM3NsREU/view?usp=sharing) | [GPG Signature](https://drive.google.com/file/d/0ByKDyYCckXqDTDAyREZIRVRtWEE/view?usp=sharing) |
-| [Ubuntu 16.04.3 with kernel 4.13.1](https://drive.google.com/open?id=0ByKDyYCckXqDbFV2X3lydVYzdzQ) | [GPG Signature](https://drive.google.com/open?id=0ByKDyYCckXqDQjhfbHEyZ3FhSnM) |
+| [Ubuntu 16.04.3 with kernel 4.13.1](https://drive.google.com/open?id=0ByKDyYCckXqDbFV2X3lydVYzdzQ) |[GPG Signature](https://drive.google.com/open?id=0ByKDyYCckXqDQjhfbHEyZ3FhSnM) |
+| [Ubuntu 16.04.3 with kernel 4.13.8](https://drive.google.com/open?id=0ByKDyYCckXqDTlNmY2hlYnBhOVU) |[GPG Signature](https://drive.google.com/open?id=0ByKDyYCckXqDYXRDMU5UUl84cXM) |
 | [xubuntu 16.04.3 with kernel 4.13.1](https://drive.google.com/open?id=0ByKDyYCckXqDamNoazNIVm5JYU0) | [GPG Signature](https://drive.google.com/open?id=0ByKDyYCckXqDdXpVbGpjNDQxTXc) |
 
 #### Verifying GPG signature    
@@ -209,7 +216,7 @@ If you have tested a distribution-model not listed here, open an issue, and I wi
 | Ubuntu Mate 16.04 | Original 14.1-inch RDP Thinbook (X5-Z8300) | None | Me |
 | Ubuntu Mate 16.04 | New 14.1-inch RDP Thinbook (X5-Z8350) | None | RDP staff |
 | Ubuntu Mate 16.04 | 11.6-inch RDP Thinbook (X5-Z8350) | None | RDP staff |
-| Ubuntu 16.04.3 | Original 14.1-inch RDP Thinbook (X5-Z8300) | **Bluetooth issues - investigating** | Me |
+| Ubuntu 16.04.3 | Original 14.1-inch RDP Thinbook (X5-Z8300) | None | Me |
 | xubuntu 16.04.3 | Original 14.1-inch RDP Thinbook (X5-Z8300) | None | Me |
 
 # Problems?
