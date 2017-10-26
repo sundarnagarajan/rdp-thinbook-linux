@@ -14,8 +14,9 @@ The 11.6 inch RDP Thinbook ships with a 64-bit UEFI loader - so 64-bit Linux ISO
 [FN keys and backspace stop working after suspend-resume on Ubuntu Mate 16.04.3 #7](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/7) - see [temporary workaround](faq.md#fn-keys-and-backspace-stop-working-after-suspend-resume)
 
 [Sound does not work on Ubuntu 17.10 (Artful Aardvark)](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/10)
-Current solution is to blacklist module **snd_hdmi_lpe_audio** - disabled sound over HDMI
-Have closed this issue and opened [new issue](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/11) to find long-term solution
+Current solution is to blacklist module **snd_hdmi_lpe_audio**
+
+This disables sound over HDMI. Have closed this issue and opened [new issue](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/11) to find long-term solution
 
 # EVERYTHING on this laptop works perfectly in Linux
 
