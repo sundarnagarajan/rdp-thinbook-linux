@@ -16,5 +16,5 @@
 # Note that for stable kernels, the url on kernel.org, that goes to
 # cdn.kernel.org may be faster TO DOWNLOAD (because of CDN)
 
-# 4.13.8 stable kernel from cdn.kernel.org
-echo "https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.13.8.tar.xz"
+# 4.13.9 stable kernel from cdn.kernel.org
+echo "https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.13.9.tar.xz"
