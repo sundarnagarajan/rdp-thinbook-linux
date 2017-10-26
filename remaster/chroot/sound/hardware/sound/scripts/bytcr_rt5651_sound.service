@@ -8,4 +8,4 @@ RemainAfterExit=true
 ExecStart=/root/hardware/sound/setup_bytcr_rt5651_asound_state.sh
 
 [Install]
-# WantedBy=multi-user.target
+WantedBy=default.target

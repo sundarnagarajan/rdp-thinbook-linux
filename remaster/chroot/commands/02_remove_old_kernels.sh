@@ -71,5 +71,33 @@ else
     echo "No kernel packages to remove"
 fi
 
+# While we check not to DIRECTLY remove any package in $KP_LIST,
+# because we use apt-get autoremove, the autoremove may remove
+# things like linux-firmware-image - happens when linux-firmware-image
+# we are installing in 01_install_kernels.sh is the SAME as the 
+# linux-firmware-image version shipped by the distro
+# To deal with this, we RE-CHECK and REINSTALL any debs in
+# $KERNEL_DEB_DIR that are no longer installed!
+
+if [ -z "S(ls -A ${KERNEL_DEB_DIR}/*.deb 2>/dev/null)" ]; then
+    echo "No deb files in $KERNEL_DEB_DIR"
+else
+    REINSTALLED=no
+    for f in ${KERNEL_DEB_DIR}/*.deb
+    do
+        PKG_VER=$(dpkg-deb --info --showformat '${Package}___${Version}\n' $f)
+        dpkg-query -W --showformat '${Package}___${Version}\n' | fgrep "${PKG_VER}"
+        if [ $? -ne 0 ]; then
+            echo "Reinstalling ${PKG_VER}"
+            dpkg -i $f
+            REINSTALLED=yes
+        fi
+    done
+    if [ "${REINSTALLED}" = "yes" ]; then
+        echo overlay >> /etc/initramfs-tools/modules
+        update-initramfs -u 2>/dev/null
+    fi
+fi
+
 echo "Kernel-related packages remaining:"
-dpkg -l 'linux-image*' 'linux-headers*' linux-signed-image-generic linux-generic 2>/dev/null | grep '^ii' | awk '{print $2}' | sed -u -e 's/^/    /'
+dpkg -l 'linux-image*' 'linux-headers*' 'linux-firmware-image*' linux-signed-image-generic linux-generic 2>/dev/null | grep '^ii' | awk '{print $2}' | sed -u -e 's/^/    /'
