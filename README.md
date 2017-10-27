@@ -145,6 +145,28 @@ Use this method **ONLY** if you are willing to trust my pre-compiled kernel and 
 
 Note: **DO NOT** rely on the **same** ISO being available and linked from this github repo. Periodically, as new kernels come out, I intend to test and update the ISOs I link to from here.
 
+#### Ubuntu releases I provide as ISO
+- Latest release - whether or not the latest release is an LTS release
+- Latest LTS release. If the **current** release is an LTS release, I will also provide the **previous** LTS release that was the current LTS release on the day before the current version was released
+- Older LTS and non-LTS releases will **not** be provided
+
+Examples
+
+- While 17.10 (Artful Aardvark) is the current (non-LTS release), I will provide:
+    - Current release: 17.10 (Artful Aardvark)
+    - Last LTS release: 16.04 (Xenial Xerus)
+- When 18.04 (Bionic Beaver) is released (LTS-release), I will provide:
+    - Current release: 18.04 (Bionic Beaver)
+    - Last (previous) LTS release: 16.04 (Xenial Xerus)
+
+#### Ubuntu flavors
+- Ubuntu (standard)
+- xubuntu
+- Ubuntu Mate
+
+I do not plan to support more flavors; if at all dispense with Ubuntu Mate. The purpose of ISOs is to be able to **TEST**. Once everything is fine, I expect users to know how to install the standard Ubuntu flavor, and then customize it by installing the required desktop meta-packages.
+
+
 [Available ISOs](https://drive.google.com/drive/folders/0ByKDyYCckXqDQmN2emE4M1V1NlE):
 
 
