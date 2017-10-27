@@ -1,11 +1,12 @@
 [Unit]
-# After=sound.target
+After=sound.target
 ConditionPathExistsGlob=/dev/snd/control*
 
 [Service]
 Type=oneshot
 RemainAfterExit=true
 ExecStart=/root/hardware/sound/setup_bytcr_rt5651_asound_state.sh
+TimeoutStartSec=30
 
 [Install]
 WantedBy=default.target
