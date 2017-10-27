@@ -32,6 +32,7 @@ PULSEAUDIO_VER=$(dpkg-query -W --showformat '${Version}' pulseaudio)
 LARGEST_VER=$((echo $PULSEAUDIO_VER; echo 1:10.0-2ubuntu3) | sort -V | tail -1)
 if [ "$LARGEST_VER" = "$PULSEAUDIO_VER" ]; then
     if [ -f ${PROG_DIR}/rdp-sound-blacklist-hdmi.conf ]; then
+        echo "Blacklisting snd_hdmi_lpe_audio"
         cat ${PROG_DIR}/rdp-sound-blacklist-hdmi.conf >> ${PROG_DIR}/rdp-sound-modules.conf
     else
         echo "Missing file: ${PROG_DIR}/rdp-sound-blacklist-hdmi.conf"
