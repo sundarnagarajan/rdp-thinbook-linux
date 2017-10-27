@@ -147,12 +147,14 @@ Note: **DO NOT** rely on the **same** ISO being available and linked from this g
 
 [Available ISOs](https://drive.google.com/drive/folders/0ByKDyYCckXqDQmN2emE4M1V1NlE):
 
-| ISO | Signature |
-| --- | --------- |
-| [Ubuntu Mate 16.04 with kernel 4.13.1](https://drive.google.com/file/d/0ByKDyYCckXqDUk9GRlJJM3NsREU/view?usp=sharing) | [GPG Signature](https://drive.google.com/file/d/0ByKDyYCckXqDTDAyREZIRVRtWEE/view?usp=sharing) |
-| [Ubuntu 16.04.3 with kernel 4.13.1](https://drive.google.com/open?id=0ByKDyYCckXqDbFV2X3lydVYzdzQ) |[GPG Signature](https://drive.google.com/open?id=0ByKDyYCckXqDQjhfbHEyZ3FhSnM) |
-| [Ubuntu 16.04.3 with kernel 4.13.8](https://drive.google.com/open?id=0ByKDyYCckXqDTlNmY2hlYnBhOVU) |[GPG Signature](https://drive.google.com/open?id=0ByKDyYCckXqDYXRDMU5UUl84cXM) |
-| [xubuntu 16.04.3 with kernel 4.13.1](https://drive.google.com/open?id=0ByKDyYCckXqDamNoazNIVm5JYU0) | [GPG Signature](https://drive.google.com/open?id=0ByKDyYCckXqDdXpVbGpjNDQxTXc) |
+| Ubuntu version | Flavor | Kernel | ISO | Signature |
+| 16.04.3 | Ubuntu | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBMzkyTWZDSUFQbWc) | [GPG Signature] (https://drive.google.com/open?id=0BwuQXW-0xicBMWJKTHRWUFEtM0k) |
+| 17.10 | Ubuntu | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBYVZKbEM3WUlyYXc) | [GPG Signature](https://drive.google.com/open?id=0BwuQXW-0xicBTHo0aG5ud3lianM) |
+| 16.04.3 | Ubuntu Mate | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBdHRqUjhaVk9RWDg) | [GPG Signature] (https://drive.google.com/open?id=0BwuQXW-0xicBMVZEYW9McU1nWWc) |
+| 17.10 | Ubuntu Mate | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBSGZtNDdGemhDQWc) | [GPG Signature](https://drive.google.com/open?id=0BwuQXW-0xicBbU55aERlcnBRMXM) |
+| 16.04.3 | xubuntu | 4.13.9 | [ISO]() | [GPG Signature] () |
+| 17.10 | xubuntu | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBRWMxU04wZnFsNG8) | [GPG Signature](https://drive.google.com/open?id=0BwuQXW-0xicBYTZSNlJoenNMdzg) |
+
 
 #### Verifying GPG signature    
 Download both the ISO and the signature (```.sign``` file). Use the following command to verify the GPG signature **BEFORE** using the ISO
