@@ -145,6 +145,8 @@ Use this method **ONLY** if you are willing to trust my pre-compiled kernel and 
 
 Note: **DO NOT** rely on the **same** ISO being available and linked from this github repo. Periodically, as new kernels come out, I intend to test and update the ISOs I link to from here.
 
+Also **DO NOT** bookmark the ISO URLs, as they are likely to change any time. I plan to update the ISOs (and corresponding GPG signatures) as the kernel is updated, and as I make changes to the enabling scripts etc.
+
 #### Ubuntu releases I provide as ISO
 - Latest release - whether or not the latest release is an LTS release
 - Latest LTS release. If the **current** release is an LTS release, I will also provide the **previous** LTS release that was the current LTS release on the day before the current version was released
