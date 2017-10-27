@@ -52,6 +52,7 @@ fi
 
 # If we got here ASOUND_TARGET is not present OR we got the -f option
 mkdir -p $(dirname ${ASOUND_TARGET})
+echo "Writing ${ASOUND_TARGET}"
 \cp -f ${ASOUND_SOURCE} ${ASOUND_TARGET}
 /usr/sbin/alsactl restore 2>&1
 exit $?
