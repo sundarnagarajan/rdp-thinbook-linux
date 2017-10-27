@@ -12,7 +12,7 @@ CONFIG_SND_SOC_RT5651=m
 ```
 ## Kernel config entries explained
 ### Make Wifi work (Realtek 8723BS chipset)
-```CONFIG_RTL8723BS``` Introduced in [kernel 4.12](https://cateee.net/lkddb/web-lkddb/RTL8723BS.html)
+- ```CONFIG_RTL8723BS``` Introduced in [kernel 4.12](https://cateee.net/lkddb/web-lkddb/RTL8723BS.html)
 ### Make battery gauge work
 - ```CONFIG_AXP288_FUEL_GAUGE``` introduced in [kernel 4.1](https://cateee.net/lkddb/web-lkddb/AXP288_FUEL_GAUGE.html)
 - ```CONFIG_AXP288_CHARGER``` introduced in [kernel 4.2](https://cateee.net/lkddb/web-lkddb/AXP288_CHARGER.html)
