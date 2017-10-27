@@ -167,7 +167,7 @@ Examples
 I do not plan to support more flavors; if at all dispense with Ubuntu Mate. The purpose of ISOs is to be able to **TEST**. Once everything is fine, I expect users to know how to install the standard Ubuntu flavor, and then customize it by installing the required desktop meta-packages.
 
 
-[Available ISOs](https://drive.google.com/drive/folders/0ByKDyYCckXqDQmN2emE4M1V1NlE):
+[Available ISOs](https://drive.google.com/drive/u/6/folders/0BwuQXW-0xicBSHUwNVRmVTN1dzQ):
 
 
 | Ubuntu version | Release | Flavor | Kernel | ISO | GPG Signature |
