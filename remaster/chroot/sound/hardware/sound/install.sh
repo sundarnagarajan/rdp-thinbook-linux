@@ -23,9 +23,8 @@ if [ ! -f ${PROG_DIR}/setup_bytcr_rt5651_asound_state.sh ]; then
 fi
 
 \cp -frv ${PROG_DIR}/UCM/* /usr/share/alsa/ucm/
-\cp -frv ${PROG_DIR}/rdp-sound-modules.conf /etc/modprobe.d/
 
-# If pulseaudio version is greater than , disable snd_hdmi_lpe_audio
+# If pulseaudio version is >= 1:10.0-2ubuntu3, disable snd_hdmi_lpe_audio
 # module by blacklisting it - since loading that module makes pulseaudio
 # fail to start
 PULSEAUDIO_VER=$(dpkg-query -W --showformat '${Version}' pulseaudio)
@@ -39,6 +38,9 @@ if [ "$LARGEST_VER" = "$PULSEAUDIO_VER" ]; then
         exit 1
     fi
 fi
+\cp -frv ${PROG_DIR}/rdp-sound-modules.conf /etc/modprobe.d/
+
+
 # On RDP Thinbook, set the default output (sink)
 # alsa_output.platform-bytcht_es8316.HiFi__hw_bytchtes8316__sink : 14-inch RDP Thinbook
 # alsa_output.platform-bytcr_rt5651.HiFi__hw_bytcrrt5651__sink : 11-inch RDP Thinbook
