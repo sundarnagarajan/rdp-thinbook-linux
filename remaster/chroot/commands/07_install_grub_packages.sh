@@ -29,7 +29,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Restore original /etc/resolv.conf if we had moved it
-if [ -f  $ORIG_RESOLV_CONF ]; then
+if [ -f  $ORIG_RESOLV_CONF -o -L $ORIG_RESOLV_CONF ]; then
     echo "Restoring original /etc/resolv.conf"
     \rm -f /etc/resolv.conf
     mv  $ORIG_RESOLV_CONF /etc/resolv.conf
