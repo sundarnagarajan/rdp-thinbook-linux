@@ -42,11 +42,11 @@ CONFIG_SND_SOC_ES8316=m
 CONFIG_SND_SOC_INTEL_BYTCR_RT5651_MACH=m
 CONFIG_SND_SOC_RT5651=m
 ```
-# Kernel 4.13.x on Ubuntu 17.10 (Artful Aardvark)
+## Kernel 4.13.x on Ubuntu 17.10 (Artful Aardvark)
 All the above entries are present
 
 However a 1-line patch is required for Bluetooth (rt8723bs_bt) to work properly:
-```
+```diff
 diff --git a/net/rfkill/rfkill-gpio.c b/net/rfkill/rfkill-gpio.c
 index 76c01cb..4e32def 100644
 --- a/net/rfkill/rfkill-gpio.c
