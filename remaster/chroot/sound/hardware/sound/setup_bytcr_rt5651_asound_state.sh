@@ -2,7 +2,6 @@
 PROG_DIR=$(printf %q "$(readlink -e $(dirname $0))")
 SCRIPTS_DIR=$(printf %q "${PROG_DIR}/scripts")
 PROG_NAME=$(basename $0)
-LOGCMD="/usr/bin/logger -t ${PROG_NAME}"
 
 DMESG_INDICATOR="bytcr_rt5651 bytcr_rt5651: snd-soc-dummy-dai <-> media-cpu-dai mapping ok"
 ASOUND_STATE_DIR=/usr/share/alsa/ucm/bytcr-rt5651
@@ -11,11 +10,13 @@ ASOUND_TARGET=/var/lib/alsa/asound.state
 
 # If there is no source file existing, cannot do anything anyway!
 if [ ! -f ${ASOUND_SOURCE} ]; then
-    $LOGCMD "Source asound.state not found: ${ASOUND_SOURCE}"
+    echo "Source asound.state not found: ${ASOUND_SOURCE}"
     exit 1
 fi
 
-SLEEP_TIME=1
+MAX_SLEEP_SECS=20
+SLEEP_SECS=1
+SLEPT_SECS=0
 SOUNDCARD_PREFIX="bytcr-rt5651"
 while true
 do
@@ -26,7 +27,12 @@ do
             break
         fi
     fi
-    sleep $SLEEP_TIME
+    sleep $SLEEP_SECS
+    SLEPT_SECS=$(($SLEPT_SECS + $SLEEP_SECS))
+    if [ $SLEPT_SECS -gt $MAX_SLEEP_SECS ]; then
+        echo "Max time exceeded $MAX_SLEEP_SECS seconds. Exiting"
+        exit 1
+    fi
 done
 
 # Sleep a few secs - let rest of the system finish booting
@@ -35,14 +41,14 @@ sleep 2
 # Check that bytcr_rt5651 sound card is present and activated in kernel
 dmesg | fgrep -q "$DMESG_INDICATOR"
 if [ $? -ne 0 ]; then
-    $LOGCMD "bytcr-rt5651 sound card not present"
+    echo "bytcr-rt5651 sound card not present"
     exit 0
 fi
 
 # Do not overwrite existing /var/lib/alsa/asound.state unless -f is used
 if [ -f ${ASOUND_TARGET} ]; then
     if [ "$1" != "-f" ]; then
-        $LOGCMD "Not overwriting existing ${ASOUND_TARGET}"
+        echo "Not overwriting existing ${ASOUND_TARGET}"
         exit 0
     fi
 fi
