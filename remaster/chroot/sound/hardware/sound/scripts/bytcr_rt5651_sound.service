@@ -1,7 +1,3 @@
-[Unit]
-After=sound.target
-ConditionPathExistsGlob=/dev/snd/control*
-
 [Service]
 Type=oneshot
 RemainAfterExit=true
