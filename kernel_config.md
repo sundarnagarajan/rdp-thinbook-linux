@@ -24,7 +24,7 @@ CONFIG_HDMI_LPE_AUDIO=m
 - ```CONFIG_SND_SOC_INTEL_BYT_CHT_ES8316_MACH``` introduced in [kernel 4.13](https://cateee.net/lkddb/web-lkddb/SND_SOC_INTEL_BYT_CHT_ES8316_MACH.html)
 - ```CONFIG_SND_SOC_ES8316``` introduced in [kernel 4.13](https://cateee.net/lkddb/web-lkddb/SND_SOC_ES8316.html)
 ### Make bytcr-rt6551 sound card work (11-inch RDP Thinbook)
-- ```CONFIG_SND_SOC_RT5651``` introduced in [kernel ](https://cateee.net/lkddb/web-lkddb/SND_SOC_RT5651.html)
+- ```CONFIG_SND_SOC_RT5651``` introduced in [kernel 3.16](https://cateee.net/lkddb/web-lkddb/SND_SOC_RT5651.html)
 - ```CONFIG_SND_SOC_INTEL_BYTCR_RT5651_MACH``` introduced in [kernel 4.5](https://cateee.net/lkddb/web-lkddb/SND_SOC_INTEL_BYTCR_RT5651_MACH.html)
 ### HDMI audio without HDaudio on Intel Atom platforms
 - ```CONFIG_HDMI_LPE_AUDIO``` introduced in [kernel 4.11](https://cateee.net/lkddb/web-lkddb/HDMI_LPE_AUDIO.html)
