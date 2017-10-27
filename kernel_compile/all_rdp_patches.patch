@@ -12,7 +12,7 @@ index 76c01cb..4e32def 100644
  MODULE_DEVICE_TABLE(acpi, rfkill_acpi_match);
 ---
 diff --git a/drivers/staging/rtl8723bs/core/rtw_pwrctrl.c 
-b/drivers/staging/rtl8723bs/core/rtw_pwrctrl.c
+index 820a061506cc..80cf5a8b1557 100644
 --- a/drivers/staging/rtl8723bs/core/rtw_pwrctrl.c
 +++ b/drivers/staging/rtl8723bs/core/rtw_pwrctrl.c
 @@ -34,7 +34,7 @@ void _ips_enter(struct adapter *padapter)
