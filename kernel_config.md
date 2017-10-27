@@ -29,13 +29,15 @@ CONFIG_EXTCON_AXP288=m
 CONFIG_AXP288_ADC=m
 ```
 ### Make bytcht-es8316 sound card work (14-inch RDP Thinbook)
-Introduced in [kernel 4.13](https://cateee.net/lkddb/web-lkddb/SND_SOC_INTEL_BYT_CHT_ES8316_MACH.html)
+- CONFIG_SND_SOC_INTEL_BYT_CHT_ES8316_MACH introduced in [kernel 4.13](https://cateee.net/lkddb/web-lkddb/SND_SOC_INTEL_BYT_CHT_ES8316_MACH.html)
+- CONFIG_SND_SOC_ES8316 introduced in [kernel 4.13](https://cateee.net/lkddb/web-lkddb/SND_SOC_ES8316.html)
 ```
 CONFIG_SND_SOC_INTEL_BYT_CHT_ES8316_MACH=m
 CONFIG_SND_SOC_ES8316=m
 ```
 ### Make bytcr-rt6551 sound card work (11-inch RDP Thinbook)
-Introduced in [kernel 4.5](https://cateee.net/lkddb/web-lkddb/SND_SOC_INTEL_BYTCR_RT5651_MACH.html)
+- CONFIG_SND_SOC_RT5651 introduced in [kernel ](https://cateee.net/lkddb/web-lkddb/SND_SOC_RT5651.html)
+- CONFIG_SND_SOC_INTEL_BYTCR_RT5651_MACH introduced in [kernel 4.5](https://cateee.net/lkddb/web-lkddb/SND_SOC_INTEL_BYTCR_RT5651_MACH.html)
 ```
 CONFIG_SND_SOC_INTEL_BYTCR_RT5651_MACH=m
 CONFIG_SND_SOC_RT5651=m
