@@ -1,5 +1,5 @@
 [Unit]
-After=sound.target
+# After=sound.target
 ConditionPathExistsGlob=/dev/snd/control*
 
 [Service]
