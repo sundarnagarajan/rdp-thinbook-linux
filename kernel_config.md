@@ -25,6 +25,9 @@ CONFIG_SND_SOC_RT5651=m
 ### Make bytcr-rt6551 sound card work (11-inch RDP Thinbook)
 - ```CONFIG_SND_SOC_RT5651``` introduced in [kernel ](https://cateee.net/lkddb/web-lkddb/SND_SOC_RT5651.html)
 - ```CONFIG_SND_SOC_INTEL_BYTCR_RT5651_MACH``` introduced in [kernel 4.5](https://cateee.net/lkddb/web-lkddb/SND_SOC_INTEL_BYTCR_RT5651_MACH.html)
+### HDMI audio without HDaudio on Intel Atom platforms
+- ```CONFIG_HDMI_LPE_AUDIO``` introduced in [kernel 4.11](https://cateee.net/lkddb/web-lkddb/HDMI_LPE_AUDIO.html)
+- Note: currently we **BLACKLIST** this module if pulseaudio version >= 1:10.0-2ubuntu3 because loading this module prevents pulseaudio (version >= 1:10.0-2ubuntu3) from starting in daemon mode
 ## Kernel 4.13.x on Ubuntu 17.10 (Artful Aardvark)
 All the above entries are present
 
