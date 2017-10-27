@@ -148,13 +148,13 @@ Note: **DO NOT** rely on the **same** ISO being available and linked from this g
 [Available ISOs](https://drive.google.com/drive/folders/0ByKDyYCckXqDQmN2emE4M1V1NlE):
 
 
-| Ubuntu version | Flavor | Kernel | ISO | GPG Signature |
-| -------------- | ------ | ------ | --- | ------------- |
-| Xenial Xerus 16.04.3 | Ubuntu | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBMzkyTWZDSUFQbWc) | [GPG Signature](https://drive.google.com/open?id=0BwuQXW-0xicBMWJKTHRWUFEtM0k) |
-| Artful Aardvark 17.10 | Ubuntu | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBYVZKbEM3WUlyYXc) | [GPG Signature](https://drive.google.com/open?id=0BwuQXW-0xicBTHo0aG5ud3lianM) |
-| Xenial Xerus 16.04.3 | Ubuntu Mate | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBdHRqUjhaVk9RWDg) | [GPG Signature](https://drive.google.com/open?id=0BwuQXW-0xicBMVZEYW9McU1nWWc) |
-| Artful Aardvark 17.10 | Ubuntu Mate | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBSGZtNDdGemhDQWc) | [GPG Signature](https://drive.google.com/open?id=0BwuQXW-0xicBbU55aERlcnBRMXM) |
-| Artful Aardvark 17.10 | xubuntu | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBRWMxU04wZnFsNG8) | [GPG Signature](https://drive.google.com/open?id=0BwuQXW-0xicBYTZSNlJoenNMdzg) |
+| Ubuntu version | Release | Flavor | Kernel | ISO | GPG Signature |
+| -------------- | ------- | ------ | ------ | --- | ------------- |
+| Xenial Xerus 16.04.3 | LTS | Ubuntu | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBMzkyTWZDSUFQbWc) | [GPG Signature](https://drive.google.com/open?id=0BwuQXW-0xicBMWJKTHRWUFEtM0k) |
+| Artful Aardvark 17.10 | Current | Ubuntu | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBYVZKbEM3WUlyYXc) | [GPG Signature](https://drive.google.com/open?id=0BwuQXW-0xicBTHo0aG5ud3lianM) |
+| Xenial Xerus 16.04.3 | LTS | Ubuntu Mate | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBdHRqUjhaVk9RWDg) | [GPG Signature](https://drive.google.com/open?id=0BwuQXW-0xicBMVZEYW9McU1nWWc) |
+| Artful Aardvark 17.10 | Current | Ubuntu Mate | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBSGZtNDdGemhDQWc) | [GPG Signature](https://drive.google.com/open?id=0BwuQXW-0xicBbU55aERlcnBRMXM) |
+| Artful Aardvark 17.10 | Current | xubuntu | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBRWMxU04wZnFsNG8) | [GPG Signature](https://drive.google.com/open?id=0BwuQXW-0xicBYTZSNlJoenNMdzg) |
 
 
 #### Verifying GPG signature    
