@@ -3,6 +3,7 @@
 - Distributions affected:
     - Ubuntu Mate 16.04.3 LTS
 - VolumeUp (Fn-F4) and VolumeDown (Fn-F3) keys are **detected** and produce OSD (On Screen Display), but the volume itself does not change
+- Update: this problem seems to occur **only** if there are **more than one sound card** - i.e. on the RDP Thinbook, if snd_hdmi_lpe_audio module is **NOT** blacklisted. If the snd_hdmi_lpe_audio module is blacklisted, and there is only one (built-in) sound card, VolumeUp (Fn-F4) and VolumeDown (Fn-F3) keys work **FINE**.
 ## Solutions explored
 - [Media keys not working on ubuntuforums.org May-10-2014](https://ubuntuforums.org/showthread.php?t=2217890&s=f89de759d920dd5c2639d51e03a3131f&p=13019361#post13019361)
 - [Volume buttons not working on lubuntu 16.04 fresh install on askubuntu.com Sep-07-2016](https://askubuntu.com/a/922795)
