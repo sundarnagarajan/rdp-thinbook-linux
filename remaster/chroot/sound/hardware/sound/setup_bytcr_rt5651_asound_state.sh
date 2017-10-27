@@ -35,9 +35,6 @@ do
     fi
 done
 
-# Sleep a few secs - let rest of the system finish booting
-sleep 2
-
 # Check that bytcr_rt5651 sound card is present and activated in kernel
 dmesg | fgrep -q "$DMESG_INDICATOR"
 if [ $? -ne 0 ]; then
