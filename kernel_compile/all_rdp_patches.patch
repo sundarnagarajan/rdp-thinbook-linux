@@ -32,7 +32,6 @@ index 820a061506cc..80cf5a8b1557 100644
 -               DBG_871X_LEVEL(_drv_always_, "nolinked power save leave\n");
 +               DBG_871X("nolinked power save leave\n");
  
-                DBG_871X("==> ips_leave.....LED(0x%08x)...\n", 
-rtw_read32(padapter, 0x4c));
+                DBG_871X("==> ips_leave.....LED(0x%08x)...\n", rtw_read32(padapter, 0x4c));
                 pwrpriv->bips_processing = false;
 ---
