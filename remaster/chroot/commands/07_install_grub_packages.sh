@@ -19,7 +19,7 @@ cat /etc/resolv.conf 2>/dev/null | grep -q '^nameserver'
 if [ $? -ne 0 ]; then
     echo "Replacing /etc/resolv.conf"
     mv /etc/resolv.conf $ORIG_RESOLV_CONF
-    echo "nameserver   8.8.8.8\nnameserver  8.8.4.4" > /etc/resolv.conf
+    echo -e "nameserver   8.8.8.8\nnameserver  8.8.4.4" > /etc/resolv.conf
 fi
 
 apt-get update 1>/dev/null
