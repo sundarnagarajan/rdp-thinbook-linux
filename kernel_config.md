@@ -42,3 +42,21 @@ CONFIG_SND_SOC_ES8316=m
 CONFIG_SND_SOC_INTEL_BYTCR_RT5651_MACH=m
 CONFIG_SND_SOC_RT5651=m
 ```
+# Kernel 4.13.x on Ubuntu 17.10 (Artful Aardvark)
+All the above entries are present
+
+However a 1-line patch is required for Bluetooth (rt8723bs_bt) to work properly:
+```
+diff --git a/net/rfkill/rfkill-gpio.c b/net/rfkill/rfkill-gpio.c
+index 76c01cb..4e32def 100644
+--- a/net/rfkill/rfkill-gpio.c
++++ b/net/rfkill/rfkill-gpio.c
+@@ -163,6 +163,7 @@ static int rfkill_gpio_remove(struct platform_device *pdev)
+ static const struct acpi_device_id rfkill_acpi_match[] = {
+ 	{ "BCM4752", RFKILL_TYPE_GPS },
+ 	{ "LNV4752", RFKILL_TYPE_GPS },
++     { "OBDA8723",RFKILL_TYPE_BLUETOOTH },
+ 	{ },
+ };
+ MODULE_DEVICE_TABLE(acpi, rfkill_acpi_match);
+```
