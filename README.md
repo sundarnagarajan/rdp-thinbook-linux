@@ -5,7 +5,7 @@ The RDP Thinbook is a new ultra-portable laptop produced by RDP Workstations Pvt
 
 # News
 
-[RDP](www.rdp.in) was kind enough to send me one of their new 11.6 inch models. With this, I have updated the [Ubuntu 16.04.3 with kernel 4.13.1](https://drive.google.com/open?id=0ByKDyYCckXqDbFV2X3lydVYzdzQ) ISO with the required changes to make sound work perfectly on the 11.6 inch RDP Thinbook. - Give it a spin!
+[RDP](http://www.rdp.in) was kind enough to send me one of their new 11.6 inch models. With this, I have updated the [Ubuntu 16.04.3 with kernel 4.13.1](https://drive.google.com/open?id=0ByKDyYCckXqDbFV2X3lydVYzdzQ) ISO with the required changes to make sound work perfectly on the 11.6 inch RDP Thinbook. - Give it a spin!
 
 The 11.6 inch RDP Thinbook ships with a 64-bit UEFI loader - so 64-bit Linux ISOs on USB drives will be detected and can boot (although you will need some drivers enabled and some userspace tools / settings to make Bluetooth and sound work).
 
