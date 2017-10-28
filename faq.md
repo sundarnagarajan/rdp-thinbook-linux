@@ -52,3 +52,20 @@ Confirmed to be an issue on Ubuntu Mate 16.04.3 LTS. All the FN-Fx keys are dete
 Key does not produce OSD or have any effect, but the key combination can be detected under System --> Preferences --> Hardware --> Keyboard Shortcuts (in Ubuntu Mate) as a candidate for a key binding - often appearing as something like Mod4 + XF86AudioLowerVolume rather than XF86AudioLowerVolume. In such cases, even the Backspace key stops working
 
 Permanent solution is underway. Until then, after **every** resume, press ```Super_L + Delete``` (```Win + Delete```). The problem will immediately be resolved. This is technically an upstream bug - I have just found a workaround.
+
+### Question: dmesg error: axp288_fuel_gauge: ADC charge current read failed:-19
+See [bugzilla comment](https://bugzilla.kernel.org/show_bug.cgi?id=155241#c61) by tagoreddy to Hans de Goode:
+```
+(In reply to Hans de Goede from comment #60)
+
+Hello Hans,
+
+I've recently noticed that whenever 'axp288_fuel_gauge' module loads before 'axp288_adc', its throwing the following error continuously until the later is loaded:
+
+axp288_fuel_gauge: ADC charge current read failed:-19
+
+Would you please add 'axp288_adc' as a dependency for 'axp288_fuel_gauge'.
+
+Thanks,
+Tagore
+```
