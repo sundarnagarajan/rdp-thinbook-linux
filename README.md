@@ -216,7 +216,7 @@ Once you have verified the signature, you can delete my public key using the com
 gpg --yes --delete-key F0C3CE69C8C00D1E4D8834F5DF2AC095857CADBD
 ```
 
-For a **weak** indication that this key belongs to me, search for me on [pgp.mit.edu](https://pgp.mit.edu/). Enter my email ```sun.nagarajan@gmail.com``` in the ```Search string``` field, and you should find this key as one of the results.
+For a **weak** indication that this key belongs to me, search for me on [pgp.mit.edu](https://pgp.mit.edu/). Enter my email ```sun.nagarajan@gmail.com``` in the ```Search string``` field, and you should find this key as one of the results - note the double space between the first 5 and last 5 4-character hex strings.
 
 ## Write ISO to USB drive
 Assuming that your USB drive is ```/dev/sdk``` and you downloaded to a filenamed ```modified.iso```
