@@ -17,4 +17,4 @@
 # cdn.kernel.org may be faster TO DOWNLOAD (because of CDN)
 
 # 4.13.9 stable kernel from cdn.kernel.org
-echo "https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.13.13.tar.xz"
+echo "http://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.13.13.tar.xz"
