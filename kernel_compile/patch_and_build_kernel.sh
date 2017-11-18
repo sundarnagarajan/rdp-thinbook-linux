@@ -5,7 +5,6 @@ CONFIG_FILE=./config.kernel
 # All patches expected to be in one file
 PATCH_FILE=./all_rdp_patches.patch
 # KERNEL_SOURCE_SCRIPT should be in current dir and echo URL of kernel source
-KERNEL_SOURCE_SCRIPT=./get_kernel_source_url.sh
 IMAGE_NAME=bzImage
 
 #-------------------------------------------------------------------------
@@ -13,7 +12,9 @@ IMAGE_NAME=bzImage
 #-------------------------------------------------------------------------
 
 CURDIR=$(printf %q "$(readlink -f $PWD)")
-KERNEL_SOURCE_SCRIPT=$(printf %q "${CURDIR}/get_kernel_source_url.sh")
+# KERNEL_SOURCE_SCRIPT=$(printf %q "${CURDIR}/get_kernel_source_url.sh")
+KERNEL_SOURCE_SCRIPT=$(printf %q "${CURDIR}/get_kernel_source_url.py")
+SHOW_AVAIL_KERNELS_SCRIPT=$(printf %q "${CURDIR}/show_available_kernels.py")
 START_END_TIME_FILE="/tmp/start_end.time"
 if [ -z "$NUM_THREADS" ]; then
     NUM_THREADS=$(lscpu | grep '^CPU(s)' | awk '{print $2}')
@@ -21,6 +22,16 @@ fi
 printf "INFO: Using %d threads\n" $NUM_THREADS
 MAKE_THREADED="make -j$NUM_THREADS"
 INDENT="    "
+CONFIG_FILE_PATH="${CURDIR}/${CONFIG_FILE}"
+if [ -n "$KERNEL_CONFIG" ]; then
+    if [ -f "$KERNEL_CONFIG" ] ; then
+        CONFIG_FILE_PATH="${KERNEL_CONFIG}"
+        echo "Using config from environment: ${KERNEL_CONFIG}"
+    else
+        echo "Ignoring non-existent config from environment: ${KERNEL_CONFIG}"
+    fi
+fi
+
 
 #-------------------------------------------------------------------------
 # functions
@@ -186,9 +197,9 @@ function apply_patches {
 function restore_kernel_config {
     cd "$BUILD_DIR"
     if [ ! -f .config ]; then
-        if [ -f "${CURDIR}/${CONFIG_FILE}" ]; then
-            cp "${CURDIR}/${CONFIG_FILE}" .config
-            local config_kern_ver_lines="$(grep '^# Linux.* Kernel Configuration' ${CURDIR}/${CONFIG_FILE})"
+        if [ -f "${CONFIG_FILE_PATH}" ]; then
+            cp "${CONFIG_FILE_PATH}" .config
+            local config_kern_ver_lines="$(grep '^# Linux.* Kernel Configuration' ${CONFIG_FILE_PATH})"
             if [ $? -eq 0 ]; then
                 local kver=$(echo "$config_kern_ver_lines" | head -1 | awk '{print $3}')
                 echo "INFO: Restored config: seems to be from version $kver"
@@ -196,7 +207,7 @@ function restore_kernel_config {
                 echo "INFO: Restored config (version not found in comment)"
             fi
         else
-            echo ".config not found: ${CONFIG_FILE}"
+            echo ".config not found: ${CONFIG_FILE_PATH}"
             exit 1
         fi
     fi
@@ -241,6 +252,11 @@ function build_kernel {
 # Actual build steps after this
 #-------------------------------------------------------------------------
 rm -f "$START_END_TIME_FILE"
+# Show available kernels and kernel version of available config
+if [ -x "${SHOW_AVAIL_KERNELS_SCRIPT}" ]; then
+    $SHOW_AVAIL_KERNELS_SCRIPT
+fi
+    
 get_kernel_source
 set_build_dir
 apply_patches
