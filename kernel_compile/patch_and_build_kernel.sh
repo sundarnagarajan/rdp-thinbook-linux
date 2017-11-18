@@ -5,6 +5,8 @@ CONFIG_FILE=./config.kernel
 # All patches expected to be in one file
 PATCH_FILE=./all_rdp_patches.patch
 # KERNEL_SOURCE_SCRIPT should be in current dir and echo URL of kernel source
+KERNEL_SOURCE_SCRIPT=./get_kernel_source_url.py
+SHOW_AVAIL_KERNELS_SCRIPT=./show_available_kernels.py
 IMAGE_NAME=bzImage
 
 #-------------------------------------------------------------------------
@@ -12,10 +14,9 @@ IMAGE_NAME=bzImage
 #-------------------------------------------------------------------------
 
 CURDIR=$(printf %q "$(readlink -f $PWD)")
-# KERNEL_SOURCE_SCRIPT=$(printf %q "${CURDIR}/get_kernel_source_url.sh")
-KERNEL_SOURCE_SCRIPT=$(printf %q "${CURDIR}/get_kernel_source_url.py")
-SHOW_AVAIL_KERNELS_SCRIPT=$(printf %q "${CURDIR}/show_available_kernels.py")
 START_END_TIME_FILE="/tmp/start_end.time"
+KERNEL_SOURCE_SCRIPT=$(printf %q "${CURDIR}/${KERNEL_SOURCE_SCRIPT}")
+SHOW_AVAIL_KERNELS_SCRIPT=$(printf %q "${CURDIR}/${SHOW_AVAIL_KERNELS_SCRIPT}")
 if [ -z "$NUM_THREADS" ]; then
     NUM_THREADS=$(lscpu | grep '^CPU(s)' | awk '{print $2}')
 fi
