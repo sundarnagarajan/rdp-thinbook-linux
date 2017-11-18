@@ -194,32 +194,38 @@ def get_kernel_urls(show_exception=True):
             (m, tbl_latest) = match_and_lstrip(tbl_latest, pat_latest_button)
             if m:
                 (dl_url, sig_url) = get_download_and_sig_urls(tbl_latest)
-                ret.append(KernelURL(
+                kurl = KernelURL(
                     ktype='latest',
                     kver=kver_from_url(dl_url),
                     download_url=dl_url,
                     sig_url=sig_url
-                ))
+                )
+                if kurl not in ret:
+                    ret.append(kurl)
         # mainline
         if row_mainline:
             (dl_url, sig_url) = get_download_and_sig_urls(row_mainline)
             if dl_url:
-                ret.append(KernelURL(
+                kurl = KernelURL(
                     ktype='mainline',
                     kver=kver_from_url(dl_url),
                     download_url=dl_url,
                     sig_url=sig_url
-                ))
+                )
+                if kurl not in ret:
+                    ret.append(kurl)
         # stable
         if row_stable:
             (dl_url, sig_url) = get_download_and_sig_urls(row_stable)
             if dl_url:
-                ret.append(KernelURL(
+                kurl = KernelURL(
                     ktype='stable',
                     kver=kver_from_url(dl_url),
                     download_url=dl_url,
                     sig_url=sig_url
-                ))
+                )
+                if kurl not in ret:
+                    ret.append(kurl)
         # Find longterm releases, one by one
         if not rowlist_longterm:
             return ret
@@ -228,12 +234,14 @@ def get_kernel_urls(show_exception=True):
         while m:
             (dl_url, sig_url) = get_download_and_sig_urls(rowlist_longterm)
             if dl_url:
-                ret.append(KernelURL(
+                kurl = KernelURL(
                     ktype='longterm',
                     kver=kver_from_url(dl_url),
                     download_url=dl_url,
                     sig_url=sig_url
-                ))
+                )
+                if kurl not in ret:
+                    ret.append(kurl)
             rowlist_longterm = rowlist_longterm[m.end():]
             m = re.search(pat_longterm_td, rowlist_longterm)
     except:
