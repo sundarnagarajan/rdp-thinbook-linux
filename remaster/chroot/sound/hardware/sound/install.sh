@@ -22,7 +22,7 @@ if [ ! -f ${PROG_DIR}/setup_bytcr_rt5651_asound_state.sh ]; then
     exit 1
 fi
 
-\cp -frv ${PROG_DIR}/UCM/* /usr/share/alsa/ucm/
+\cp -fr ${PROG_DIR}/UCM/* /usr/share/alsa/ucm/
 
 # If pulseaudio version is >= 1:10.0-2ubuntu3, disable snd_hdmi_lpe_audio
 # module by blacklisting it - since loading that module makes pulseaudio
@@ -38,7 +38,7 @@ if [ "$LARGEST_VER" = "$PULSEAUDIO_VER" ]; then
         exit 1
     fi
 fi
-\cp -frv ${PROG_DIR}/rdp-sound-modules.conf /etc/modprobe.d/
+\cp -fr ${PROG_DIR}/rdp-sound-modules.conf /etc/modprobe.d/
 
 
 # On RDP Thinbook, set the default output (sink)
@@ -68,8 +68,8 @@ if [ $? -ne 0 ]; then
     fi
 fi
 
-\cp -fv ${SCRIPTS_DIR}/bytcr_rt5651_sound.service /etc/systemd/system/
+\cp -f ${SCRIPTS_DIR}/bytcr_rt5651_sound.service /etc/systemd/system/
 mkdir -p /etc/systemd/system/sound.target.wants
-\rm -fv /etc/systemd/system/sound.target.wants/bytcr_rt5651_sound.service
+\rm -f /etc/systemd/system/sound.target.wants/bytcr_rt5651_sound.service
 
-ln -sv /etc/systemd/system/bytcr_rt5651_sound.service /etc/systemd/system/sound.target.wants/
+ln -s /etc/systemd/system/bytcr_rt5651_sound.service /etc/systemd/system/sound.target.wants/

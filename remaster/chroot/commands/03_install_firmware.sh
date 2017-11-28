@@ -20,4 +20,4 @@ if [ $? -ne 0 ]; then
     exit 0
 fi
 
-cp -rv ${FIRMWARE_SRC_DIR}/. $FIRMWARE_DEST_DIR/
+cp -r ${FIRMWARE_SRC_DIR}/. $FIRMWARE_DEST_DIR/
