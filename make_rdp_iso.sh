@@ -22,8 +22,8 @@ function check_required_pkgs {
 function check_avail_disk_space {
     REQD_SPACE_BYTES=10000000000
     AVAIL_SPACE_BYTES=$(df -B1 --output=avail . | sed -e '1d')
-    echo "Required space: $REQD_SPACE_BYTES"
-    echo "Available space: $AVAIL_SPACE_BYTES"
+    printf "Required space : %18d\n" $REQD_SPACE_BYTES
+    printf "Available space: %18d\n" $AVAIL_SPACE_BYTES
     if [ $AVAIL_SPACE_BYTES -lt $REQD_SPACE_BYTES ]; then
         echo "You do not have enough disk space"
         exit 1
