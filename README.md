@@ -9,6 +9,7 @@ With the move to [kernel_build](https://github.com/sundarnagarajan/kernel_build.
 - Automatically download latest kernel from kernel.org
 - Use [JSON API]https://www.kernel.org/releases.json() from kernel.org
 - Automatically upgrade kernel config for new (MAJOR) kernel versions
+
 Note: **MUST** download latest make_rdp_iso.sh
 
 [RDP](http://www.rdp.in) was kind enough to send me one of their new 11.6 inch models. With this, I have updated the [Ubuntu 16.04.3 with kernel 4.13.1](https://drive.google.com/open?id=0ByKDyYCckXqDbFV2X3lydVYzdzQ) ISO with the required changes to make sound work perfectly on the 11.6 inch RDP Thinbook. - Give it a spin!
