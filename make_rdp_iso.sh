@@ -33,17 +33,18 @@ function check_avail_disk_space {
 
 function update_from_git {
     cd $TOP_DIR
-    rm -rf bootutils rdp-thinbook-linux
+    rm -rf bootutils rdp-thinbook-linux kernel_build
     echo "Cloning bootutils..."
     git clone --depth 1 https://github.com/sundarnagarajan/bootutils.git 2>/dev/null
     echo "Cloning rdp-thinbook-linux..."
     git clone --depth 1 https://github.com/sundarnagarajan/rdp-thinbook-linux.git 2>/dev/null
+    echo "Cloning kernel_build"
+    git clone --depth 1 'https://github.com/sundarnagarajan/kernel_build.git' 2>/dev/null
 }
 
 function compile_kernel {
     cd $TOP_DIR
-    cp -r rdp-thinbook-linux/kernel_compile $TOP_DIR/
-    cd $TOP_DIR/kernel_compile
+    cd $TOP_DIR/kernel_build
     ./patch_and_build_kernel.sh
     if [ $? -ne 0 ]; then
         exit 1
@@ -51,7 +52,6 @@ function compile_kernel {
     mv debs/*.deb $TOP_DIR/rdp-thinbook-linux/remaster/chroot/kernel-debs/
 
     cd $TOP_DIR
-    rm -rf kernel_compile
 }
 
 function remaster_iso {
