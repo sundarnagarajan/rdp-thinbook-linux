@@ -4,6 +4,13 @@ Linux on the [RDP Thinbook](http://www.rdp.in/thinbook/)
 The RDP Thinbook is a new ultra-portable laptop produced by RDP Workstations Pvt. Ltd. in India. It is marketed as India's most affordable laptop, and is sold for around US$ 140 - 160 (when you choose the option of buying it without Windows installed).
 
 # News
+Moved out kernel_compile to [separate repository](https://github.com/sundarnagarajan/kernel_build.git)
+With the move to [kernel_build](https://github.com/sundarnagarajan/kernel_build.git), following new features are available:
+- Automatically download latest kernel from kernel.org
+- Use [JSON API]https://www.kernel.org/releases.json() from kernel.org
+- Automatically upgrade kernel config for new (MAJOR) kernel versions
+
+Note: **MUST** download latest make_rdp_iso.sh
 
 [RDP](http://www.rdp.in) was kind enough to send me one of their new 11.6 inch models. With this, I have updated the [Ubuntu 16.04.3 with kernel 4.13.1](https://drive.google.com/open?id=0ByKDyYCckXqDbFV2X3lydVYzdzQ) ISO with the required changes to make sound work perfectly on the 11.6 inch RDP Thinbook. - Give it a spin!
 
