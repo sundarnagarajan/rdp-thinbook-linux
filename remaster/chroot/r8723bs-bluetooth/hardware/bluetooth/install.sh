@@ -14,10 +14,10 @@ elif [ ! -f ${SCRIPTS_DIR}/r8723bs_bluetooth.service ]; then
     exit 1
 fi
 
-\cp -fv ${SCRIPTS_DIR}/bluetooth_r8723bs.rules /etc/udev/rules.d/
-\cp -fv ${SCRIPTS_DIR}/r8723bs_bluetooth.service /etc/systemd/system/
+\cp -f ${SCRIPTS_DIR}/bluetooth_r8723bs.rules /etc/udev/rules.d/
+\cp -f ${SCRIPTS_DIR}/r8723bs_bluetooth.service /etc/systemd/system/
 
 mkdir -p /etc/systemd/system/bluetooth.service.wants
-\rm -fv /etc/systemd/system/bluetooth.service.wants/r8723bs_bluetooth.service
+\rm -f /etc/systemd/system/bluetooth.service.wants/r8723bs_bluetooth.service
 
-ln -sv /etc/systemd/system/r8723bs_bluetooth.service /etc/systemd/system/bluetooth.service.wants/
+ln -s /etc/systemd/system/r8723bs_bluetooth.service /etc/systemd/system/bluetooth.service.wants/
