@@ -39,10 +39,14 @@ def get_chosen_kernel_url(verbose=False):
 
     l = get_kernel_urls()
     if verbose:
-        fmt = '    %-16s %-10s'
+        fmt = '    %-16s %-10s %-10s'
         print('Available kernels:')
+        print(fmt % ('Type', 'Version', 'Rel. Date'))
         for u in l:
-            print(fmt % (u.ktype, u.kver))
+            print(fmt % (
+                u.ktype, u.kver,
+                u.release_date or ''
+            ))
 
     kver = None
     ktype = None
@@ -60,13 +64,15 @@ def get_chosen_kernel_url(verbose=False):
     if kver:
         if verbose:
             print('Available config is from kernel %s' % (kver,))
-        kurl = filter_kernel_urls(l, kver=kver)
+        # Do not filter based on config - we know how to upgrade config!
+        # kurl = filter_kernel_urls(l, kver=kver)
+        kurl = filter_kernel_urls(l)
     else:
         kurl = filter_kernel_urls(l)
 
     if kurl:
         if verbose:
-            print('Based on kernel config, will choose: %s (%s)' % (
+            print('Will choose: %s (%s)' % (
                 kurl.kver, kurl.ktype))
 
         if (override_ktype or override_kver):
