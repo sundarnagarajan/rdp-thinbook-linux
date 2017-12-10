@@ -7,7 +7,7 @@ The RDP Thinbook is a new ultra-portable laptop produced by RDP Workstations Pvt
 Moved out kernel_compile to [separate repository](https://github.com/sundarnagarajan/kernel_build.git)
 With the move to [kernel_build](https://github.com/sundarnagarajan/kernel_build.git), following new features are available:
 - Automatically download latest kernel from kernel.org
-- Use [JSON API]https://www.kernel.org/releases.json() from kernel.org
+- Use [JSON API](https://www.kernel.org/releases.json) from kernel.org
 - Automatically upgrade kernel config for new (MAJOR) kernel versions
 
 Note: **MUST** download latest make_rdp_iso.sh
