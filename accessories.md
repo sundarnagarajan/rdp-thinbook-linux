@@ -22,15 +22,16 @@ kernel: IPv6: ADDRCONF(NETDEV_UP): enx8cae4cf4cf43: link is not ready
 kernel: ax88179_178a 1-1:1.0 enx8cae4cf4cf43: ax88179 - Link status is: 1
 kernel: IPv6: ADDRCONF(NETDEV_CHANGE): enx8cae4cf4cf43: link becomes ready
 ```
+Connecting [Plugable USB 3.0 to 10/100/1000 Gigabit Ethernet LAN Network Adapter - ASIX AX88179 chipset](https://www.amazon.com/gp/product/B00AQM8586) on one of the ports:
+
+iperf shows 918 Mbits/sec throughput (install iperf with ```sudo apt-get install iperf```)
+
 
 ### Sabrent Premium 3-Port Aluminum Mini USB 3.0 Rotatable Hub
 
 Uses one USB 3.0 port and expands to 3 USB 3.0 ports.
 Also backward-compatible with USB 2.0 (but speeds will be limited to USB 2.0 speeds).
 Plug can rotate, allowing to use in different orientations.
-Connecting [Plugable USB 3.0 to 10/100/1000 Gigabit Ethernet LAN Network Adapter - ASIX AX88179 chipset](https://github.com/sundarnagarajan/rdp-thinbook-linux/new/master#plugable-usb-30-to-101001000-gigabit-ethernet-lan-network-adapter---asix-ax88179-chipset) on one of the ports:
-
-iperf shows 918 Mbits/sec throughput (install iperf with ```sudo apt-get install iperf```)
 
 [Buy on Amazon](https://www.amazon.com/gp/product/B013XGK53E)
 
