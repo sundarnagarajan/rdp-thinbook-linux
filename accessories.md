@@ -22,7 +22,7 @@ kernel: IPv6: ADDRCONF(NETDEV_UP): enx8cae4cf4cf43: link is not ready
 kernel: ax88179_178a 1-1:1.0 enx8cae4cf4cf43: ax88179 - Link status is: 1
 kernel: IPv6: ADDRCONF(NETDEV_CHANGE): enx8cae4cf4cf43: link becomes ready
 ```
-Connecting [Plugable USB 3.0 to 10/100/1000 Gigabit Ethernet LAN Network Adapter - ASIX AX88179 chipset](https://www.amazon.com/gp/product/B00AQM8586) on one of the ports:
+Connecting [Plugable USB 3.0 to 10/100/1000 Gigabit Ethernet LAN Network Adapter - ASIX AX88179 chipset](https://plugable.com/products/USB3-E1000) on one of the ports:
 
 iperf shows 918 Mbits/sec throughput (install iperf with ```sudo apt-get install iperf```)
 
