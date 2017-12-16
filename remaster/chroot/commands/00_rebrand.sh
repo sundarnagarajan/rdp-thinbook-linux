@@ -12,10 +12,10 @@ if [ ! -d ${SCRIPTS_DIR} ]; then
     exit 0
 fi
 SCRIPTS_DIR=$(readlink -e $SCRIPTS_DIR)
-INSTALL_SCRIPT=${SCRIPTS_DIR}/rebrand.py
+INSTALL_SCRIPT=/root/rebrand/rebrand.py
 
 mkdir -p /root
-cp -r ${SCRIPTS_DIR}/. /root/
+cp -r ${SCRIPTS_DIR} /root/
 
 if [ ! -x ${INSTALL_SCRIPT} ]; then
     echo "Not found or not executable: ${INSTALL_SCRIPT}"

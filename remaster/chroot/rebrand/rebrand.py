@@ -2,7 +2,7 @@
 import subprocess
 import re
 import os
-import configparser
+import ConfigParser
 import shutil
 from collections import OrderedDict
 
@@ -24,7 +24,7 @@ def get_config_values():
     ):
         return ret
     try:
-        cfg = configparser.ConfigParser()
+        cfg = ConfigParser.ConfigParser()
         cfg.read(os.path.join(SCRIPT_DIR, CONFIG_FILE))
         ret = dict(cfg.items(CONFIG_SECTION))
         word_pat = '(?P<id>%s+)' % WORD_CHARS
