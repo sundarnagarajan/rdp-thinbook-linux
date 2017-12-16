@@ -67,6 +67,11 @@ function remaster_iso {
     if [ -n "${OUTPUT_ISO}" -a -f "${OUTPUT_ISO}" ]; then
         sudo rm -f ${OUTPUT_ISO}
     fi
+    if [ -n "$ENABLE_REBRAND" ]; then
+        if [ -f remaster/chroot/commands/00_rebrand.sh ]; then
+            chmod +x remaster/chroot/commands/00_rebrand.sh
+        fi
+    fi
     sudo REMASTER_CMDS_DIR=${R_DIR} ${TOP_DIR}/bootutils/scripts/ubuntu_remaster_iso.sh ${INPUT_ISO} ${EXTRACT_DIR} ${OUTPUT_ISO}
 }
 
@@ -77,6 +82,11 @@ export R_DIR=${TOP_DIR}/rdp-thinbook-linux/remaster
 export INPUT_ISO=${TOP_DIR}/ISO/in/source.iso
 export EXTRACT_DIR=${TOP_DIR}/ISO/extract
 export OUTPUT_ISO=${TOP_DIR}/ISO/out/modified.iso
+if [ "$1" = "--rebrand" ]; then
+    export ENABLE_REBRAND=yes
+else
+    unset ENABLE_REBRAND
+fi
 
 check_required_pkgs
 check_avail_disk_space
