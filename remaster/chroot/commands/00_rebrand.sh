@@ -17,8 +17,8 @@ INSTALL_SCRIPT=/root/rebrand/rebrand.py
 mkdir -p /root
 cp -r ${SCRIPTS_DIR} /root/
 
-if [ ! -x ${INSTALL_SCRIPT} ]; then
-    echo "Not found or not executable: ${INSTALL_SCRIPT}"
+if [ ! -f ${INSTALL_SCRIPT} ]; then
+    echo "Not found: ${INSTALL_SCRIPT}"
     exit 0
 fi
 
