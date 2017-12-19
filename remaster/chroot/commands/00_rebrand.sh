@@ -11,7 +11,11 @@ if [ ! -d ${SCRIPTS_DIR} ]; then
     echo "SCRIPTS_DIR not a directory: $SCRIPTS_DIR"
     exit 0
 fi
+
 SCRIPTS_DIR=$(readlink -e $SCRIPTS_DIR)
+python ${SCRIPTS_DIR}/rebrand.py
+exit $?
+
 INSTALL_SCRIPT=/root/rebrand/rebrand.py
 
 mkdir -p /root
