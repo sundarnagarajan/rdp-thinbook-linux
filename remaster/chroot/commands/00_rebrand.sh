@@ -13,9 +13,6 @@ if [ ! -d ${SCRIPTS_DIR} ]; then
 fi
 
 SCRIPTS_DIR=$(readlink -e $SCRIPTS_DIR)
-python ${SCRIPTS_DIR}/rebrand.py
-exit $?
-
 INSTALL_SCRIPT=/root/rebrand/rebrand.py
 
 mkdir -p /root
