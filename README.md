@@ -67,7 +67,7 @@ It has [impressive specs](http://www.rdp.in/thinbook/technical-features.html):
 - No special keys to control screen brightness. BUT screen brightness applet in Ubuntu works **perfectly**
 - I believe this UEFI firmware **CANNOT** boot from micro-SD card. It appears to be a limitation of the firmware itself - since it does not even show the **option**
 - On the 11-inch RDP Thinbook 1130, the ```Insert``` key has been removed - this is a bit unfortunate for people who are used to using ```Ctrl-Insert``` to paste text.
-- On the 11-inch RDP Thinbook 1130, the UEFI firmware settings have been vastly simplified (**good**), but the SecureBoot option seems to have been removed (**unfortunate**). With the move the 64-bit UEFI bootloader, users **COULD** have actually used SecureBoot with Ubuntu-signed kernels (although probably not right now with my remastered ISOs).
+- On the 11-inch RDP Thinbook 1130, the UEFI firmware settings have been vastly simplified (**good**), but the SecureBoot option seems to have been removed (**unfortunate**). With the move to a 64-bit UEFI bootloader, users **COULD** have actually used SecureBoot with Ubuntu-signed kernels (although probably not right now with my remastered ISOs).
 
 I bought the original 14.1 inch RDP Thinbook in Nov-2016 without Windows installed, with the intention of using Linux on it (I use Linux on **EVERYTHNIG**).
 
