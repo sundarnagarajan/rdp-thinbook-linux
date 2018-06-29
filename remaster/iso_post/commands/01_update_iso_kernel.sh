@@ -27,5 +27,9 @@ if [ ! -f ${REMASTER_ISO_CHROOT_DIR}/.${REMASTER_DIR}/${KP_LIST} ]; then
     exit 0
 fi
 
+# On 18.04 grub.cfg references vmlinuz and not vmlinuz.efi
+if [ -f ${ISO_EXTRACT_DIR}/casper/vmlinuz ]; then
+    \cp ${REMASTER_ISO_CHROOT_DIR}/boot/vmlinuz-* ${ISO_EXTRACT_DIR}/casper/vmlinuz
+fi
 \cp ${REMASTER_ISO_CHROOT_DIR}/boot/vmlinuz-* ${ISO_EXTRACT_DIR}/casper/vmlinuz.efi
 \cp ${REMASTER_ISO_CHROOT_DIR}/boot/initrd.img-* ${ISO_EXTRACT_DIR}/casper/initrd.lz
