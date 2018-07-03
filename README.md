@@ -184,10 +184,10 @@ Note:
 - Xenial Xerus 16.04 ISOs are the same as before (new link)
 
 ##### SHA256SUMS
-| Distribution | SHA256SUMS | SHA256SUMS GPG sig |
-| ------------ | ---------- | ------------------ |
-| 16.04 Xenial Xerus | [SHA256SUMS](https://drive.google.com/open?id=1ychmit3HXrf_lQH7RQGuOepphzIpfj01) | [SHA256SUMS GPG sig](https://drive.google.com/open?id=1v3mKp0i-_2l_WwfnJbRl319DN9YjnfJj) |
-| 18.04 Bionic Beaver | [SHA256SUMS](https://drive.google.com/open?id=1TGcqHYAVvOxuQ5rQlEUnAxXmZTvJyW4t) | [SHA256SUMS GPG sig](https://drive.google.com/open?id=1aA7Y3E4ihSgJ83nMS8NPCyzqveDs-k85) |
+| Distribution | Signed SHA256SUMS |
+| ------------ | ---------- |
+| 16.04 Xenial Xerus | [SHA256SUMS.asc.xenial](https://drive.google.com/open?id=1v3mKp0i-_2l_WwfnJbRl319DN9YjnfJj&export=download) |
+| 18.04 Bionic Beaver | [SHA256SUMS.asc.bionic](https://drive.google.com/open?id=1aA7Y3E4ihSgJ83nMS8NPCyzqveDs-k85&export=download) |
 
 
 | Ubuntu version | Release | Flavor | Kernel | ISO |
@@ -201,17 +201,33 @@ Note:
 
 
 
-#### Verifying GPG signature    
-Download both the ISO and the signature (```.sign``` file). Use the following command to verify the GPG signature **BEFORE** using the ISO
+#### Verifying GPG signature  
+If you are downloading a Xenial Xerus ISO, download [SHA256SUMS.asc.xenial](https://drive.google.com/open?id=1v3mKp0i-_2l_WwfnJbRl319DN9YjnfJj&export=download) first.
 
-```
-gpg --verify <signature_file> <ISO_file>
-```
+Similarly, if you are downloading a Bionic Beaver ISO, download [SHA256SUMS.asc.bionic](https://drive.google.com/open?id=1aA7Y3E4ihSgJ83nMS8NPCyzqveDs-k85&export=download) files first.
 
+Run the command:
+```
+gpg --verify SHA256SUMS.asc.xenial
+```
+and / or (depending on which SHA256SUMS file you downloaded)
+```
+gpg --verify SHA256SUMS.asc.bionic
+```
 The output should be something like:
-
 ```
-gpg: Signature made Sun 10 Sep 2017 08:49:50 PM PDT using RSA key ID 857CADBD
+gpg: Signature made Fri 29 Jun 2018 05:23:27 PM PDT using RSA key ID 857CADBD
+```
+
+Use the following command to verify the downloaded ISOs:
+##### Xenial Xerus 16.04
+```
+sha256sum -c SHA256SUMS.asc.xenial 2>/dev/null | grep 'OK$'
+```
+
+##### Bionic Beaver 18.04
+```
+sha256sum -c SHA256SUMS.asc.bionic 2>/dev/null | grep 'OK$'
 ```
 
 You can find my GPG public key [here](https://pgp.mit.edu/pks/lookup?op=get&search=0xDF2AC095857CADBD). If you want to add my public key to your GPG keychain, use the following command:
@@ -221,14 +237,9 @@ gpg --keyserver pgp.mit.edu --recv-keys F0C3CE69C8C00D1E4D8834F5DF2AC095857CADBD
 
 Once you have imported my public key with the command above (note: you are **not TRUSTING** my public key for anything), if you rerun the ```gpg --verify``` command above, the output should look like:
 ```
-gpg: Signature made Sun 10 Sep 2017 08:49:50 PM PDT using RSA key ID 857CADBD
+gpg: Signature made Fri 29 Jun 2018 05:23:27 PM PDT using RSA key ID 857CADBD
 gpg: Good signature from "Sundar Nagarajan <sun.nagarajan@gmail.com>"
-gpg: WARNING: This key is not certified with a trusted signature!
-gpg:          There is no indication that the signature belongs to the owner.
-Primary key fingerprint: F0C3 CE69 C8C0 0D1E 4D88  34F5 DF2A C095 857C ADBD
 ```
-
-The message ```This key is not certified with a trusted signature!``` is because you have not attached any level of 'trust' to my public key. That should be OK for this purpose.
 
 Once you have verified the signature, you can delete my public key using the command, to avoid cluttering your keyring:
 ```
