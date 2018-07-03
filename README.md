@@ -280,6 +280,12 @@ If you have tested a distribution-model not listed here, open an issue, and I wi
 
 | Distribution | RDP Thinbook Model | Issues, if any | Tested by |
 | ------------ | ------------------ | -------------- | --------- |
+| Ubuntu 18.04 | 14.1 inch RDP Thinbook 1430 (X5-8300) | Issue 36 | Me |
+| Ubuntu Mate 18.04 | 14.1 inch RDP Thinbook 1430 (X5-8300) | Issue 36 | Me |
+| xubuntu 18.04 | 14.1 inch RDP Thinbook 1430 (X5-8300) | Issue 36 | Me |
+| Ubuntu 18.04 | 11 inch RDP Thinbook 1130 (X5-8350) | Issue 35 | Me |
+| Ubuntu Mate 18.04 | 11 inch RDP Thinbook 1130 (X5-8350) | Issue 36 | Me |
+| xubuntu 18.04 | 11 inch RDP Thinbook 1130 (X5-8350) | Issue 35 | Me |
 | Ubuntu Mate 16.04 | Original 14.1-inch RDP Thinbook (X5-Z8300) | None | Me |
 | Ubuntu Mate 16.04 | New 14.1-inch RDP Thinbook (X5-Z8350) | None | RDP staff |
 | Ubuntu Mate 16.04 | 11.6-inch RDP Thinbook (X5-Z8350) | None | RDP staff |
