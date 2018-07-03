@@ -4,6 +4,8 @@ Linux on the [RDP Thinbook](http://www.rdp.in/thinbook/)
 The RDP Thinbook is a new ultra-portable laptop produced by RDP Workstations Pvt. Ltd. in India. It is marketed as India's most affordable laptop, and is sold for around US$ 140 - 160 (when you choose the option of buying it without Windows installed).
 
 # News
+New Bionic Beaver 18.04 ISOs
+
 Moved out kernel_compile to [separate repository](https://github.com/sundarnagarajan/kernel_build.git)
 With the move to [kernel_build](https://github.com/sundarnagarajan/kernel_build.git), following new features are available:
 - Automatically download latest kernel from kernel.org
@@ -12,11 +14,14 @@ With the move to [kernel_build](https://github.com/sundarnagarajan/kernel_build.
 
 Note: **MUST** download latest make_rdp_iso.sh
 
-[RDP](http://www.rdp.in) was kind enough to send me one of their new 11.6 inch models. With this, I have updated the [Ubuntu 16.04.3 with kernel 4.13.1](https://drive.google.com/open?id=0ByKDyYCckXqDbFV2X3lydVYzdzQ) ISO with the required changes to make sound work perfectly on the 11.6 inch RDP Thinbook. - Give it a spin!
+[RDP](http://www.rdp.in) was kind enough to send me one of their new 11.6 inch models. With this, I have updated the Ubuntu 16.04.3 with kernel 4.13.1 ISO with the required changes to make sound work perfectly on the 11.6 inch RDP Thinbook. - Give it a spin!
 
 The 11.6 inch RDP Thinbook ships with a 64-bit UEFI loader - so 64-bit Linux ISOs on USB drives will be detected and can boot (although you will need some drivers enabled and some userspace tools / settings to make Bluetooth and sound work).
 
 # Open issues
+[Issue 36: When using headphones, sound still comes from speakers](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/36)
+
+[Issue 35: Highly distorted sound / feedback in headphones](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/35)
 
 [Issue 7: FN keys and backspace stop working after suspend-resume on Ubuntu Mate 16.04.3 #7](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/7) - see [temporary workaround](faq.md#question-fn-keys-and-backspace-stop-working-after-suspend-resume)
 
