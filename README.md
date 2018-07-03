@@ -179,16 +179,26 @@ I do not plan to support more flavors; if at all dispense with Ubuntu Mate. The 
 
 
 [Available ISOs](https://drive.google.com/drive/u/6/folders/0BwuQXW-0xicBSHUwNVRmVTN1dzQ):
+Note:
+- Artful Aardvark 17.10 ISOs no longer available
+- Xenial Xerus 16.04 ISOs are the same as before (new link)
+
+##### SHA256SUMS
+| Distribution | SHA256SUMS | SHA256SUMS GPG sig |
+| ------------ | ---------- | ------------------ |
+| 16.04 Xenial Xerus | [SHA256SUMS](https://drive.google.com/open?id=1ychmit3HXrf_lQH7RQGuOepphzIpfj01) | [SHA256SUMS GPG sig](https://drive.google.com/open?id=1v3mKp0i-_2l_WwfnJbRl319DN9YjnfJj) |
+| 18.04 Bionic Beaver | [SHA256SUMS](https://drive.google.com/open?id=1TGcqHYAVvOxuQ5rQlEUnAxXmZTvJyW4t) | [SHA256SUMS GPG sig](https://drive.google.com/open?id=1aA7Y3E4ihSgJ83nMS8NPCyzqveDs-k85) |
 
 
-| Ubuntu version | Release | Flavor | Kernel | ISO | GPG Signature |
-| -------------- | ------- | ------ | ------ | --- | ------------- |
-| Xenial Xerus 16.04.3 | LTS | Ubuntu | 4.13.9 | [ISO](https://drive.google.com/uc?id=0BwuQXW-0xicBMzkyTWZDSUFQbWc&export=download) | [GPG Signature](https://drive.google.com/uc?id=0BwuQXW-0xicBMWJKTHRWUFEtM0k&export=download) |
-| Artful Aardvark 17.10 | Current | Ubuntu | 4.13.9 | [ISO](https://drive.google.com/uc?id=0BwuQXW-0xicBYVZKbEM3WUlyYXc&export=download) | [GPG Signature](https://drive.google.com/uc?id=0BwuQXW-0xicBTHo0aG5ud3lianM&export=download) |
-| Xenial Xerus 16.04.3 | LTS | Ubuntu Mate | 4.13.9 | [ISO](https://drive.google.com/uc?id=0BwuQXW-0xicBdHRqUjhaVk9RWDg&export=download) | [GPG Signature](https://drive.google.com/uc?id=0BwuQXW-0xicBMVZEYW9McU1nWWc&export=download) |
-| Artful Aardvark 17.10 | Current | Ubuntu Mate | 4.13.9 | [ISO](https://drive.google.com/uc?id=0BwuQXW-0xicBSGZtNDdGemhDQWc&export=download) | [GPG Signature](https://drive.google.com/uc?id=0BwuQXW-0xicBbU55aERlcnBRMXM&export=download) |
-| Xenial Xerus 16.04.3 | LTS | xubuntu | 4.13.9 | [ISO](https://drive.google.com/uc?id=0BwuQXW-0xicBeExMeW5DTzltZVE&export=download) | [GPG Signature](https://drive.google.com/uc?id=0BwuQXW-0xicBUHBHbDQxZXgzX2s&export=download) 
-| Artful Aardvark 17.10 | Current | xubuntu | 4.13.9 | [ISO](https://drive.google.com/uc?id=0BwuQXW-0xicBRWMxU04wZnFsNG8&export=download) | [GPG Signature](https://drive.google.com/uc?id=0BwuQXW-0xicBYTZSNlJoenNMdzg&export=download) |
+| Ubuntu version | Release | Flavor | Kernel | ISO |
+| -------------- | ------- | ------ | ------ | --- |
+| Xenial Xerus 16.04.3 | LTS | Ubuntu | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBMzkyTWZDSUFQbWc&export=download) |
+| Xenial Xerus 16.04.3 | LTS | Ubuntu Mate | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBdHRqUjhaVk9RWDg&export=download) |
+| Xenial Xerus 16.04.3 | LTS | xubuntu | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBeExMeW5DTzltZVE&export=download) |
+| Bionic Beaver 18.04 | LTS | Ubuntu | 4.16.18 | [ISO](https://drive.google.com/open?id=1zGy0-cGd0oZ9VBage9hH8NbJz5NRdMen&export=download) |
+| Bionic Beaver 18.04 | LTS | Ubuntu Mate | 4.16.18 | [ISO](https://drive.google.com/open?id=1wu2XEyvpgxB6pLos-a6y2hxv6AVXYjMz&export=download) |
+| Bionic Beaver 18.04 | LTS | xubuntu | 4.16.18 | [ISO](https://drive.google.com/open?id=1oMTiWn8g_1mOxoDt93tfNWrevxnadY7D&export=download) |
+
 
 
 #### Verifying GPG signature    
