@@ -204,7 +204,7 @@ Note:
 #### Verifying GPG signature  
 If you are downloading a Xenial Xerus ISO, download [SHA256SUMS.asc.xenial](https://drive.google.com/open?id=1v3mKp0i-_2l_WwfnJbRl319DN9YjnfJj&export=download) first.
 
-Similarly, if you are downloading a Bionic Beaver ISO, download [SHA256SUMS.asc.bionic](https://drive.google.com/open?id=1aA7Y3E4ihSgJ83nMS8NPCyzqveDs-k85&export=download) files first.
+Similarly, if you are downloading a Bionic Beaver ISO, download [SHA256SUMS.asc.bionic](https://drive.google.com/open?id=1aA7Y3E4ihSgJ83nMS8NPCyzqveDs-k85&export=download) first.
 
 Run the command:
 ```
