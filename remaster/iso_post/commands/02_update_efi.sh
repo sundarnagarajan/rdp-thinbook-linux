@@ -18,7 +18,7 @@ GRUB_CFG=${ISO_EXTRACT_DIR}/boot/grub/grub.cfg
 if [ -f ${GRUB_CFG} ]; then
     \cp -f ${GRUB_CFG} ${EFI_DIR}/boot/grub/grub.cfg
 fi
-\cp -a ${EFI_DIR}/. ${ISO_EXTRACT_DIR}/.
+# \cp -a ${EFI_DIR}/. ${ISO_EXTRACT_DIR}/.
 
 # Create .efi files from scratch using grub-mkimage
 # For now we have linuxium efi files, and OVERWRITE them
