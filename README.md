@@ -4,6 +4,8 @@ Linux on the [RDP Thinbook](http://www.rdp.in/thinbook/)
 The RDP Thinbook is a new ultra-portable laptop produced by RDP Workstations Pvt. Ltd. in India. It is marketed as India's most affordable laptop, and is sold for around US$ 140 - 160 (when you choose the option of buying it without Windows installed).
 
 # News
+New Bionic Beaver 18.04 ISOs
+
 Moved out kernel_compile to [separate repository](https://github.com/sundarnagarajan/kernel_build.git)
 With the move to [kernel_build](https://github.com/sundarnagarajan/kernel_build.git), following new features are available:
 - Automatically download latest kernel from kernel.org
@@ -12,18 +14,19 @@ With the move to [kernel_build](https://github.com/sundarnagarajan/kernel_build.
 
 Note: **MUST** download latest make_rdp_iso.sh
 
-[RDP](http://www.rdp.in) was kind enough to send me one of their new 11.6 inch models. With this, I have updated the [Ubuntu 16.04.3 with kernel 4.13.1](https://drive.google.com/open?id=0ByKDyYCckXqDbFV2X3lydVYzdzQ) ISO with the required changes to make sound work perfectly on the 11.6 inch RDP Thinbook. - Give it a spin!
+[RDP](http://www.rdp.in) was kind enough to send me one of their new 11.6 inch models. With this, I have updated the Ubuntu 16.04.3 with kernel 4.13.1 ISO with the required changes to make sound work perfectly on the 11.6 inch RDP Thinbook. - Give it a spin!
 
 The 11.6 inch RDP Thinbook ships with a 64-bit UEFI loader - so 64-bit Linux ISOs on USB drives will be detected and can boot (although you will need some drivers enabled and some userspace tools / settings to make Bluetooth and sound work).
 
 # Open issues
+[Issue 36: When using headphones, sound still comes from speakers](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/36)
 
-[FN keys and backspace stop working after suspend-resume on Ubuntu Mate 16.04.3 #7](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/7) - see [temporary workaround](faq.md#question-fn-keys-and-backspace-stop-working-after-suspend-resume)
+[Issue 35: Highly distorted sound / feedback in headphones](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/35)
 
-[Sound does not work on Ubuntu 17.10 (Artful Aardvark)](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/10)
-Current solution is to blacklist module **snd_hdmi_lpe_audio**
+[Issue 7: FN keys and backspace stop working after suspend-resume on Ubuntu Mate 16.04.3 #7](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/7) - see [temporary workaround](faq.md#question-fn-keys-and-backspace-stop-working-after-suspend-resume)
 
-This disables sound over HDMI. Have closed this issue and opened [new issue](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/11) to find long-term solution
+[Issue 10: Sound does not work on Ubuntu 17.10 (Artful Aardvark)](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/10)
+Current solution is to blacklist module **snd_hdmi_lpe_audio**. This disables sound over HDMI. Have closed this issue and opened [new issue](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/11) to find long-term solution. This workaround is also applied to Bionic Beaver 18.04
 
 # EVERYTHING on this laptop works perfectly in Linux
 
@@ -178,30 +181,56 @@ Examples
 I do not plan to support more flavors; if at all dispense with Ubuntu Mate. The purpose of ISOs is to be able to **TEST**. Once everything is fine, I expect users to know how to install the standard Ubuntu flavor, and then customize it by installing the required desktop meta-packages.
 
 
-[Available ISOs](https://drive.google.com/drive/u/6/folders/0BwuQXW-0xicBSHUwNVRmVTN1dzQ):
+### Available ISOs:
+Note:
+- Artful Aardvark 17.10 ISOs no longer available
+- Xenial Xerus 16.04 ISOs are the same as before (new link)
+
+##### SHA256SUMS
+| Distribution | Signed SHA256SUMS |
+| ------------ | ---------- |
+| 16.04 Xenial Xerus | [SHA256SUMS.asc.xenial](https://drive.google.com/open?id=1v3mKp0i-_2l_WwfnJbRl319DN9YjnfJj&export=download) |
+| 18.04 Bionic Beaver | [SHA256SUMS.asc.bionic](https://drive.google.com/open?id=1aA7Y3E4ihSgJ83nMS8NPCyzqveDs-k85&export=download) |
 
 
-| Ubuntu version | Release | Flavor | Kernel | ISO | GPG Signature |
-| -------------- | ------- | ------ | ------ | --- | ------------- |
-| Xenial Xerus 16.04.3 | LTS | Ubuntu | 4.13.9 | [ISO](https://drive.google.com/uc?id=0BwuQXW-0xicBMzkyTWZDSUFQbWc&export=download) | [GPG Signature](https://drive.google.com/uc?id=0BwuQXW-0xicBMWJKTHRWUFEtM0k&export=download) |
-| Artful Aardvark 17.10 | Current | Ubuntu | 4.13.9 | [ISO](https://drive.google.com/uc?id=0BwuQXW-0xicBYVZKbEM3WUlyYXc&export=download) | [GPG Signature](https://drive.google.com/uc?id=0BwuQXW-0xicBTHo0aG5ud3lianM&export=download) |
-| Xenial Xerus 16.04.3 | LTS | Ubuntu Mate | 4.13.9 | [ISO](https://drive.google.com/uc?id=0BwuQXW-0xicBdHRqUjhaVk9RWDg&export=download) | [GPG Signature](https://drive.google.com/uc?id=0BwuQXW-0xicBMVZEYW9McU1nWWc&export=download) |
-| Artful Aardvark 17.10 | Current | Ubuntu Mate | 4.13.9 | [ISO](https://drive.google.com/uc?id=0BwuQXW-0xicBSGZtNDdGemhDQWc&export=download) | [GPG Signature](https://drive.google.com/uc?id=0BwuQXW-0xicBbU55aERlcnBRMXM&export=download) |
-| Xenial Xerus 16.04.3 | LTS | xubuntu | 4.13.9 | [ISO](https://drive.google.com/uc?id=0BwuQXW-0xicBeExMeW5DTzltZVE&export=download) | [GPG Signature](https://drive.google.com/uc?id=0BwuQXW-0xicBUHBHbDQxZXgzX2s&export=download) 
-| Artful Aardvark 17.10 | Current | xubuntu | 4.13.9 | [ISO](https://drive.google.com/uc?id=0BwuQXW-0xicBRWMxU04wZnFsNG8&export=download) | [GPG Signature](https://drive.google.com/uc?id=0BwuQXW-0xicBYTZSNlJoenNMdzg&export=download) |
+| Ubuntu version | Release | Flavor | Kernel | ISO |
+| -------------- | ------- | ------ | ------ | --- |
+| Xenial Xerus 16.04.3 | LTS | Ubuntu | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBMzkyTWZDSUFQbWc&export=download) |
+| Xenial Xerus 16.04.3 | LTS | Ubuntu Mate | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBdHRqUjhaVk9RWDg&export=download) |
+| Xenial Xerus 16.04.3 | LTS | xubuntu | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBeExMeW5DTzltZVE&export=download) |
+| Bionic Beaver 18.04 | LTS | Ubuntu | 4.16.18 | [ISO](https://drive.google.com/open?id=1zGy0-cGd0oZ9VBage9hH8NbJz5NRdMen&export=download) |
+| Bionic Beaver 18.04 | LTS | Ubuntu Mate | 4.16.18 | [ISO](https://drive.google.com/open?id=1wu2XEyvpgxB6pLos-a6y2hxv6AVXYjMz&export=download) |
+| Bionic Beaver 18.04 | LTS | xubuntu | 4.16.18 | [ISO](https://drive.google.com/open?id=1oMTiWn8g_1mOxoDt93tfNWrevxnadY7D&export=download) |
 
 
-#### Verifying GPG signature    
-Download both the ISO and the signature (```.sign``` file). Use the following command to verify the GPG signature **BEFORE** using the ISO
 
+#### Verifying GPG signature  
+If you are downloading a Xenial Xerus ISO, download [SHA256SUMS.asc.xenial](https://drive.google.com/open?id=1v3mKp0i-_2l_WwfnJbRl319DN9YjnfJj&export=download) first.
+
+Similarly, if you are downloading a Bionic Beaver ISO, download [SHA256SUMS.asc.bionic](https://drive.google.com/open?id=1aA7Y3E4ihSgJ83nMS8NPCyzqveDs-k85&export=download) first.
+
+Run the command:
 ```
-gpg --verify <signature_file> <ISO_file>
+gpg --verify SHA256SUMS.asc.xenial
 ```
-
+and / or (depending on which SHA256SUMS file you downloaded)
+```
+gpg --verify SHA256SUMS.asc.bionic
+```
 The output should be something like:
-
 ```
-gpg: Signature made Sun 10 Sep 2017 08:49:50 PM PDT using RSA key ID 857CADBD
+gpg: Signature made Fri 29 Jun 2018 05:23:27 PM PDT using RSA key ID 857CADBD
+```
+
+Use the following command to verify the downloaded ISOs:
+##### Xenial Xerus 16.04
+```
+sha256sum -c SHA256SUMS.asc.xenial 2>/dev/null | grep 'OK$'
+```
+
+##### Bionic Beaver 18.04
+```
+sha256sum -c SHA256SUMS.asc.bionic 2>/dev/null | grep 'OK$'
 ```
 
 You can find my GPG public key [here](https://pgp.mit.edu/pks/lookup?op=get&search=0xDF2AC095857CADBD). If you want to add my public key to your GPG keychain, use the following command:
@@ -211,14 +240,9 @@ gpg --keyserver pgp.mit.edu --recv-keys F0C3CE69C8C00D1E4D8834F5DF2AC095857CADBD
 
 Once you have imported my public key with the command above (note: you are **not TRUSTING** my public key for anything), if you rerun the ```gpg --verify``` command above, the output should look like:
 ```
-gpg: Signature made Sun 10 Sep 2017 08:49:50 PM PDT using RSA key ID 857CADBD
+gpg: Signature made Fri 29 Jun 2018 05:23:27 PM PDT using RSA key ID 857CADBD
 gpg: Good signature from "Sundar Nagarajan <sun.nagarajan@gmail.com>"
-gpg: WARNING: This key is not certified with a trusted signature!
-gpg:          There is no indication that the signature belongs to the owner.
-Primary key fingerprint: F0C3 CE69 C8C0 0D1E 4D88  34F5 DF2A C095 857C ADBD
 ```
-
-The message ```This key is not certified with a trusted signature!``` is because you have not attached any level of 'trust' to my public key. That should be OK for this purpose.
 
 Once you have verified the signature, you can delete my public key using the command, to avoid cluttering your keyring:
 ```
@@ -254,6 +278,12 @@ If you have tested a distribution-model not listed here, open an issue, and I wi
 
 | Distribution | RDP Thinbook Model | Issues, if any | Tested by |
 | ------------ | ------------------ | -------------- | --------- |
+| Ubuntu 18.04 | 14.1 inch RDP Thinbook 1430 (X5-8300) | Issue 36 | Me |
+| Ubuntu Mate 18.04 | 14.1 inch RDP Thinbook 1430 (X5-8300) | Issue 36 | Me |
+| xubuntu 18.04 | 14.1 inch RDP Thinbook 1430 (X5-8300) | Issue 36 | Me |
+| Ubuntu 18.04 | 11 inch RDP Thinbook 1130 (X5-8350) | Issue 35 | Me |
+| Ubuntu Mate 18.04 | 11 inch RDP Thinbook 1130 (X5-8350) | Issue 36 | Me |
+| xubuntu 18.04 | 11 inch RDP Thinbook 1130 (X5-8350) | Issue 35 | Me |
 | Ubuntu Mate 16.04 | Original 14.1-inch RDP Thinbook (X5-Z8300) | None | Me |
 | Ubuntu Mate 16.04 | New 14.1-inch RDP Thinbook (X5-Z8350) | None | RDP staff |
 | Ubuntu Mate 16.04 | 11.6-inch RDP Thinbook (X5-Z8350) | None | RDP staff |
@@ -342,6 +372,7 @@ Only additional step to boot was to turn secure boot off.
 - Sound - required [es8316 module](https://cateee.net/lkddb/web-lkddb/SND_SOC_ES8316.html) - available in kernel 4.13+. Also needed [bytcht-es8316 UCM files](https://github.com/kernins/linux-chwhi12/tree/master/configs/audio/ucm). For the newer RDP Thinbooks shipping with the with Intel Atom X5-Z8350, sound required [bytcr-rt5651 UCM files](https://github.com/plbossart/UCM)
     - Speakers and headphone jack both work.
     - Microphone (sound recording) works
+    - See issues [35](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/35) and [36](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/36)
 
 ## What is not working yet
 **Everything on the RDP Thinbook now works perfectly in Linux.**
