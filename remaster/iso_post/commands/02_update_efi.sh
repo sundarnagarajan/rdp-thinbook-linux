@@ -21,14 +21,13 @@ ISO_EXTRACT_DIR=$(readlink -e $ISO_EXTRACT_DIR)
 # \cp -a ${EFI_DIR}/. ${ISO_EXTRACT_DIR}/.
 
 # Create .efi files from scratch using grub-mkimage
-# GRUB_MODULES="ntfs hfs appleldr boot cat efi_gop efi_uga elf fat hfsplus iso9660 linux keylayouts memdisk minicmd part_apple ext2 extcmd xfs xnu part_bsd part_gpt search search_fs_file chain btrfs loadbios loadenv lvm minix minix2 reiserfs memrw mmap msdospart scsi loopback normal configfile gzio all_video efi_gop efi_uga gfxterm gettext echo boot chain eval"
+GRUB_MODULES="ntfs hfs appleldr boot cat efi_gop efi_uga elf fat hfsplus iso9660 linux keylayouts memdisk minicmd part_apple ext2 extcmd xfs xnu part_bsd part_gpt search search_fs_file chain btrfs loadbios loadenv lvm minix minix2 reiserfs memrw mmap msdospart scsi loopback normal configfile gzio all_video efi_gop efi_uga gfxterm gettext echo boot chain eval"
 
 mkdir -p ${ISO_EXTRACT_DIR}/EFI/BOOT
 GRUB_DIR=/usr/lib/grub/i386-efi
 GRUB_FORMAT=i386-efi
 if [ -d $GRUB_DIR -a -f $GRUB_DIR/moddep.lst ]; then
-    GRUB_MODLIST_FILES=$(for l in $GRUB_DIR*.lst; do if [ "$l" != "$GRUB_DIR/moddep.lst" ]; then echo $l; fi; done)
-    GRUB_MODULES=$(for m in $(cat $GRUB_MODLIST_FILES  | awk '{print $2}' | sort | uniq); do if [ -f "${m}.mod" ]; then echo "${m}"; fi; done)
+    # GRUB_MODULES=$(for f in $(ls $GRUB_DIR/*.mod); do echo $(basename $f .mod); done)
     if [ -n "$GRUB_MODULES" ]; then
         \rm -f ${ISO_EXTRACT_DIR}/EFI/BOOT/bootia32.efi
         grub-mkimage -d $GRUB_DIR -o ${ISO_EXTRACT_DIR}/EFI/BOOT/bootia32.efi -O $GRUB_FORMAT -p /boot/grub $GRUB_MODULES
@@ -42,8 +41,7 @@ fi
 GRUB_DIR=/usr/lib/grub/x86_64-efi
 GRUB_FORMAT=x86_64-efi
 if [ -d $GRUB_DIR -a -f $GRUB_DIR/moddep.lst ]; then
-    GRUB_MODLIST_FILES=$(for l in $GRUB_DIR*.lst; do if [ "$l" != "$GRUB_DIR/moddep.lst" ]; then echo $l; fi; done)
-    GRUB_MODULES=$(for m in $(cat $GRUB_MODLIST_FILES  | awk '{print $2}' | sort | uniq); do if [ -f "${m}.mod" ]; then echo "${m}"; fi; done)
+    # GRUB_MODULES=$(for f in $(ls $GRUB_DIR/*.mod); do echo $(basename $f .mod); done)
     if [ -n "$GRUB_MODULES" ]; then
         \rm -f ${ISO_EXTRACT_DIR}/EFI/BOOT/bootx64.efi
         \rm -f ${ISO_EXTRACT_DIR}/EFI/BOOT/grubx64.efi
