@@ -28,7 +28,7 @@ fi
 
 apt-get update 1>/dev/null
 # Fetch the latest firmware from linux firmware git instead
-apt-get -y install git
+apt-get -y install git 1>/dev/null
 if [ $? -ne 0 ]; then
 	apt-get -f install
 fi
@@ -37,7 +37,7 @@ cd /lib
 rm -rf firmware
 git clone --depth 1 $LINUX_FIRMWARE_GIT firmware
 rm -rf firmware/.git
-apt-get autoremove -y --purge git
+apt-get autoremove -y --purge git 1>/dev/null 2>/dev/null
 # Restore original /etc/resolv.conf if we had moved it
 if [ -f  $ORIG_RESOLV_CONF -o -L $ORIG_RESOLV_CONF ]; then
     echo "Restoring original /etc/resolv.conf"
