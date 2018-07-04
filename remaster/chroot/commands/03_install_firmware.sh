@@ -7,7 +7,7 @@ PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
 
 # Fetch the latest firmware from linux firmware git instead
-apt-get update && apt-get install git
+apt-get update && apt-get install git -y
 if [ $? -ne 0 ]; then
     echo "Could not install git"
     exit 0
