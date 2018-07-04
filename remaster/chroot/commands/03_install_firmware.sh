@@ -6,6 +6,16 @@ PROG_PATH=${PROG_PATH:-$(readlink -e $0)}
 PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
 
+# Fetch the latest firmware from linux firmware git instead
+LINUX_FIRMWARE_GIT='git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git'
+cd /lib
+rm -rf firmware
+git clone --depth 1 $LINUX_FIRMWARE_GIT firmware
+rm -rf firmware/.git
+
+exit 0
+
+
 FIRMWARE_SRC_DIR=${PROG_DIR}/../firmware
 FIRMWARE_DEST_DIR=/lib/firmware
 
