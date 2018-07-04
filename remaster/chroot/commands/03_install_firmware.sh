@@ -7,11 +7,18 @@ PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
 
 # Fetch the latest firmware from linux firmware git instead
+apt-get update && apt-get install git
+if [ $? -ne 0 ]; then
+    echo "Could not install git"
+    exit 0
+fi
+
 LINUX_FIRMWARE_GIT='git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git'
 cd /lib
 rm -rf firmware
 git clone --depth 1 $LINUX_FIRMWARE_GIT firmware
 rm -rf firmware/.git
+apt-get autoremove --purge git
 
 exit 0
 
