@@ -19,3 +19,27 @@ if [ -f ${GRUB_CFG} ]; then
     \cp -f ${GRUB_CFG} ${EFI_DIR}/boot/grub/grub.cfg
 fi
 \cp -a ${EFI_DIR}/. ${ISO_EXTRACT_DIR}/.
+
+# Create .efi files from scratch using grub-mkimage
+# For now we have linuxium efi files, and OVERWRITE them
+GRUB_MODULES="ntfs hfs appleldr boot cat efi_gop efi_uga elf fat hfsplus iso9660 linux keylayouts memdisk minicmd part_apple ext2 extcmd xfs xnu part_bsd part_gpt search search_fs_file chain btrfs loadbios loadenv lvm minix minix2 reiserfs memrw mmap msdospart scsi loopback normal configfile gzio all_video efi_gop efi_uga gfxterm gettext echo boot chain eval"
+
+GRUB_DIR=/usr/lib/grub/i386-efi
+GRUB_FORMAT=i386-efi
+if [ -d $GRUB_DIR -a -f $GRUB_DIR/moddep.lst ]; then
+    \rm -f ${ISO_EXTRACT_DIR}/EFI/BOOT/bootia32.efi
+    grub-mkimage -d $GRUB_DIR -o ${ISO_EXTRACT_DIR}/EFI/BOOT/bootia32.efi -O $GRUB_FORMAT -p /boot/grub $GRUB_MODULES
+else
+    echo "grub directory or moddep.lst not found: $GRUB_DIR"
+fi    
+
+GRUB_DIR=/usr/lib/grub/x86_64-efi
+GRUB_FORMAT=x86_64-efi
+if [ -d $GRUB_DIR -a -f $GRUB_DIR/moddep.lst ]; then
+    \rm -f ${ISO_EXTRACT_DIR}/EFI/BOOT/bootx64.efi
+    \rm -f ${ISO_EXTRACT_DIR}/EFI/BOOT/grubx64.efi
+    grub-mkimage -d $GRUB_DIR -o ${ISO_EXTRACT_DIR}/EFI/BOOT/bootx64.efi -O $GRUB_FORMAT -p /boot/grub $GRUB_MODULES
+    \cp ${ISO_EXTRACT_DIR}/EFI/BOOT/bootx64.efi ${ISO_EXTRACT_DIR}/EFI/BOOT/grubx64.efi
+else
+    echo "grub directory or moddep.lst not found: $GRUB_DIR"
+fi    
