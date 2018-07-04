@@ -23,17 +23,8 @@ if [ ! -f ${PROG_DIR}/setup_bytcr_rt5651_asound_state.sh ]; then
 fi
 
 \cp -fr ${PROG_DIR}/UCM/* /usr/share/alsa/ucm/
-# bytcr-rt5651 is updated, but if kernel is 4.13 or older, we use
-# old-byt-cr-rt5651 to keep old behavior unchanged - i.e. with kernels
-# newer than 4.13, the new UCM files will be used
-if [ -d /usr/share/alsa/ucm/bytcr-rt5651 -a -d /usr/share/alsa/ucm/old-bytcr-rt5651 ]; then
-    MAJ=$(uname -r | cut -d'.' -f1)
-    MIN=$(uname -r | cut -d'.' -f2)i
-    if [ \( $MAJ -eq 4 -a $MIN -gt 13 \) -o \( $MAJ -gt 4 \) ]; then
-        mv /usr/share/alsa/ucm/bytcr-rt5651 /usr/share/alsa/ucm/new-bytcr-rt5651
-        mv /usr/share/alsa/ucm/old-bytcr-rt5651 /usr/share/alsa/ucm/bytcr-rt5651
-    fi
-fi
+# bytcr-rt5651 is updated, but older bytcr-rt5651 files are under
+# old-byt-cr-rt5651 to keep old behavior if desired
 
 # If pulseaudio version is >= 1:10.0-2ubuntu3, disable snd_hdmi_lpe_audio
 # module by blacklisting it - since loading that module makes pulseaudio
