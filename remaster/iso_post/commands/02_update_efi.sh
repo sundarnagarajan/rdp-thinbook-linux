@@ -6,11 +6,11 @@ PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
 
 ISO_EXTRACT_DIR=${PROG_DIR}/../..
 ISO_EXTRACT_DIR=$(readlink -e $ISO_EXTRACT_DIR)
-#GRUB_CFG=${ISO_EXTRACT_DIR}/boot/grub/grub.cfg
+GRUB_CFG=${ISO_EXTRACT_DIR}/boot/grub/grub.cfg
 
-#if [ -f ${GRUB_CFG} ]; then
-#    \cp -f ${GRUB_CFG} ${EFI_DIR}/boot/grub/grub.cfg
-#fi
+if [ -f ${GRUB_CFG} ]; then
+    \cp -f ${GRUB_CFG} ${EFI_DIR}/boot/grub/grub.cfg
+fi
 
 mkdir -p ${ISO_EXTRACT_DIR}/EFI/BOOT
 EFI_DIR=${PROG_DIR}/../efi
@@ -19,6 +19,7 @@ if [ -d ${EFI_DIR} ]; then
     \cp -av ${EFI_DIR}/. ${ISO_EXTRACT_DIR}/.
 fi
 
+exit 0
 
 # Create .efi files from scratch using grub-mkimage
 GRUB_MODULES="ntfs hfs appleldr boot cat efi_gop efi_uga elf fat hfsplus iso9660 linux keylayouts memdisk minicmd part_apple ext2 extcmd xfs xnu part_bsd part_gpt search search_fs_file chain btrfs loadbios loadenv lvm minix minix2 reiserfs memrw mmap msdospart scsi loopback normal configfile gzio all_video efi_gop efi_uga gfxterm gettext echo boot chain eval"
