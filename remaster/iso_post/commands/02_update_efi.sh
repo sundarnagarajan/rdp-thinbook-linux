@@ -29,7 +29,7 @@ if [ -d $GRUB_DIR -a -f $GRUB_DIR/moddep.lst ]; then
     GRUB_MODULES=$(for f in $(ls $GRUB_DIR/*.mod); do echo $(basename $f .mod); done)
     if [ -n "$GRUB_MODULES" ]; then
         \rm -fv ${ISO_EXTRACT_DIR}/EFI/BOOT/bootx64.efi
-        \rm -fv ${ISO_EXTRACT_DIR}/EFI/BOOT/BOOTx64.efi
+        \rm -fv ${ISO_EXTRACT_DIR}/EFI/BOOT/BOOTx64.EFI
         \rm -fv ${ISO_EXTRACT_DIR}/EFI/BOOT/grubx64.efi
         \rm -fv ${ISO_EXTRACT_DIR}/EFI/BOOT/GRUBX64.efi
         grub-mkimage -d $GRUB_DIR -o ${ISO_EXTRACT_DIR}/EFI/BOOT/bootx64.efi -O $GRUB_FORMAT -p /boot/grub $GRUB_MODULES
