@@ -16,7 +16,7 @@ mkdir -p ${ISO_EXTRACT_DIR}/EFI/BOOT
 EFI_DIR=${PROG_DIR}/../efi
 if [ -d ${EFI_DIR} ]; then
     EFI_DIR=$(readlink -e $EFI_DIR)
-    \cp -fv ${EFI_DIR}/EFI/BOOT/bootia32.efi ${ISO_EXTRACT_DIR}/
+    \cp -av ${EFI_DIR}/. ${ISO_EXTRACT_DIR}/.
 fi
 
 
@@ -28,10 +28,10 @@ GRUB_FORMAT=x86_64-efi
 if [ -d $GRUB_DIR -a -f $GRUB_DIR/moddep.lst ]; then
     GRUB_MODULES=$(for f in $(ls $GRUB_DIR/*.mod); do echo $(basename $f .mod); done)
     if [ -n "$GRUB_MODULES" ]; then
-        \rm -f ${ISO_EXTRACT_DIR}/EFI/BOOT/bootx64.efi
-        \rm -f ${ISO_EXTRACT_DIR}/EFI/BOOT/BOOTX64.efi
-        \rm -f ${ISO_EXTRACT_DIR}/EFI/BOOT/grubx64.efi
-        \rm -f ${ISO_EXTRACT_DIR}/EFI/BOOT/GRUBX64.efi
+        \rm -fv ${ISO_EXTRACT_DIR}/EFI/BOOT/bootx64.efi
+        \rm -fv ${ISO_EXTRACT_DIR}/EFI/BOOT/BOOTx64.efi
+        \rm -fv ${ISO_EXTRACT_DIR}/EFI/BOOT/grubx64.efi
+        \rm -fv ${ISO_EXTRACT_DIR}/EFI/BOOT/GRUBX64.efi
         grub-mkimage -d $GRUB_DIR -o ${ISO_EXTRACT_DIR}/EFI/BOOT/bootx64.efi -O $GRUB_FORMAT -p /boot/grub $GRUB_MODULES
         \cp ${ISO_EXTRACT_DIR}/EFI/BOOT/bootx64.efi ${ISO_EXTRACT_DIR}/EFI/BOOT/grubx64.efi
     else
@@ -41,14 +41,12 @@ else
     echo "grub directory or moddep.lst not found: $GRUB_DIR"
 fi    
 
-exit 0
-
 GRUB_DIR=/usr/lib/grub/i386-efi
 GRUB_FORMAT=i386-efi
 if [ -d $GRUB_DIR -a -f $GRUB_DIR/moddep.lst ]; then
     # GRUB_MODULES=$(for f in $(ls $GRUB_DIR/*.mod); do echo $(basename $f .mod); done)
     if [ -n "$GRUB_MODULES" ]; then
-        \rm -f ${ISO_EXTRACT_DIR}/EFI/BOOT/bootia32.efi
+        \rm -fv ${ISO_EXTRACT_DIR}/EFI/BOOT/bootia32.efi
         grub-mkimage -d $GRUB_DIR -o ${ISO_EXTRACT_DIR}/EFI/BOOT/bootia32.efi -O $GRUB_FORMAT -p /boot/grub $GRUB_MODULES
     else
         echo "No grub modules found in $GRUB_DIR"
