@@ -45,7 +45,14 @@ function update_from_git {
 function compile_kernel {
     cd $TOP_DIR
     cd $TOP_DIR/kernel_build
-    ./patch_and_build_kernel.sh
+    mkdir -p $TOP_DIR/kernel_build/debs
+    export KERNEL_BUILD_DIR=$TOP_DIR/kernel_build/debs
+
+    # Avoid kernel 4.17 - has issues with RDP 1130i
+    # Because 4.17 had a huge set of ALSA changes?
+    export KERNEL_TYPE=stable
+    KERNEL_BUILD_CONFIG="./kernel_build.config" KERNEL__NO_SRC_PKG=yes KERNEL_BUILD_DIR=$TOP_DIR/kernel_build/debs ./patch_and_build_kernel.sh
+
     if [ $? -ne 0 ]; then
         exit 1
     fi
