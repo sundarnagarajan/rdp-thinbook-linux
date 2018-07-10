@@ -9,7 +9,7 @@ NEW_EFI_IMG_SIZE_BYTES=3145728
 GRUB_BUILTIN_MODLIST="iso9660 memdisk extcmd search search_fs_file minix normal configfile"
 
 # grub prefix - used with grub-mkimage
-GRUB_PREFIX=""
+GRUB_PREFIX="/boot/grub"
 
 PROG_PATH=${PROG_PATH:-$(readlink -e $0)}
 PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
@@ -98,6 +98,7 @@ function create_1_efi_file {
     local grub_format=$2
     local boot_grub_dir=$3
     local efi_filename=""
+    local grub_embedded_cfg=${boot_grub_dir}/grub_embedded.cfg
 
     case $grub_format in
         i386-efi)
@@ -111,7 +112,11 @@ function create_1_efi_file {
             return 1
     esac
     echo "Creating EFI image: $efi_filename"
-    grub-mkimage -p "$GRUB_PREFIX" -O $grub_format -o ${efi_directory}/${efi_filename} ${GRUB_BUILTIN_MODLIST}
+    \rm -f $grub_embedded_cfg
+    echo 'set root=(hd0)' > $grub_embedded_cfg
+
+    grub-mkimage -p "$GRUB_PREFIX" --format=$grub_format i--config=$grub_embedded_cfg --output=${efi_directory}/${efi_filename} ${GRUB_BUILTIN_MODLIST}
+    \rm -f $grub_embedded_cfg
 
     # Delete builtin modules
     if [ -n "$boot_grub_dir" -a -d "${boot_grub_dir}/${grub_format}" ]; then
