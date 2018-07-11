@@ -56,9 +56,6 @@ if [ ! -x /root/$PPASCRIPTS_DIR_NAME/$INSTALL_SCRIPT_FILENAME ]; then
     exit 1
 fi
 
-# Install the PPA sources file and add trusted key
-/root/ $PPASCRIPTS_DIR_NAME/$INSTALL_SCRIPT_FILENAME || exit 0
-
 # On Ubuntu 17.10 systemd provides the system-wide DNS resolver
 # On such distributions, /etc/resolv.conf inside the ISO points
 # at ../run/systemd/resolve/stub-resolv.conf and the target will not
@@ -77,6 +74,9 @@ if [ $? -ne 0 ]; then
     mv /etc/resolv.conf $ORIG_RESOLV_CONF
     echo -e "nameserver   8.8.8.8\nnameserver  8.8.4.4" > /etc/resolv.conf
 fi
+
+# Install the PPA sources file and add trusted key
+/root/$PPASCRIPTS_DIR_NAME/$INSTALL_SCRIPT_FILENAME || exit 0
 
 apt-get update 1>/dev/null
 apt-get -y install cherrytux-image cherrytux-headers 1>/dev/null
