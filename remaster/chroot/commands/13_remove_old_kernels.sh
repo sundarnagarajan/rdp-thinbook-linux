@@ -79,7 +79,9 @@ fi
 # To deal with this, we RE-CHECK and REINSTALL any debs in
 # $KERNEL_DEB_DIR that are no longer installed!
 
-if [ -z "S(ls -A ${KERNEL_DEB_DIR}/*.deb 2>/dev/null)" ]; then
+ls ${KERNEL_DEB_DIR}/ | grep -q '\.deb$'
+if [ $? -ne 0 ]; then
+# if [ -z "S(ls -A ${KERNEL_DEB_DIR}/*.deb 2>/dev/null)" ]; then
     echo "No deb files in $KERNEL_DEB_DIR"
 else
     REINSTALLED=no
