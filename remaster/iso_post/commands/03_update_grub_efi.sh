@@ -7,6 +7,7 @@ NEW_EFI_IMG_SIZE_BYTES=3145728
 # List of grub modules to build into EFI images
 # Module names should NOT have '.mod' ending!
 GRUB_BUILTIN_MODLIST="iso9660 memdisk extcmd search search_fs_file minix normal configfile"
+GRUB_REMOVE_MODULES="affs.mod afs.mod extcmd.mod fshelp.mod functional_test.mod hello.mod nilfs2.mod search_fs_file.mod search_fs_uuid.mod search_label.mod search.mod sfs.mod tar.mod zfsinfo.mod zfs.mod"
 
 # grub prefix - used with grub-mkimage
 GRUB_PREFIX="/boot/grub"
@@ -213,7 +214,14 @@ function create_1_grub_module_dir {
         fi
     else
         echo "Copying from grub_src_dir: $grub_src_dir"
-        \cp -fa $grub_src_dir/. $target_dir/.
+        # Only copy .mod and .lst
+        \cp -fa $grub_src_dir/*.mod $target_dir/
+        \cp -fa $grub_src_dir/*.lst $target_dir/
+        # Remove some modules that are not normally present
+        for m in $GRUB_REMOVE_MODULES
+        do
+            \rm -f  $target_dir/$m
+        done
     fi
 }
 
