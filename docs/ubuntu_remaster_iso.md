@@ -72,17 +72,19 @@ ubuntu_remaster_iso.sh ISO_PATH EXTRACT_DIR OUTPUT_ISO
 ## Sample remaster commands
 | Stage | Command | What it does | Default state |
 | ----- | ------- | ------------ | ------------- |
-| chroot | 01_install_firmware.sh | Install firmware required by RTL 8723bs Wifi chipset | Disabled |
-| chroot | 02_install_kernels.sh | Install custom kernels does nothing if kernel_debs dir is empty | Enabled |
-| chroot | 03_remove_old_kernels.sh | Removes all kernels **EXCEPT** kernels installed by ```02_install_kernels.sh```. Does nothing if ```02_install_kernels.sh``` did nothing | Enabled |
-| chroot | 04_install_es8316-sound.sh | Install systemd service and udev rules to make Bluetooth work on RTL 8723bs chipset | Enabled |
+| chroot | 00_rebrand.sh | Rebrand distro as cherrytux - avoid user confusion | Enabled |
+| chroot | 01_install_kernels.sh | Install custom kernels does nothing if kernel_debs dir is empty | Enabled |
+| chroot | 02_remove_old_kernels.sh | Removes all kernels **EXCEPT** kernels installed by ```02_install_kernels.sh```. Does nothing if ```02_install_kernels.sh``` did nothing | Enabled |
+| chroot | 03_update_all_packages.sh | Update all packages | Enabled |
+| chroot | 04_install_sound.sh | Install UCM files and /var/lib/alsa/asound.state to make sound work with bytcht_8316 and bytcr-rt5651 chipsets  | Enabled |
 | chroot | 05_install_r8723_bluetooth.sh | Install systemd service and udev rules to make Bluetooth work on RTL 8723bs chipset | Enabled |
-| chroot | 06_update_all_packages.sh | Update all packages | Enabled |
+| chroot | 06_install_firmware.sh | Get latest firmware from linux firmware git | Enabled |
 | chroot | 07_install_grub_packages.sh | Install UEFI-i386 UEFI-amd64 and non-UEFI grub packages | Enabled |
 | chroot | 08_apt_cleanup.sh | apt autoremove and cleanup apt cache | Enabled |
 | chroot | 09_copy_scripts.sh | Copy scripts under /root/remaster | Enabled |
-| iso_post | 01_iso_kernel.sh | Update kernel in ISO (live session) if kernel was updated in chroot stage by ```02_install_kernels.sh```. Does nothing otherwise | Enabled |
-| iso_post | 02_update_efi.sh | Makes ISO bootable in 32-bit and 64-bit EFI loaders | Enabled |
+| iso_post | 01_update_iso_kernel.sh | Update kernel in ISO (live session) if kernel was updated in chroot stage by ```02_install_kernels.sh```. Does nothing otherwise | Enabled |
+| iso_post | 02_remove_existing_grub_efi.sh | Removes all existing EFI images and grub modules from ISO | Disabled |
+| iso_post | 03_update_grub_efi.sh | Creates missing EFI images and adds missing grub modules for enabling use with 32-bit and 64-bit EFI loaders | Enabled |
 
 ## File layout
 ```
