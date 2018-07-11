@@ -16,7 +16,6 @@ fi
 KERNEL_DEB_DIR=$(readlink -e $KERNEL_DEB_DIR)
 ls $KERNEL_DRB_DIR/ | grep -q '\.deb$'
 if [ $? -ne 0 ]; then
-# if [ -z "S(ls -A ${KERNEL_DEB_DIR}/*.deb 2>/dev/null)" ]; then
     echo "No deb files in $KERNEL_DEB_DIR"
     exit 0
 fi
