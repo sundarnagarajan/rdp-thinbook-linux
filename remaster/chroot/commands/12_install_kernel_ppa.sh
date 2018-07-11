@@ -42,8 +42,6 @@ fi
 
 mkdir -p /root
 cp -r ${PPA_SCRIPTS_DIR} /root/
-echo "sleeping"
-sleep 120
 
 SOURCES_FILENAME=001-cherrytux-ppa.list
 INSTALL_SCRIPT_FILENAME=install_ppa.sh
