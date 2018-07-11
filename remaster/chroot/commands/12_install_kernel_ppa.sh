@@ -41,7 +41,7 @@ if [ $? -ne 0 ]; then
 fi
 
 mkdir -p /root
-cp -r ${PPA_SCRIPTS_DIR}/. /root/
+cp -r ${PPA_SCRIPTS_DIR} /root/
 
 SOURCES_FILENAME=001-cherrytux-ppa.list
 INSTALL_SCRIPT_FILENAME=install_ppa.sh
