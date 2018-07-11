@@ -45,8 +45,10 @@ if [ -f  $ORIG_RESOLV_CONF -o -L $ORIG_RESOLV_CONF ]; then
     mv  $ORIG_RESOLV_CONF /etc/resolv.conf
 fi
 
-exit 0
 
+# Rest was used earlier to copy RTL8723bs firmware - not needed any more
+# if we get latest linux firmware
+exit 0
 
 FIRMWARE_SRC_DIR=${PROG_DIR}/../firmware
 FIRMWARE_DEST_DIR=/lib/firmware
