@@ -83,9 +83,14 @@ apt-get -y install cherrytux-image cherrytux-headers 1>/dev/null
 
 # Add kernel we installed to $KP_LIST
 mkdir -p $KERNEL_DEB_DIR
-dpkg -l linux-headers-[0-9]* | grep '^ii' | tail -1 | awk '{print $2}' > $KP_LIST
-echo "KP_LIST: $KP_LIST"
-cat $KP_LIST
+touch $KP_LIST
+dpkg -l linux-image-[0-9]* | grep '^ii' | tail -1 | awk '{print $2}' >> $KP_LIST
+dpkg -l linux-headers-[0-9]* | grep '^ii' | tail -1 | awk '{print $2}' >> $KP_LIST
+
+echo "Installed following packages:"
+dpkg -l cherrytux-image | grep '^ii' | tail -1 | awk '{print $2}' | sed -e 's/^/    /'
+dpkg -l cherrytux-headers | grep '^ii' | tail -1 | awk '{print $2}' | sed -e 's/^/    /'
+cat $KP_LIST | sed -e 's/^/    /'
 
 
 # Restore original /etc/resolv.conf if we had moved it
