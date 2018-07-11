@@ -313,13 +313,20 @@ function all_efi_files_present {
 
 exit_if_not_root
 
-OLD_LOOPDEV=$(setup_loop_dev $OLD_IMG_FILE)
+if [ -f "$OLD_IMG_FILE" ]; then
+    IMG_FOUND=yes
 
-\rm -rf "$MOUNT_OLD_DIR"; mkdir -p "$MOUNT_OLD_DIR"
-mount $OLD_LOOPDEV "$MOUNT_OLD_DIR"
-# We don't need a new image if all EFI files are already present
-EFI_BOOT_DIR=$(find ${MOUNT_OLD_DIR} -ipath ${MOUNT_OLD_DIR}/EFI/BOOT)
-all_efi_files_present "$EFI_BOOT_DIR" && EFI_FILES_OK=yes || EFI_FILES_OK=no
+    OLD_LOOPDEV=$(setup_loop_dev $OLD_IMG_FILE)
+    \rm -rf "$MOUNT_OLD_DIR"; mkdir -p "$MOUNT_OLD_DIR"
+    mount $OLD_LOOPDEV "$MOUNT_OLD_DIR"
+    # We don't need a new image if all EFI files are already present
+    EFI_BOOT_DIR=$(find ${MOUNT_OLD_DIR} -ipath ${MOUNT_OLD_DIR}/EFI/BOOT)
+    all_efi_files_present "$EFI_BOOT_DIR" && EFI_FILES_OK=yes || EFI_FILES_OK=no
+else
+    IMG_FOUND=no
+    EFI_FILES_OK=no
+fi
+
 
 trap cleanup_mounts_loopdevs EXIT
 
@@ -333,17 +340,16 @@ if [ "$EFI_FILES_OK" = "no" ]; then
 
     \rm -rf "$MOUNT_NEW_DIR"; mkdir -p "$MOUNT_NEW_DIR"
     mount $NEW_LOOPDEV "$MOUNT_NEW_DIR"
-    cp -a $MOUNT_OLD_DIR/. $MOUNT_NEW_DIR/.
 
-    umount $MOUNT_OLD_DIR
-    tear_down_loop_dev $OLD_LOOPDEV
+    if [ "$IMG_FOUND" = "yes" ]; then
+        cp -a $MOUNT_OLD_DIR/. $MOUNT_NEW_DIR/.
+        umount $MOUNT_OLD_DIR
+        tear_down_loop_dev $OLD_LOOPDEV
+    else
+        mkdir -p $MOUNT_NEW_DIR/efi/boot
+    fi
 fi
 
-if [ "$EFI_FILES_OK" = "no" ]; then    
-    EFI_BOOT_DIR=$(find ${MOUNT_NEW_DIR} -ipath ${MOUNT_NEW_DIR}/EFI/BOOT)
-else
-    EFI_BOOT_DIR=$(find ${MOUNT_OLD_DIR} -ipath ${MOUNT_OLD_DIR}/EFI/BOOT)
-fi
 create_reqd_grub_module_dirs "$GRUB_DIR" || exit 1
 
 if [ "$EFI_FILES_OK" = "no" ]; then
