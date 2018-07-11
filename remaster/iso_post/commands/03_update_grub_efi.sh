@@ -112,10 +112,12 @@ function create_1_efi_file {
             return 1
     esac
     echo "Creating EFI image: $efi_filename"
+
     \rm -f $grub_embedded_cfg
     echo 'set root=(hd0)' > $grub_embedded_cfg
-
-    grub-mkimage -p "$GRUB_PREFIX" --format=$grub_format --config=$grub_embedded_cfg --output=${efi_directory}/${efi_filename} ${GRUB_BUILTIN_MODLIST}
+    echo 'set prefix=/boot/grub' >> $grub_embedded_cfg
+    echo 'normal' >> $grub_embedded_cfg
+    grub-mkimage --prefix=$GRUB_PREFIX --format=$grub_format --config=$grub_embedded_cfg --output=${efi_directory}/${efi_filename} ${GRUB_BUILTIN_MODLIST}
     \rm -f $grub_embedded_cfg
 
     # Delete builtin modules
