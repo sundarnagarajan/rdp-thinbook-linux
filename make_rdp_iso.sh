@@ -109,6 +109,6 @@ check_required_pkgs
 check_avail_disk_space
 
 update_from_git
-compile_kernel
+# compile_kernel
 remaster_iso
 echo "Start: $START_TIME" ; echo "Ended: $(date)"
