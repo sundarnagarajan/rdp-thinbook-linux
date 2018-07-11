@@ -45,6 +45,13 @@ do
 		REMOVE_LIST="$REMOVE_LIST $p"
 	fi
 done
+for p in $(dpkg -l 'linux-modules-*' | grep '^ii' | awk '{print $2}')
+do
+	fgrep -qx $p $KP_LIST
+	if [ $? -ne 0 ]; then
+		REMOVE_LIST="$REMOVE_LIST $p"
+	fi
+done
 for p in $(dpkg -l 'linux-headers*' | grep '^ii' | awk '{print $2}')
 do
 	fgrep -qx $p $KP_LIST
