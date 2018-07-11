@@ -51,7 +51,7 @@ if [ ! -f /root/$PPASCRIPTS_DIR_NAME/$SOURCES_FILENAME ]; then
     echo "Sources file not found: /root/$PPASCRIPTS_DIR_NAME/$SOURCES_FILENAME"
     exit 0
 fi
-if [ ! -x /root/ $PPASCRIPTS_DIR_NAME/$INSTALL_SCRIPT_FILENAME ]; then
+if [ ! -x /root/$PPASCRIPTS_DIR_NAME/$INSTALL_SCRIPT_FILENAME ]; then
     echo "Install script not found: /root/ $PPASCRIPTS_DIR_NAME/$INSTALL_SCRIPT_FILENAME"
     exit 1
 fi
