@@ -4,6 +4,8 @@ Linux on the [RDP Thinbook](http://www.rdp.in/thinbook/)
 The RDP Thinbook is a new ultra-portable laptop produced by RDP Workstations Pvt. Ltd. in India. It is marketed as India's most affordable laptop, and is sold for around US$ 140 - 160 (when you choose the option of buying it without Windows installed).
 
 # News
+Now EFI Images (32-bit and 64-bit) and associated grub modues are built using ```grub-mkimage``` rather than including pre-built (binary) EFI images and grub modules in this repository. Tested to work on RDP 1430 (32-bit UEFI loader) and RDP 1130 (64-bit UEFI loader). This was long overdue and finally completed.
+
 New Bionic Beaver 18.04 ISOs
 
 Moved out kernel_compile to [separate repository](https://github.com/sundarnagarajan/kernel_build.git)
