@@ -44,19 +44,21 @@ function update_from_git {
 
 function compile_kernel {
     cd $TOP_DIR
-    cd $TOP_DIR/kernel_build
-    mkdir -p $TOP_DIR/kernel_build/debs
-    export KERNEL_BUILD_DIR=$TOP_DIR/kernel_build/debs
+    mkdir -p $TOP_DIR/debs
 
+    # Config values are in kernel_build.config
     # Avoid kernel 4.17 - has issues with RDP 1130i
     # Because 4.17 had a huge set of ALSA changes?
-    export KERNEL_TYPE=stable
-    KERNEL_BUILD_CONFIG="./kernel_build.config" KERNEL__NO_SRC_PKG=yes KERNEL_BUILD_DIR=$TOP_DIR/kernel_build/debs ./patch_and_build_kernel.sh
+    # export KERNEL_TYPE=stable
+    # export KERNEL_BUILD_DIR=$TOP_DIR/kernel_build/debs
+    # KERNEL_BUILD_CONFIG="./kernel_build.config" KERNEL__NO_SRC_PKG=yes KERNEL_BUILD_DIR=$TOP_DIR/kernel_build/debs ./patch_and_build_kernel.sh
+    
+    KERNEL_BUILD_CONFIG="$TOP_DIR/kernel_build.config" $TOP_DIR/kernel_build/scripts/patch_and_build_kernel.sh
 
     if [ $? -ne 0 ]; then
         exit 1
     fi
-    mv debs/*.deb $TOP_DIR/rdp-thinbook-linux/remaster/chroot/kernel-debs/
+    mv $TOP_DIR/debs/*.deb $TOP_DIR/rdp-thinbook-linux/remaster/chroot/kernel-debs/
 
     cd $TOP_DIR
 }
@@ -74,9 +76,11 @@ function remaster_iso {
     if [ -n "${OUTPUT_ISO}" -a -f "${OUTPUT_ISO}" ]; then
         sudo rm -f ${OUTPUT_ISO}
     fi
-    if [ -n "$ENABLE_REBRAND" ]; then
-        if [ -f $TOP_DIR/rdp-thinbook-linux/remaster/chroot/commands/00_rebrand.sh ]; then
+    if [ -f $TOP_DIR/rdp-thinbook-linux/remaster/chroot/commands/00_rebrand.sh ]; then
+        if [ "$ENABLE_REBRAND" = "yes" ]; then
             chmod +x $TOP_DIR/rdp-thinbook-linux/remaster/chroot/commands/00_rebrand.sh
+        else
+            chmod -x $TOP_DIR/rdp-thinbook-linux/remaster/chroot/commands/00_rebrand.sh
         fi
     fi
     sudo REMASTER_CMDS_DIR=${R_DIR} ${TOP_DIR}/bootutils/scripts/ubuntu_remaster_iso.sh ${INPUT_ISO} ${EXTRACT_DIR} ${OUTPUT_ISO}
@@ -94,7 +98,7 @@ if [ "$1" = "--rebrand" ]; then
     export ENABLE_REBRAND=yes
 else
     echo "Rebranding is disabled"
-    unset ENABLE_REBRAND
+    export ENABLE_REBRAND=no
 fi
 
 check_required_pkgs
