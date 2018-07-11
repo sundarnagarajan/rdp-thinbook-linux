@@ -42,6 +42,8 @@ fi
 
 mkdir -p /root
 cp -r ${PPA_SCRIPTS_DIR} /root/
+echo "sleeping"
+sleep 120
 
 SOURCES_FILENAME=001-cherrytux-ppa.list
 INSTALL_SCRIPT_FILENAME=install_ppa.sh
@@ -52,7 +54,7 @@ if [ ! -f /root/$PPASCRIPTS_DIR_NAME/$SOURCES_FILENAME ]; then
     exit 0
 fi
 if [ ! -x /root/$PPASCRIPTS_DIR_NAME/$INSTALL_SCRIPT_FILENAME ]; then
-    echo "Install script not found: /root/ $PPASCRIPTS_DIR_NAME/$INSTALL_SCRIPT_FILENAME"
+    echo "Install script not found: /root/$PPASCRIPTS_DIR_NAME/$INSTALL_SCRIPT_FILENAME"
     exit 1
 fi
 
