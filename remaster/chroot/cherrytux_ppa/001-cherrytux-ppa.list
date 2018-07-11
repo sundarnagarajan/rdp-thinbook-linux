@@ -1,0 +1,12 @@
+# cherrytux
+
+# user: sundar-nagarajan
+# project: cherrytux-kernel
+# fingerprint: ABF7C302A5B662BDE68E0EFE883F04480A577E61
+
+# PPA page: https://launchpad.net/~sundar-nagarajan/+archive/cherrytux
+# Add public key using:
+# sudo apt-key --keyring /etc/apt/trusted.gpg.d/ppa.gpg adv --recv-keys --keyserver keyserver.ubuntu.com ABF7C302A5B662BDE68E0EFE883F04480A577E61
+
+# deb line will look like:
+deb [ arch=amd64 signed-by=ABF7C302A5B662BDE68E0EFE883F04480A577E61] http://ppa.launchpad.net/sundar-nagarajan/cherrytux-test/ubuntu xenial main 
