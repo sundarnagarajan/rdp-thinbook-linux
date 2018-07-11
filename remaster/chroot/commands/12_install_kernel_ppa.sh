@@ -18,14 +18,6 @@ KERNEL_DEB_DIR=$(readlink -e $KERNEL_DEB_DIR)
 KP_LIST=kernel_pkgs.list
 KP_LIST=${KERNEL_DEB_DIR}/$KP_LIST
 
-if [ -f $KP_LIST -a -s $KP_LIST ]; then
-    grep -q '^linux-image' $KP_LIST
-    if [ $? -eq 0 ]; then
-        echo "Kernels already installed - not using cherrytux PPA"
-        exit 0
-    fi
-fi
-
 PPASCRIPTS_DIR_NAME=cherrytux_ppa
 PPA_SCRIPTS_DIR=${PROG_DIR}/../$PPASCRIPTS_DIR_NAME
 
@@ -77,6 +69,15 @@ fi
 
 # Install the PPA sources file and add trusted key
 /root/$PPASCRIPTS_DIR_NAME/$INSTALL_SCRIPT_FILENAME || exit 0
+
+if [ -f $KP_LIST -a -s $KP_LIST ]; then
+    grep -q '^linux-image' $KP_LIST
+    if [ $? -eq 0 ]; then
+        echo "Kernels already installed - not using cherrytux PPA"
+        echo "cherrytux PPA setup and ready to use"
+        exit 0
+    fi
+fi
 
 apt-get update 1>/dev/null
 echo "Installing cherrytux-image cherrytux-headers"
