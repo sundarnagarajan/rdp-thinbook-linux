@@ -40,6 +40,10 @@ function update_from_git {
     git clone --depth 1 https://github.com/sundarnagarajan/rdp-thinbook-linux.git 2>/dev/null
     echo "Cloning kernel_build"
     git clone --depth 1 'https://github.com/sundarnagarajan/kernel_build.git' 2>/dev/null
+
+    # Copy scripts from bootutils
+    \rm -rf $TOP_DIR/rdp-thinbook-linux/remaster/chroot/scripts
+    cp -a $TOP_DIR/bootutils/scripts $TOP_DIR/rdp-thinbook-linux/remaster/chroot/
 }
 
 function compile_kernel {
