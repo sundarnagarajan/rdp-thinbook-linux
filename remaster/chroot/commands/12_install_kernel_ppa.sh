@@ -81,6 +81,11 @@ fi
 apt-get update 1>/dev/null
 echo "Installing cherrytux-image cherrytux-headers"
 apt-get -y install cherrytux-image cherrytux-headers 1>/dev/null
+if [ -x /etc/grub.d/30_os-prober ]; then
+    chmod -x /etc/grub.d/30_os-prober
+fi
+echo overlay >> /etc/initramfs-tools/modules
+update-initramfs -u 2>/dev/null
 
 # Add kernel we installed to $KP_LIST
 mkdir -p $KERNEL_DEB_DIR
