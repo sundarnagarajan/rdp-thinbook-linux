@@ -115,7 +115,7 @@ function create_1_efi_file {
     \rm -f $grub_embedded_cfg
     echo 'set root=(hd0)' > $grub_embedded_cfg
 
-    grub-mkimage -p "$GRUB_PREFIX" --format=$grub_format i--config=$grub_embedded_cfg --output=${efi_directory}/${efi_filename} ${GRUB_BUILTIN_MODLIST}
+    grub-mkimage -p "$GRUB_PREFIX" --format=$grub_format --config=$grub_embedded_cfg --output=${efi_directory}/${efi_filename} ${GRUB_BUILTIN_MODLIST}
     \rm -f $grub_embedded_cfg
 
     # Delete builtin modules
