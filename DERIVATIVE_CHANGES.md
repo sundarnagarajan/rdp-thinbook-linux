@@ -42,7 +42,7 @@ No changes required
 
 ## Analysis of other Ubuntu-derived distributions
 
-| Derivative change | [Bodhi](http://www.bodhilinux.com/) | [Elementary](https://elementary.io/) | [Linux Lite](https://www.linuxliteos.com/) | [Linux Mint](https://linuxmint.com/) | [Peppermint](https://peppermintos.com/) | [Trisquel](https://trisquel.info/) | [Pop! OS](https://system76.com/pop)
+| Derivative change | [Bodhi Linux](http://www.bodhilinux.com/) | [Elementary OS](https://elementary.io/) | [Linux Lite](https://www.linuxliteos.com/) | [Linux Mint](https://linuxmint.com/) | [Peppermint OS](https://peppermintos.com/) | [Trisquel](https://trisquel.info/) | [Pop! OS](https://system76.com/pop)
 | ----------------- | --------- | -------------- | -------- | -------- | ------------ | ---------- | --------- |
 | /etc/issue | No | Yes | Yes | Yes | Yes | Yes | Yes |
 | /etc/issue.net | No | Yes | No | Yes | Yes | Yes | Yes |
