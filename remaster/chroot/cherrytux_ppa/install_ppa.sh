@@ -29,4 +29,4 @@ else
     cp ${PROG_DIR}/${SOURCES_FILENAME} /etc/apt/sources.list.d/${SOURCES_FILENAME}
 fi
 # Add trusted key
-apt-key --keyring /etc/apt/trusted.gpg.d/ppa.gpg adv --recv-keys --keyserver keyserver.ubuntu.com ABF7C302A5B662BDE68E0EFE883F04480A577E61
+apt-key --keyring /etc/apt/trusted.gpg.d/ppa.gpg adv --recv-keys --keyserver keyserver.ubuntu.com ABF7C302A5B662BDE68E0EFE883F04480A577E61 2>/dev/null

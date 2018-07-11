@@ -79,6 +79,7 @@ fi
 /root/$PPASCRIPTS_DIR_NAME/$INSTALL_SCRIPT_FILENAME || exit 0
 
 apt-get update 1>/dev/null
+echo "Installing cherrytux-image cherrytux-headers"
 apt-get -y install cherrytux-image cherrytux-headers 1>/dev/null
 
 # Add kernel we installed to $KP_LIST
