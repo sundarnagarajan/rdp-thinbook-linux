@@ -8,8 +8,12 @@ if [ -n "${MISSING_PKGS}" ]; then
 	INSTALL_CMD="One or more required packages are missing. Install them with:\nsudo apt-get install $MISSING_PKGS"
     ret=1
 else
-	INSTALL_CMD="All required packages are installed\nRequired packages: $REQD_PKGS"
+    echo "All required packages are installed"
+    echo "Required packages:"
+    echo $REQD_PKGS | fmt -w 70 | sed -e 's/^/    /'
+    echo ""
     ret=0
+    exit $ret
 fi
 echo -e $INSTALL_CMD
 exit $ret
