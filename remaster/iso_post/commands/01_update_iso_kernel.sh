@@ -22,7 +22,7 @@ if [ ! -d "$REMASTER_ISO_CHROOT_DIR" ]; then
     exit 0
 fi
 
-if [ ! -f ${REMASTER_ISO_CHROOT_DIR}/.${REMASTER_DIR}/${KP_LIST} ]; then
+if [ ! -f ${REMASTER_ISO_CHROOT_DIR}/${REMASTER_DIR}/${KP_LIST} ]; then
     echo "Kernel not updated"
     exit 0
 fi
