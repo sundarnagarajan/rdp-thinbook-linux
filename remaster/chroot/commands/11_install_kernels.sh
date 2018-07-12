@@ -15,16 +15,7 @@ if [ ! -d ${KERNEL_DEB_DIR} ]; then
 fi
 KERNEL_DEB_DIR=$(readlink -e $KERNEL_DEB_DIR)
 
-# DEBUG
-echo "KERNEL_DEB_DIR: $KERNEL_DEB_DIR"
-ls $KERNEL_DEB_DIR/
-echo "PROG_DIR: $PROG_DIR"
-ls -R $PROG_DIR/
-echo "REMASTER_DIR: $REMASTER_DIR"
-ls -R $REMASTER_DIR/
-# DEBUG
-
-ls $KERNEL_DRB_DIR/ | grep -q '\.deb$'
+ls $KERNEL_DEB_DIR/ | grep -q '\.deb$'
 if [ $? -ne 0 ]; then
     echo "No deb files in $KERNEL_DEB_DIR"
     exit 0
