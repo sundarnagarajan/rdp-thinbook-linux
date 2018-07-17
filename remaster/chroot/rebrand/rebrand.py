@@ -2,9 +2,14 @@
 import subprocess
 import re
 import os
-import ConfigParser
 import shutil
+import sys
 from collections import OrderedDict
+# On Ubuntu 18.04 live server ISO, only PY3 is available
+if sys.version_info.major == 3:
+    import configparser as ConfigParser
+else:
+    import ConfigParser
 
 
 CONFIG_FILE = 'rebrand.config'
