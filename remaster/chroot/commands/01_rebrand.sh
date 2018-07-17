@@ -23,4 +23,15 @@ if [ ! -f ${INSTALL_SCRIPT} ]; then
     exit 0
 fi
 
-python $INSTALL_SCRIPT
+PY=python
+which $PY 1>/dev/null
+if [ $? -ne 0 ]; then
+    PY=python3
+    which $PY 1>/dev/null
+    if [ $? -ne 0 ]; then
+        echo "Could not find python2 or python3"
+        exit 0
+    fi
+fi
+
+$PY $INSTALL_SCRIPT
