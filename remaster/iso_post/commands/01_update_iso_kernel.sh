@@ -53,25 +53,30 @@ do
 done
 
 # On 18.04 grub.cfg references vmlinuz and not vmlinuz.efi
-if [ -f ${ISO_EXTRACT_DIR}/casper/vmlinuz.efi ]; then
-    TARGET_VMLINUZ=${ISO_EXTRACT_DIR}/casper/vmlinuz.efi
-elif [ -f ${ISO_EXTRACT_DIR}/casper/vmlinuz ]; then
-    TARGET_VMLINUZ=${ISO_EXTRACT_DIR}/casper/vmlinuz
-else
-    echo "Could not find target vmlinuz"
-    exit 0
-fi
-TARGET_INITRD=${ISO_EXTRACT_DIR}/casper/initrd.lz
+# On 18.04 live server ISO initrd is called initrd.gz and not initrd.lz!
+# Find each file named vmlinuz* and initrd* and overwrite them if they
+# are different from SRC_VMLINUZ and SRC_INITRD respectively
 
-diff --brief $SRC_VMLINUZ $TARGET_VMLINUZ 1>/dev/null
-if [ $? -eq 0 ]; then
-    echo "vmlinuz unchanged - not overwriting"
-else
-    \cp -f $SRC_VMLINUZ $TARGET_VMLINUZ
-fi
-diff --brief $SRC_INITRD $TARGET_INITRD 1>/dev/null
-if [ $? -eq 0 ]; then
-    echo "initrd unchanged - not overwriting"
-else
-    \cp -f $SRC_INITRD $TARGET_INITRD
-fi
+for f in ${ISO_EXTRACT_DIR}/casper/vmlinuz*
+do
+    SRC_FILE=$SRC_VMLINUZ
+    diff --brief $SRC_FILE $f 1>/dev/null
+    if [ $? -ne 0 ]; then
+        \cp -f $SRC_FILE $f
+        echo "replaced $(basename $f)"
+    else
+        echo "$(basename $f) unchanged - not overwriting"
+    fi
+done
+
+for f in ${ISO_EXTRACT_DIR}/casper/initrd*
+do
+    SRC_FILE=$SRC_INITRD
+    diff --brief $SRC_FILE $f 1>/dev/null
+    if [ $? -ne 0 ]; then
+        \cp -f $SRC_FILE $f
+        echo "replaced $(basename $f)"
+    else
+        echo "$(basename $f) unchanged - not overwriting"
+    fi
+done
