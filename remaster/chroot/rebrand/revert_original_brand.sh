@@ -61,6 +61,13 @@ do
     fi
     # The actual restore
     if [ -f ${BACKUP_DIR}/${f}.orig ]; then
-        \cp -f ${BACKUP_DIR}/${f}.orig $f
+        diff --brief ${BACKUP_DIR}/${f}.orig $f 1>/dev/null
+        if [ $? -eq 0 ]; then
+            echo "File unchanged: $f"
+        else
+            \cp -f ${BACKUP_DIR}/${f}.orig $f
+        fi
+    else
+        echo "Backup not found: ${BACKUP_DIR}/${f}.orig"
     fi
 done
