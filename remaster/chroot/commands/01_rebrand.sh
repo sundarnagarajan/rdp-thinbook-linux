@@ -34,4 +34,32 @@ if [ $? -ne 0 ]; then
     fi
 fi
 
+# Copy original and new rebranded files under SCRIPTS_DIR/backup
+# So that revert_ubuntu_brand.sh can find and use them
+REBRAND_FILES="/etc/issue /etc/issue.net /etc/lsb-release /etc/os-release /etc/dpkg/origins/default"
+BACKUP_DIR=/root/rebrand/backup
+OLD_DISTRO_ID=$(cat /etc/lsb-release | head -1 | cut -d= -f2)
+mkdir -p $BACKUP_DIR
+# Backup original rebranded files
+for f in $REBRAND_FILES
+do
+    dn=$(dirname $f)
+    fn=$(basename $f)
+    if [ -f $f ]; then
+        mkdir -p ${BACKUP_DIR}/$dn
+        \cp -Lf $f ${BACKUP_DIR}/${f}.orig
+    fi
+done
+
 $PY $INSTALL_SCRIPT
+
+# Backup new rebranded files
+for f in $REBRAND_FILES
+do
+    dn=$(dirname $f)
+    fn=$(basename $f)
+    if [ -f $f ]; then
+        mkdir -p ${BACKUP_DIR}/$dn
+        \cp -Lf $f ${BACKUP_DIR}/${f}.new
+    fi
+done
