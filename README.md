@@ -4,30 +4,32 @@ Linux on the [RDP Thinbook](http://www.rdp.in/thinbook/)
 The RDP Thinbook is a new ultra-portable laptop produced by RDP Workstations Pvt. Ltd. in India. It is marketed as India's most affordable laptop, and is sold for around US$ 140 - 160 (when you choose the option of buying it without Windows installed).
 
 # News
-Now EFI Images (32-bit and 64-bit) and associated grub modues are built using ```grub-mkimage``` rather than including pre-built (binary) EFI images and grub modules in this repository. Tested to work on RDP 1430 (32-bit UEFI loader) and RDP 1130 (64-bit UEFI loader). This was long overdue and finally completed.
+- Rebranding of certain files (```/etc/issue /etc/issue.net /etc/lsb-release /etc/os-release```) is now **always** done. I have added a script to rever to original Ubuntu branding that is available under ```/root/rebrand/revert_original/brand.sh```. The user of the ISO - whether in the live session or after installation - can run ```/root/rebrand/revert_original/brand.sh``` to revert the branding if the user desires. This allows safe distribution of ISO while reducing any confusion because of the custom kernel and custom PPA used. At the same time it allows the **end user** to revert the branding to the original Ubuntu branding - making it look familiar to the end user. This should brook zero objection from Ubuntu and other distribution owners.
 
-New Bionic Beaver 18.04 ISOs
+- Now EFI Images (32-bit and 64-bit) and associated grub modues are built using ```grub-mkimage``` rather than including pre-built (binary) EFI images and grub modules in this repository. Tested to work on RDP 1430 (32-bit UEFI loader) and RDP 1130 (64-bit UEFI loader). This was long overdue and finally completed.
 
-Moved out kernel_compile to [separate repository](https://github.com/sundarnagarajan/kernel_build.git)
+- New Bionic Beaver 18.04 ISOs
+
+- Moved out kernel_compile to [separate repository](https://github.com/sundarnagarajan/kernel_build.git)
 With the move to [kernel_build](https://github.com/sundarnagarajan/kernel_build.git), following new features are available:
-- Automatically download latest kernel from kernel.org
-- Use [JSON API](https://www.kernel.org/releases.json) from kernel.org
-- Automatically upgrade kernel config for new (MAJOR) kernel versions
+    - Automatically download latest kernel from kernel.org
+    - Use [JSON API](https://www.kernel.org/releases.json) from kernel.org
+    - Automatically upgrade kernel config for new (MAJOR) kernel versions
 
-Note: **MUST** download latest make_rdp_iso.sh
+    Note: **MUST** download latest make_rdp_iso.sh
 
-[RDP](http://www.rdp.in) was kind enough to send me one of their new 11.6 inch models. With this, I have updated the Ubuntu 16.04.3 with kernel 4.13.1 ISO with the required changes to make sound work perfectly on the 11.6 inch RDP Thinbook. - Give it a spin!
+- [RDP](http://www.rdp.in) was kind enough to send me one of their new 11.6 inch models. With this, I have updated the Ubuntu 16.04.3 with kernel 4.13.1 ISO with the required changes to make sound work perfectly on the 11.6 inch RDP Thinbook. - Give it a spin!
 
-The 11.6 inch RDP Thinbook ships with a 64-bit UEFI loader - so 64-bit Linux ISOs on USB drives will be detected and can boot (although you will need some drivers enabled and some userspace tools / settings to make Bluetooth and sound work).
+- The 11.6 inch RDP Thinbook ships with a 64-bit UEFI loader - so 64-bit Linux ISOs on USB drives will be detected and can boot (although you will need some drivers enabled and some userspace tools / settings to make Bluetooth and sound work).
 
 # Open issues
-[Issue 36: When using headphones, sound still comes from speakers](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/36)
+- [Issue 36: When using headphones, sound still comes from speakers](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/36)
 
-[Issue 35: Highly distorted sound / feedback in headphones](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/35)
+- [Issue 35: Highly distorted sound / feedback in headphones](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/35)
 
-[Issue 7: FN keys and backspace stop working after suspend-resume on Ubuntu Mate 16.04.3 #7](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/7) - see [temporary workaround](faq.md#question-fn-keys-and-backspace-stop-working-after-suspend-resume)
+- [Issue 7: FN keys and backspace stop working after suspend-resume on Ubuntu Mate 16.04.3 #7](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/7) - see [temporary workaround](faq.md#question-fn-keys-and-backspace-stop-working-after-suspend-resume)
 
-[Issue 10: Sound does not work on Ubuntu 17.10 (Artful Aardvark)](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/10)
+- [Issue 10: Sound does not work on Ubuntu 17.10 (Artful Aardvark)](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/10)
 Current solution is to blacklist module **snd_hdmi_lpe_audio**. This disables sound over HDMI. Have closed this issue and opened [new issue](https://github.com/sundarnagarajan/rdp-thinbook-linux/issues/11) to find long-term solution. This workaround is also applied to Bionic Beaver 18.04
 
 # EVERYTHING on this laptop works perfectly in Linux
