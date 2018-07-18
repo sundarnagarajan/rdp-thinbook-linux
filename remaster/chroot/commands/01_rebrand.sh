@@ -36,7 +36,9 @@ fi
 
 # Copy original and new rebranded files under SCRIPTS_DIR/backup
 # So that revert_ubuntu_brand.sh can find and use them
-REBRAND_FILES="/etc/issue /etc/issue.net /etc/lsb-release /etc/os-release /etc/dpkg/origins/default"
+# We don't change /etc/dpkg/origins/default - just back it up and
+# flip some symlinks
+REBRAND_FILES="/etc/issue /etc/issue.net /etc/lsb-release /etc/os-release"
 BACKUP_DIR=/root/rebrand/backup
 OLD_DISTRO_ID=$(cat /etc/lsb-release | head -1 | cut -d= -f2)
 mkdir -p $BACKUP_DIR

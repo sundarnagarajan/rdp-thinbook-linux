@@ -13,7 +13,9 @@ if [ ! -d ${SCRIPTS_DIR} ]; then
 fi
 
 SCRIPTS_DIR=$(readlink -e $SCRIPTS_DIR)
-REBRAND_FILES="/etc/issue /etc/issue.net /etc/lsb-release /etc/os-release /etc/dpkg/origins/default"
+# We don't change /etc/dpkg/origins/default - just back it up and
+# flip some symlinks
+REBRAND_FILES="/etc/issue /etc/issue.net /etc/lsb-release /etc/os-release"
 BACKUP_DIR=${SCRIPTS_DIR}/backup
 
 if [ ! -d "${BACKUP_DIR}" ]; then
@@ -47,15 +49,18 @@ fi
 
 for f in $REBRAND_FILES
 do
-    if [ ! -f ${BACKUP_DIR}/${f}.new ]; then
-        echo "Backup not found: ${BACKUP_DIR}/${f}.new"
-        exit 0
-    fi
-    # Do not revert if the new rebranded file has been changed since originally created
-    diff --brief $f ${BACKUP_DIR}/${f}.new 1>/dev/null
-    if [ $? -ne 0 ]; then
+    if [ -f ${BACKUP_DIR}/${f}.new ]; then
+        # Do not revert if the new rebranded file has been changed since originally created
+        diff --brief $f ${BACKUP_DIR}/${f}.new 1>/dev/null
+        if [ $? -ne 0 ]; then
+            if [ "$FORCE" != "yes" ]; then
+                echo "$f has been changed - will not overwrite. Use --force to override"
+                exit 0
+            fi
+        fi
+    else
         if [ "$FORCE" != "yes" ]; then
-            echo "$f has been changed - will not overwrite. Use --force to override"
+            echo "Backup not found: ${BACKUP_DIR}/${f}.new"
             exit 0
         fi
     fi
