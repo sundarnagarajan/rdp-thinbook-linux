@@ -194,7 +194,7 @@ Note:
 | Distribution | Signed SHA256SUMS |
 | ------------ | ---------- |
 | 16.04 Xenial Xerus | [SHA256SUMS.asc.xenial](https://drive.google.com/open?id=1v3mKp0i-_2l_WwfnJbRl319DN9YjnfJj&export=download) |
-| 18.04 Bionic Beaver | [SHA256SUMS.asc.bionic](https://drive.google.com/open?id=1aA7Y3E4ihSgJ83nMS8NPCyzqveDs-k85&export=download) |
+| 18.04 Bionic Beaver | [SHA256SUMS.asc.bionic](https://drive.google.com/open?id=1jETbifyp1WckbU8-jO8lM-BlOnJb22pZ&export=download) |
 
 
 | Ubuntu version | Release | Flavor | Kernel | ISO |
@@ -205,6 +205,7 @@ Note:
 | Bionic Beaver 18.04 | LTS | Ubuntu | 4.16.18 | [ISO](https://drive.google.com/open?id=1zGy0-cGd0oZ9VBage9hH8NbJz5NRdMen&export=download) |
 | Bionic Beaver 18.04 | LTS | Ubuntu Mate | 4.16.18 | [ISO](https://drive.google.com/open?id=1wu2XEyvpgxB6pLos-a6y2hxv6AVXYjMz&export=download) |
 | Bionic Beaver 18.04 | LTS | xubuntu | 4.16.18 | [ISO](https://drive.google.com/open?id=1oMTiWn8g_1mOxoDt93tfNWrevxnadY7D&export=download) |
+| Bionic Beaver 18.04 with asound.state fix | LTS | xubuntu | 4.18 | [ISO](https://drive.google.com/open?id=1Bcefrd3CozdjolKen2f7CaFhPyPA4fSP&export=download) |
 
 
 
