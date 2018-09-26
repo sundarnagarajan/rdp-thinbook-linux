@@ -202,7 +202,6 @@ Note:
 | Xenial Xerus 16.04.3 | LTS | Ubuntu | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBMzkyTWZDSUFQbWc&export=download) |
 | Xenial Xerus 16.04.3 | LTS | Ubuntu Mate | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBdHRqUjhaVk9RWDg&export=download) |
 | Xenial Xerus 16.04.3 | LTS | xubuntu | 4.13.9 | [ISO](https://drive.google.com/open?id=0BwuQXW-0xicBeExMeW5DTzltZVE&export=download) |
-https://drive.google.com/file/d/1jETbifyp1WckbU8-jO8lM-BlOnJb22pZ/view?usp=sharing
 | Bionic Beaver 18.04 | LTS | Ubuntu | 4.16.18 | [ISO](https://drive.google.com/open?id=1zGy0-cGd0oZ9VBage9hH8NbJz5NRdMen&export=download) |
 | Bionic Beaver 18.04 | LTS | Ubuntu Mate | 4.16.18 | [ISO](https://drive.google.com/open?id=1wu2XEyvpgxB6pLos-a6y2hxv6AVXYjMz&export=download) |
 | Bionic Beaver 18.04 | LTS | xubuntu | 4.16.18 | [ISO](https://drive.google.com/open?id=1oMTiWn8g_1mOxoDt93tfNWrevxnadY7D&export=download) |
