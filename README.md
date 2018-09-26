@@ -206,7 +206,7 @@ https://drive.google.com/file/d/1jETbifyp1WckbU8-jO8lM-BlOnJb22pZ/view?usp=shari
 | Bionic Beaver 18.04 | LTS | Ubuntu | 4.16.18 | [ISO](https://drive.google.com/open?id=1zGy0-cGd0oZ9VBage9hH8NbJz5NRdMen&export=download) |
 | Bionic Beaver 18.04 | LTS | Ubuntu Mate | 4.16.18 | [ISO](https://drive.google.com/open?id=1wu2XEyvpgxB6pLos-a6y2hxv6AVXYjMz&export=download) |
 | Bionic Beaver 18.04 | LTS | xubuntu | 4.16.18 | [ISO](https://drive.google.com/open?id=1oMTiWn8g_1mOxoDt93tfNWrevxnadY7D&export=download) |
-| Bionic Beaver 18.04 with asound.state fix | LTS | xubuntu | 4.18 | [ISO](https://drive.google.com/open?id=1Bcefrd3CozdjolKen2f7CaFhPyPA4fSP&export=download) |
+
 
 
 
