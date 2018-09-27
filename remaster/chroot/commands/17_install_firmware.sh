@@ -38,13 +38,13 @@ rm -rf firmware
 git clone --quiet --depth 1 $LINUX_FIRMWARE_GIT firmware 2>&1
 rm -rf firmware/.git
 apt-get autoremove -y --purge git 1>/dev/null 2>/dev/null
+
 # Restore original /etc/resolv.conf if we had moved it
 if [ -f  $ORIG_RESOLV_CONF -o -L $ORIG_RESOLV_CONF ]; then
     echo "Restoring original /etc/resolv.conf"
     \rm -f /etc/resolv.conf
     mv  $ORIG_RESOLV_CONF /etc/resolv.conf
 fi
-
 
 # Rest was used earlier to copy RTL8723bs firmware - not needed any more
 # if we get latest linux firmware

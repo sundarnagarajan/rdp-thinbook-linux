@@ -1778,6 +1778,20 @@ state.bytcrrt5651 {
 			dbvalue.0 2000
 		}
 	}
+	control.159 {
+		iface MIXER
+		name 'IN3 Boost'
+		value 0
+		comment {
+			access 'read write'
+			type INTEGER
+			count 1
+			range '0 - 8'
+			dbmin 0
+			dbmax 5200
+			dbvalue.0 0
+		}
+	}
 	control.160 {
 		iface MIXER
 		name 'IN Capture Volume'
