@@ -33,6 +33,13 @@ do
         echo "File not found: /lib/udev/rules.d/$f"
     fi
 done
+if [ -f /lib/crda/setregdomain ]; then
+    if [ ! -f /etc/udev/rules.d/40-crda.rules ]; then
+        echo 'SUBSYSTEM=="ieee80211", ACTION=="add", RUN+="/lib/crda/setregdomain"' > /etc/udev/rules.d/40-crda.rules
+    fi
+else
+    echo "File not found: /lib/crda/setregdomain"
+fi
 
 # Set a default regulatory domain in /etc/default/crda
 CRDA_CONF=/etc/default/crda
