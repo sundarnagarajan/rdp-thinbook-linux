@@ -31,15 +31,39 @@ function check_avail_disk_space {
     echo ""
 }
 
+function update_gitdir {
+    # $1: directory
+    # $2: git url
+    local oldpwd=$(pwd)
+    local gitdir=$1
+    local git_url=$2
+
+    if [ -z "$2" ]; then
+        echo "Usage: update_gitdir <directory_path> <git_url>"
+        return 1
+    fi
+    if [ -d "$1" ]; then
+        cd "$1"
+        echo "Pulling latest changes to $(basename $gitdir)"
+        git pull
+        if [ $? -ne 0 ]; then
+            echo "Could not update $gitdir"
+            cd $oldpwd
+            exit 1
+        fi
+        cd $oldpwd
+    else
+        cd $(dirname $gitdir)
+        echo "Cloning $(basename $gitdir)"
+        git clone --depth 1 "$git_url" 2>/dev/null
+        cd $oldpwd
+    fi
+}
+
 function update_from_git {
     cd $TOP_DIR
-    rm -rf bootutils rdp-thinbook-linux kernel_build
-    echo "Cloning bootutils..."
-    git clone --depth 1 https://github.com/sundarnagarajan/bootutils.git 2>/dev/null
-    echo "Cloning rdp-thinbook-linux..."
-    git clone --depth 1 https://github.com/sundarnagarajan/rdp-thinbook-linux.git 2>/dev/null
-    echo "Cloning kernel_build"
-    git clone --depth 1 'https://github.com/sundarnagarajan/kernel_build.git' 2>/dev/null
+    update_gitdir ${TOP_DIR}/bootutils 'https://github.com/sundarnagarajan/bootutils.git' || exit 1
+    update_gitdir ${TOP_DIR}/rdp-thinbook-linux 'https://github.com/sundarnagarajan/rdp-thinbook-linux.git' || exit 1
 
     # Copy scripts from bootutils
     \rm -rf $TOP_DIR/rdp-thinbook-linux/remaster/chroot/scripts
@@ -48,6 +72,9 @@ function update_from_git {
 
 function compile_kernel {
     cd $TOP_DIR
+    # We only need kernel_build if we are compiling the kernel
+    update_gitdir ${TOP_DIR}/kernel_build 'https://github.com/sundarnagarajan/kernel_build.git' || exit 1
+
     mkdir -p $TOP_DIR/debs
 
     # Config values are in kernel_build.config
@@ -62,6 +89,9 @@ function compile_kernel {
     if [ $? -ne 0 ]; then
         exit 1
     fi
+    echo "Moving compiled debs:"
+    ls $TOP_DIR/debs/*.deb | sed -e 's/^/    /'
+    rm -f $TOP_DIR/rdp-thinbook-linux/remaster/chroot/kernel-debs/*.deb
     mv $TOP_DIR/debs/*.deb $TOP_DIR/rdp-thinbook-linux/remaster/chroot/kernel-debs/
 
     cd $TOP_DIR
@@ -80,16 +110,12 @@ function remaster_iso {
     if [ -n "${OUTPUT_ISO}" -a -f "${OUTPUT_ISO}" ]; then
         sudo rm -f ${OUTPUT_ISO}
     fi
-    if [ -f $TOP_DIR/rdp-thinbook-linux/remaster/chroot/commands/00_rebrand.sh ]; then
-        if [ "$ENABLE_REBRAND" = "yes" ]; then
-            chmod +x $TOP_DIR/rdp-thinbook-linux/remaster/chroot/commands/00_rebrand.sh
-        else
-            chmod -x $TOP_DIR/rdp-thinbook-linux/remaster/chroot/commands/00_rebrand.sh
-        fi
-    fi
     sudo REMASTER_CMDS_DIR=${R_DIR} ${TOP_DIR}/bootutils/scripts/ubuntu_remaster_iso.sh ${INPUT_ISO} ${EXTRACT_DIR} ${OUTPUT_ISO}
 }
 
+# ------------------------------------------------------------------------
+# Main script starts after this
+# ------------------------------------------------------------------------
 
 START_TIME=$(date)
 export TOP_DIR=$(readlink -e $(dirname $0))
@@ -97,13 +123,6 @@ export R_DIR=${TOP_DIR}/rdp-thinbook-linux/remaster
 export INPUT_ISO=${TOP_DIR}/ISO/in/source.iso
 export EXTRACT_DIR=${TOP_DIR}/ISO/extract
 export OUTPUT_ISO=${TOP_DIR}/ISO/out/modified.iso
-if [ "$1" = "--rebrand" ]; then
-    echo "Enabling rebranding"
-    export ENABLE_REBRAND=yes
-else
-    echo "Rebranding is disabled"
-    export ENABLE_REBRAND=no
-fi
 
 check_required_pkgs
 check_avail_disk_space
