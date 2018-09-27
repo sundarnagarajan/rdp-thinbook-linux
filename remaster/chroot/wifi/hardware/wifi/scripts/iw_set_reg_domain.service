@@ -1,8 +1,0 @@
-[Service]
-Type=oneshot
-RemainAfterExit=true
-ExecStart=/root/hardware/wifi/iw_set_reg_domain.sh
-TimeoutStartSec=30
-
-[Install]
-WantedBy=default.target
