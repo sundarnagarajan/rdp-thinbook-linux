@@ -98,11 +98,11 @@ Number  Start   End     Size    File system     Name  Flags
  3      21.6GB  24.8GB  3221MB  linux-swap(v1)  swap
  4      24.8GB  31.0GB  6236MB                  data
 
-The goal is to run the script /root/remaster/scripts/make_bootable.py
-that script needs two parameters:
+We are going to to run the script ```/root/remaster/scripts/make_bootable.py```
 
-The disk device - we know this - it is /dev/mmcblk0
-The root partition - usually the partition with filesystem == 'ext4'
+That script needs two parameters:
+- The disk device - we know this - it is /dev/mmcblk0
+- The root partition - usually the partition with filesystem == 'ext4'
 
 In the example output above, the root partition would be partition 2
 
