@@ -70,3 +70,45 @@ Would you please add 'axp288_adc' as a dependency for 'axp288_fuel_gauge'.
 Thanks,
 Tagore
 ```
+
+### Question: Installer fails with message 'grub-efi-ia32', package failed to install into /target/ , without GRUB boot loader, the installed system will not boot.'
+
+Steps
+- Insert the bootable Linux ISO USB disk that you created with Ubuntu Mate
+- Turn on the RDP Thinbook, and as soon as the RDP symbol appears, press F7
+- Choose your USB disk from the menu - it will look something like 'UEFI: disk_brand_model'. This is NOT the entry labelled 'ubuntu' - if such an entry appears
+- If your USB disk does not appear, press Ctrl-Alt-Del and AGAIN press F7 as soon as the RDP symbol appears - your disk should apear at least the second time
+- Boot into Ubuntu Mate choosing Try Ubuntu Mate without Installing
+- Once inside Ubuntu Mate open a Terminal by using the menu Applications --> System Tools --> Mate Terminal
+- Read and follow the following instructions very carefully:
+
+sudo parted /dev/mmcblk0 print
+The output of the parted command should look something like this:
+
+Model: MMC NCard (sd/mmc)
+Disk /dev/mmcblk0: 31.0GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags: 
+
+Number  Start   End     Size    File system     Name  Flags
+ 5      17.4kB  1049kB  1031kB                  bios  bios_grub
+ 1      1049kB  106MB   105MB   fat16           EFI   boot, esp
+ 2      106MB   21.6GB  21.5GB  ext4            root
+ 3      21.6GB  24.8GB  3221MB  linux-swap(v1)  swap
+ 4      24.8GB  31.0GB  6236MB                  data
+
+The goal is to run the script /root/remaster/scripts/make_bootable.py
+that script needs two parameters:
+
+The disk device - we know this - it is /dev/mmcblk0
+The root partition - usually the partition with filesystem == 'ext4'
+
+In the example output above, the root partition would be partition 2
+
+Run the following command:
+```
+/root/remaster/scripts/make_bootable.py /dev/mmcblk0 /dev/mmcblk0p2
+```
+
+
