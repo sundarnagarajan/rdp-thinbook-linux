@@ -85,6 +85,7 @@ Steps
 sudo parted /dev/mmcblk0 print
 The output of the parted command should look something like this:
 
+```
 Model: MMC NCard (sd/mmc)
 Disk /dev/mmcblk0: 31.0GB
 Sector size (logical/physical): 512B/512B
@@ -97,6 +98,7 @@ Number  Start   End     Size    File system     Name  Flags
  2      106MB   21.6GB  21.5GB  ext4            root
  3      21.6GB  24.8GB  3221MB  linux-swap(v1)  swap
  4      24.8GB  31.0GB  6236MB                  data
+```
 
 We are going to to run the script ```/root/remaster/scripts/make_bootable.py```
 
