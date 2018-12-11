@@ -82,7 +82,8 @@ Steps
 - Once inside Ubuntu Mate open a Terminal by using the menu Applications --> System Tools --> Mate Terminal
 - Read and follow the following instructions very carefully:
 
-sudo parted /dev/mmcblk0 print
+```sudo parted /dev/mmcblk0 print```
+
 The output of the parted command should look something like this:
 
 ```
