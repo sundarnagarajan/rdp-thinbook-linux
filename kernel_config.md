@@ -10,6 +10,8 @@ CONFIG_SND_SOC_ES8316=m
 CONFIG_SND_SOC_INTEL_BYTCR_RT5651_MACH=m
 CONFIG_SND_SOC_RT5651=m
 CONFIG_HDMI_LPE_AUDIO=m
+CGROUP_BPF=y
+CONFIG_SERIAL_DEV_CTRL_TTYPORT=y
 ```
 ## Kernel config entries explained
 ### Make Wifi work (Realtek 8723BS chipset)
@@ -47,3 +49,15 @@ index 76c01cb..4e32def 100644
  };
  MODULE_DEVICE_TABLE(acpi, rfkill_acpi_match);
 ```
+### Automatic bluetooth configuration in kernel 4.19+
+From kernel 4.19 onwards, 1-line patch to ```rfkill-gpio.c``` is no longer required.
+However the following config entry is required to allow kernel to automatically detect and enable Bluetooth RF
+```
+CONFIG_SERIAL_DEV_CTRL_TTYPORT=y
+```
+### systemd v235 BPF bug
+The following config entry is recommended to avoid errors like ```... egress BPF program ...```:
+
+```CGROUP_BPF=y```
+
+See [this issue](https://github.com/systemd/systemd/issues/7054). This is required until systemd v235 bug fix.
