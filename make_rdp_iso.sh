@@ -63,7 +63,8 @@ function update_gitdir {
 function update_from_git {
     cd $TOP_DIR
     update_gitdir ${TOP_DIR}/bootutils 'https://github.com/sundarnagarajan/bootutils.git' || exit 1
-    update_gitdir ${TOP_DIR}/rdp-thinbook-linux 'https://github.com/sundarnagarajan/rdp-thinbook-linux.git' || exit 1
+    update_gitdir ${TOP_DIR}/kernel_build 'https://github.com/sundarnagarajan/kernel_build.git' || exit 1
+    # update_gitdir ${TOP_DIR}/rdp-thinbook-linux 'https://github.com/sundarnagarajan/rdp-thinbook-linux.git' || exit 1
 
     # Copy scripts from bootutils
     \rm -rf $TOP_DIR/rdp-thinbook-linux/remaster/chroot/scripts
@@ -73,9 +74,7 @@ function update_from_git {
 function compile_kernel {
     cd $TOP_DIR
     # We only need kernel_build if we are compiling the kernel
-    update_gitdir ${TOP_DIR}/kernel_build 'https://github.com/sundarnagarajan/kernel_build.git' || exit 1
-
-    mkdir -p $TOP_DIR/debs
+    #update_gitdir ${TOP_DIR}/kernel_build 'https://github.com/sundarnagarajan/kernel_build.git' || exit 1
 
     # Config values are in kernel_build.config
     # Avoid kernel 4.17 - has issues with RDP 1130i
@@ -90,9 +89,9 @@ function compile_kernel {
         exit 1
     fi
     echo "Moving compiled debs:"
-    ls $TOP_DIR/debs/*.deb | sed -e 's/^/    /'
+    ls $TOP_DIR/__kernel_build/debs/*.deb | sed -e 's/^/    /'
     rm -f $TOP_DIR/rdp-thinbook-linux/remaster/chroot/kernel-debs/*.deb
-    mv $TOP_DIR/debs/*.deb $TOP_DIR/rdp-thinbook-linux/remaster/chroot/kernel-debs/
+    mv $TOP_DIR/__kernel_build/debs/*.deb $TOP_DIR/rdp-thinbook-linux/remaster/chroot/kernel-debs/
 
     cd $TOP_DIR
 }
