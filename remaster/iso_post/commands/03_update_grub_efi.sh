@@ -341,7 +341,8 @@ trap cleanup_mounts_loopdevs EXIT
 if [ "$EFI_FILES_OK" = "no" ]; then
     NEW_SIZE=$NEW_EFI_IMG_SIZE_BYTES
     echo "Creating new image: $NEW_IMG_FILE"
-    dd if=/dev/zero of=$NEW_IMG_FILE bs=$NEW_SIZE count=1 status=progress oflag=direct 2>/dev/null
+    # Avoid oflag=direct in case we are using tmpfs
+    dd if=/dev/zero of=$NEW_IMG_FILE bs=$NEW_SIZE count=1 status=progress 2>/dev/null
 
     NEW_LOOPDEV=$(setup_loop_dev $NEW_IMG_FILE)
     mkfs.vfat $NEW_LOOPDEV 1>/dev/null
