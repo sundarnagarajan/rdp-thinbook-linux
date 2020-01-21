@@ -194,7 +194,7 @@ Note:
 | Distribution | Signed SHA256SUMS |
 | ------------ | ---------- |
 | 16.04 Xenial Xerus | [SHA256SUMS.asc.xenial](https://drive.google.com/open?id=1v3mKp0i-_2l_WwfnJbRl319DN9YjnfJj&export=download) |
-| 18.04 Bionic Beaver | [SHA256SUMS.asc.bionic](https://drive.google.com/open?id=1jETbifyp1WckbU8-jO8lM-BlOnJb22pZ&export=download) |
+| 18.04 Bionic Beaver | [SHA256SUMS.asc.bionic](https://drive.google.com/open?id=1xFCFAF3CzGf36NIUOs6wW4CbV3Lzd6d-&export=download) |
 
 
 | Ubuntu version | Release | Flavor | Kernel | ISO |
@@ -206,7 +206,7 @@ Note:
 | Bionic Beaver 18.04 | LTS | Ubuntu Mate | 4.16.18 | [ISO](https://drive.google.com/open?id=1wu2XEyvpgxB6pLos-a6y2hxv6AVXYjMz&export=download) |
 | Bionic Beaver 18.04 | LTS | xubuntu | 4.16.18 | [ISO](https://drive.google.com/open?id=1oMTiWn8g_1mOxoDt93tfNWrevxnadY7D&export=download) |
 | Bionic Beaver 18.04 with asound.state fix | LTS | xubuntu | 4.18 | [ISO](https://drive.google.com/open?id=1Bcefrd3CozdjolKen2f7CaFhPyPA4fSP&export=download) |
-
+| Bionic Beaver 18.04.2 | LTS | Ubuntu | 5.4.13 | [ISO](https://drive.google.com/open?id=1K54zQoQ8ucor5IqYlcHQ7gl298xI4kPj&export=download) |
 
 
 #### Verifying GPG signature  
