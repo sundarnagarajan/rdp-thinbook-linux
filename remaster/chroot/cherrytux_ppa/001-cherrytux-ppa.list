@@ -9,4 +9,4 @@
 # sudo apt-key --keyring /etc/apt/trusted.gpg.d/ppa.gpg adv --recv-keys --keyserver keyserver.ubuntu.com ABF7C302A5B662BDE68E0EFE883F04480A577E61
 
 # deb line will look like:
-deb [ arch=amd64 signed-by=ABF7C302A5B662BDE68E0EFE883F04480A577E61] http://ppa.launchpad.net/sundar-nagarajan/cherrytux/ubuntu xenial main 
+deb [ arch=amd64 signed-by=ABF7C302A5B662BDE68E0EFE883F04480A577E61] http://ppa.launchpad.net/sundar-nagarajan/cherrytux/ubuntu bionic main 
