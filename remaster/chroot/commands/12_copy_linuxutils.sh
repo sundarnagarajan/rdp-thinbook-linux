@@ -17,7 +17,7 @@ LINUXUTILS_DIR=$(readlink -e $LINUXUTILS_DIR)
 
 # Install required packages for linuxutils (show_storage, mostly)
 
-REQUIRED_PKGS="udevadm coreutils util-linux hddtemp parted lvm2 hdparm udisks nvme-cli lsscsi"
+REQUIRED_PKGS="udev coreutils util-linux hddtemp parted lvm2 hdparm nvme-cli lsscsi"
 
 ORIG_RESOLV_CONF=/etc/resolv.conf.remaster_orig
 cat /etc/resolv.conf 2>/dev/null | grep -q '^nameserver'
@@ -40,6 +40,7 @@ if [ -n "$MISSING_PKGS" ]; then
     apt-get update 1 > /dev/null 2>&1
     apt-get install -y $MISSING_PKGS 1>/dev/null 2>&1
 fi
+dpkg -l $REQUIRED_PKGS 2>/dev/null | sed -e '1,5d' | awk '{print $1, $2}' 
 
 
 # Restore original /etc/resolv.conf if we had moved it
