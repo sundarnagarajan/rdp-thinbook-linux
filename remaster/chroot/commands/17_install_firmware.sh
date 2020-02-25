@@ -7,6 +7,8 @@ PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
 
 LINUX_FIRMWARE_GIT='git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git'
+INTEL_FIRMWARE_GIT='git://git.kernel.org/pub/scm/linux/kernel/git/iwlwifi/linux-firmware.git'
+
 # On Ubuntu 17.10 systemd provides the system-wide DNS resolver
 # On such distributions, /etc/resolv.conf inside the ISO points
 # at ../run/systemd/resolve/stub-resolv.conf and the target will not
@@ -35,8 +37,20 @@ fi
 
 cd /lib
 rm -rf firmware
+
+# Linux firmware git
 git clone --quiet --depth 1 $LINUX_FIRMWARE_GIT firmware 2>&1
 rm -rf firmware/.git
+# Intel firmware git
+git clone --quiet --depth 1 $INTEL_FIRMWARE_GIT intel-firmware 2>&1
+rm -rf intel-firmware/.git
+
+# Copy (ONLY) additional firmware file from intel-firmware to firmware
+# In particular only iwlwifi-*.ucode and intel/*
+cd intel-firmware
+( find -maxdepth 1 -name 'iwlwifi-*.ucode'; find -mindepth 2 -path './intel/*' ) | while read fn; do if [ ! -e /lib/firmware/$fn ]; then cp -v --parents $fn $(dirname /lib/firmware/$fn); fi; done ; cd - 1>/dev/null 2>&1
+rm -rf intel-firmware
+
 apt-get autoremove -y --purge git 1>/dev/null 2>/dev/null
 
 # Restore original /etc/resolv.conf if we had moved it

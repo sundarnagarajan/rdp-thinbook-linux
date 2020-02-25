@@ -64,7 +64,7 @@ function update_from_git {
     cd $TOP_DIR
     update_gitdir ${TOP_DIR}/bootutils 'https://github.com/sundarnagarajan/bootutils.git' || exit 1
     update_gitdir ${TOP_DIR}/kernel_build 'https://github.com/sundarnagarajan/kernel_build.git' || exit 1
-    # update_gitdir ${TOP_DIR}/rdp-thinbook-linux 'https://github.com/sundarnagarajan/rdp-thinbook-linux.git' || exit 1
+    update_gitdir ${TOP_DIR}/rdp-thinbook-linux 'https://github.com/sundarnagarajan/rdp-thinbook-linux.git' || exit 1
 
     # Copy scripts from bootutils
     \rm -rf $TOP_DIR/rdp-thinbook-linux/remaster/chroot/scripts
@@ -123,10 +123,27 @@ export INPUT_ISO=${TOP_DIR}/ISO/in/source.iso
 export EXTRACT_DIR=${TOP_DIR}/ISO/extract
 export OUTPUT_ISO=${TOP_DIR}/ISO/out/modified.iso
 
+function cleanup_mounts()
+{
+    if [ -z "$EXTRACT_DIR" ]; then
+        return
+    fi
+    which findmnt 1>/dev/null 2>&1 || return
+    for d in $(findmnt -n -l | grep "$EXTRACT_DIR" | awk '{print $1}' | sort -r)
+    do
+        echo "Unmounting $d"
+        umount $d
+    done
+    rm -rf "$EXTRACT_DIR"
+}
+
+trap cleanup_mounts 1 2 3 15
+
+
 check_required_pkgs
 check_avail_disk_space
 
 update_from_git
-compile_kernel
+# compile_kernel
 remaster_iso
 echo "Start: $START_TIME" ; echo "Ended: $(date)"
