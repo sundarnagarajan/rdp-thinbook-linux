@@ -71,6 +71,21 @@ function update_from_git {
     cp -a $TOP_DIR/bootutils/scripts $TOP_DIR/rdp-thinbook-linux/remaster/chroot/
 }
 
+function copy_linuxutils()
+{
+    local LINUXUTILS_DIR=/usr/local/bin/linuxutils
+    if [ ! -d "$LINUXUTILS_DIR" ]; then
+        echo "Directory not found: $LINUXUTILS_DIR"
+        return
+    fi
+    cp -a "$LINUXUTILS_DIR" $TOP_DIR/rdp-thinbook-linux/remaster/chroot/
+    for file_dir in .git fixrandr.py fixrandr_wrapper.py get_hosts_from_router ipmimon.py ipmimon_type_fan ipmimon_type_temperature ipmimon_type_voltage movewindow_fixes rdp.py repo_ppa_lib.py sas2ircu show_lsisas show_scanners sign_sha256_dir_hierarchy.sh ssh_functions.sh sudoers.txt watch_md_iostat.sh xrandr_settings
+    do
+        rm -rf $TOP_DIR/rdp-thinbook-linux/remaster/chroot/$(basename "$LINUXUTILS_DIR")/$file_dir
+    done
+}
+
+
 function compile_kernel {
     cd $TOP_DIR
     # We only need kernel_build if we are compiling the kernel
@@ -144,6 +159,7 @@ check_required_pkgs
 check_avail_disk_space
 
 update_from_git
+copy_linuxutils
 # compile_kernel
 remaster_iso
 echo "Start: $START_TIME" ; echo "Ended: $(date)"
