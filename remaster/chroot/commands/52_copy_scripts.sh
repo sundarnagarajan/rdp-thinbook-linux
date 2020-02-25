@@ -13,4 +13,5 @@ if [ ! -d ${SCRIPTS_DIR} ]; then
 fi
 SCRIPTS_DIR=$(readlink -e $SCRIPTS_DIR)
 
-\cp -r $SCRIPTS_DIR ${REMASTER_DIR}/
+mkdir -p ${REMASTER_DIR}/bootutils
+\cp -r $SCRIPTS_DIR ${REMASTER_DIR}/bootutils/
