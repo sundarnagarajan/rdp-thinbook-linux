@@ -79,7 +79,7 @@ function copy_linuxutils()
         return
     fi
     cp -a "$LINUXUTILS_DIR" $TOP_DIR/rdp-thinbook-linux/remaster/chroot/
-    for file_dir in .git fixrandr.py fixrandr_wrapper.py get_hosts_from_router ipmimon.py ipmimon_type_fan ipmimon_type_temperature ipmimon_type_voltage movewindow_fixes rdp.py repo_ppa_lib.py sas2ircu show_lsisas show_scanners sign_sha256_dir_hierarchy.sh ssh_functions.sh sudoers.txt watch_md_iostat.sh xrandr_settings
+    for file_dir in .git fixrandr.py fixrandr_wrapper.py get_hosts_from_router ipmimon.py ipmimon_type_fan ipmimon_type_temperature ipmimon_type_voltage movewindow_fixes rdp.py repo_ppa_lib.py sas2ircu show_lsisas show_scanners sign_sha256_dir_hierarchy.sh show_ssh ssh_functions.sh sudoers.txt watch_md_iostat.sh xrandr_settings
     do
         rm -rf $TOP_DIR/rdp-thinbook-linux/remaster/chroot/$(basename "$LINUXUTILS_DIR")/$file_dir
     done
