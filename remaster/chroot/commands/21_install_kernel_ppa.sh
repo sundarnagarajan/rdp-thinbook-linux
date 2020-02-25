@@ -78,6 +78,9 @@ if [ -f $KP_LIST -a -s $KP_LIST ]; then
         exit 0
     fi
 fi
+# Add kernel we installed to $KP_LIST
+mkdir -p $KERNEL_DEB_DIR
+touch $KP_LIST
 
 apt-get update 1>/dev/null
 echo "Installing cherrytux-image cherrytux-headers"
@@ -92,9 +95,6 @@ fi
 echo overlay >> /etc/initramfs-tools/modules
 update-initramfs -u 2>/dev/null
 
-# Add kernel we installed to $KP_LIST
-mkdir -p $KERNEL_DEB_DIR
-touch $KP_LIST
 dpkg -l linux-image-[0-9]* | grep '^ii' | tail -1 | awk '{print $2}' >> $KP_LIST
 dpkg -l linux-headers-[0-9]* | grep '^ii' | tail -1 | awk '{print $2}' >> $KP_LIST
 
