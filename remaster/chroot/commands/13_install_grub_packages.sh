@@ -27,9 +27,8 @@ apt-get update 1>/dev/null
 echo "Installing $REQUIRED_PKGS"
 apt-get -y install $REQUIRED_PKGS 1>/dev/null
 if [ $? -ne 0 ]; then
-    if [ $? -ne 0 ]; then
-        echo "Install failed: $MISSING_PKGS"
-    fi
+    echo "Install failed: $MISSING_PKGS"
+    exit 255
 fi
 dpkg -l $REQUIRED_PKGS 2>/dev/null | sed -e '1,5d' | awk '{print $1, $2}' 
 

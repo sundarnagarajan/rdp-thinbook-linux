@@ -85,7 +85,7 @@ echo "Installing $REQUIRED_PKGS"
 apt-get -y install $REQUIRED_PKGS 1>/dev/null
 if [ $? -ne 0 ]; then
     echo "Install failed: $REQUIRED_PKGS"
-    exit 1
+    exit 255
 fi
 if [ -x /etc/grub.d/30_os-prober ]; then
     chmod -x /etc/grub.d/30_os-prober

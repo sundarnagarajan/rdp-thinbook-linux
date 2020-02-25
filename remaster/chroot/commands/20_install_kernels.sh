@@ -29,8 +29,8 @@ if [ -x /etc/grub.d/30_os-prober ]; then
 fi
 dpkg -i ${KERNEL_DEB_DIR}/*.deb 2>/dev/null 1>/dev/null
 if [ $? -ne 0 ]; then
-    echo "Install failed: $MISSING_PKGS"
-    exit 1
+    echo "Install of kernel DEBs failed"
+    exit 255
 fi
 echo overlay >> /etc/initramfs-tools/modules
 update-initramfs -u 2>/dev/null
