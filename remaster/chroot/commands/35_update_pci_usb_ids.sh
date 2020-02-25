@@ -22,12 +22,9 @@ do
     fi
 done
 if [ -n "$MISSING_PKGS" ]; then
+    echo "Installing $MISSING_PKGS"
     apt-get update 1 > /dev/null 2>&1
-    for pkg in $MISSING_PKGS
-    do
-        echo "Installing $pkg"
-        apt-get install $pkg 1>/dev/null 2>&1
-    done
+    apt-get install -y $MISSING_PKGS 1>/dev/null 2>&1
 fi
 
 which update-pciids 1>/dev/null 2>&1
