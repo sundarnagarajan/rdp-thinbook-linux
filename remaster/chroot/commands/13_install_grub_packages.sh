@@ -22,11 +22,16 @@ if [ $? -ne 0 ]; then
     echo -e "nameserver   8.8.8.8\nnameserver  8.8.4.4" > /etc/resolv.conf
 fi
 
+REQUIRED_PKGS="grub-efi-ia32-bin grub-efi-amd64-bin grub-pc-bin"
 apt-get update 1>/dev/null
-apt-get -y install grub-efi-ia32-bin grub-efi-amd64-bin grub-pc-bin 1>/dev/null
+echo "Installing $REQUIRED_PKGS"
+apt-get -y install $REQUIRED_PKGS 1>/dev/null
 if [ $? -ne 0 ]; then
-	apt-get -f install
+    if [ $? -ne 0 ]; then
+        echo "Install failed: $MISSING_PKGS"
+    fi
 fi
+dpkg -l $REQUIRED_PKGS 2>/dev/null | sed -e '1,5d' | awk '{print $1, $2}' 
 
 # Restore original /etc/resolv.conf if we had moved it
 if [ -f  $ORIG_RESOLV_CONF -o -L $ORIG_RESOLV_CONF ]; then

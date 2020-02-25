@@ -39,6 +39,9 @@ if [ -n "$MISSING_PKGS" ]; then
     echo "Installing $MISSING_PKGS"
     apt-get update 1 > /dev/null 2>&1
     apt-get install -y $MISSING_PKGS 1>/dev/null 2>&1
+    if [ $? -ne 0 ]; then
+        echo "Install failed: $MISSING_PKGS"
+    fi
 fi
 dpkg -l $REQUIRED_PKGS 2>/dev/null | sed -e '1,5d' | awk '{print $1, $2}' 
 

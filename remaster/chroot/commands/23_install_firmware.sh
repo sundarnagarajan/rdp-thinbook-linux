@@ -32,7 +32,8 @@ apt-get update 1>/dev/null
 # Fetch the latest firmware from linux firmware git instead
 apt-get -y install git 1>/dev/null
 if [ $? -ne 0 ]; then
-	apt-get -f install
+    echo "Install failed: git"
+    exit 1
 fi
 
 cd /lib

@@ -82,8 +82,8 @@ fi
 apt-get update 1>/dev/null
 echo "Installing cherrytux-image cherrytux-headers"
 apt-get -y install cherrytux-image cherrytux-headers 1>/dev/null
-# Try to fix errors, if any
 if [ $? -ne 0 ]; then
+    echo "Install failed: $MISSING_PKGS"
     exit 1
 fi
 if [ -x /etc/grub.d/30_os-prober ]; then
