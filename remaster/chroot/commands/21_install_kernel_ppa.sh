@@ -84,7 +84,7 @@ echo "Installing cherrytux-image cherrytux-headers"
 apt-get -y install cherrytux-image cherrytux-headers 1>/dev/null
 # Try to fix errors, if any
 if [ $? -ne 0 ]; then
-    apt-get -f install
+    exit 1
 fi
 if [ -x /etc/grub.d/30_os-prober ]; then
     chmod -x /etc/grub.d/30_os-prober
