@@ -80,10 +80,11 @@ if [ -f $KP_LIST -a -s $KP_LIST ]; then
 fi
 
 apt-get update 1>/dev/null
-echo "Installing cherrytux-image cherrytux-headers"
-apt-get -y install cherrytux-image cherrytux-headers 1>/dev/null
+REQUIRED_PKGS="cherrytux-image cherrytux-headers"
+echo "Installing $REQUIRED_PKGS"
+apt-get -y install $REQUIRED_PKGS 1>/dev/null
 if [ $? -ne 0 ]; then
-    echo "Install failed: $MISSING_PKGS"
+    echo "Install failed: $REQUIRED_PKGS"
     exit 1
 fi
 if [ -x /etc/grub.d/30_os-prober ]; then
