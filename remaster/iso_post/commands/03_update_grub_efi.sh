@@ -119,6 +119,10 @@ function create_1_efi_file {
     echo 'set prefix=/boot/grub' >> $grub_embedded_cfg
     echo 'normal' >> $grub_embedded_cfg
     grub-mkimage --prefix=$GRUB_PREFIX --format=$grub_format --config=$grub_embedded_cfg --output=${efi_directory}/${efi_filename} ${GRUB_BUILTIN_MODLIST}
+    if [ $?-ne 0 ]; then
+        echo "grub-mkimage failed"
+        return 1
+    fi
     \rm -f $grub_embedded_cfg
 
     # Delete builtin modules
@@ -191,11 +195,10 @@ function create_1_grub_module_dir {
     esac
     local grub_src_dir=/usr/lib/grub/${grub_format}
     local target_dir=${boot_grub_dir}/${grub_format}
-    if [ -d "${target_dir}" ]; then
-        echo "grub module dir already exists: $target_dir"
-        return
+    if [ ! -d "$grub_src_dir" ]; then
+        echo "Directory not found: $grub_src_dir"
+        return 1
     fi
-
     echo "Emptying and creating grub module dir: $target_dir"
     find ${target_dir} -exec rm -rf {} \; 2>/dev/null
     mkdir -p $target_dir
@@ -250,10 +253,18 @@ function create_reqd_grub_module_dirs {
         if [ -d $grub_dir/i386-efi ]; then
             echo "All grub module directories exist"
         else
-            create_1_grub_module_dir $grub_dir i386-efi
+            create_1_grub_module_dir $grub_dir i386-efi || return 1
+            if [ $? -ne 0 ]; then
+                echo "FAILED: create_1_grub_module_dir $grub_dir i386-efi"
+                return 1
+            fi
         fi
     elif [ -d $grub_dir/i386-efi ]; then
-        create_1_grub_module_dir $grub_dir x86_64-efi
+        create_1_grub_module_dir $grub_dir x86_64-efi || return 1
+        if [ $? -ne 0 ]; then
+            echo "FAILED: create_1_grub_module_dir $grub_dir x86_64-efi"
+            return 1
+        fi
     else
         create_1_grub_module_dir $grub_dir x86_64-efi
         if [ $? -ne 0 ]; then
@@ -320,6 +331,7 @@ function all_efi_files_present {
 # ------------------------------------------------------------------------
 
 exit_if_not_root
+trap cleanup_mounts_loopdevs EXIT
 
 if [ -f "$OLD_IMG_FILE" ]; then
     IMG_FOUND=yes
@@ -327,6 +339,10 @@ if [ -f "$OLD_IMG_FILE" ]; then
     OLD_LOOPDEV=$(setup_loop_dev $OLD_IMG_FILE)
     \rm -rf "$MOUNT_OLD_DIR"; mkdir -p "$MOUNT_OLD_DIR"
     mount $OLD_LOOPDEV "$MOUNT_OLD_DIR"
+    if [ $? -ne 0 ]; then
+        echo "Could not mount $OLD_LOOPDEV on $MOUNT_OLD_DIR"
+        exit 1
+    fi
     # We don't need a new image if all EFI files are already present
     EFI_BOOT_DIR=$(find ${MOUNT_OLD_DIR} -ipath ${MOUNT_OLD_DIR}/EFI/BOOT)
     all_efi_files_present "$EFI_BOOT_DIR" && EFI_FILES_OK=yes || EFI_FILES_OK=no
@@ -335,8 +351,6 @@ else
     EFI_FILES_OK=no
 fi
 
-
-trap cleanup_mounts_loopdevs EXIT
 
 if [ "$EFI_FILES_OK" = "no" ]; then
     NEW_SIZE=$NEW_EFI_IMG_SIZE_BYTES
