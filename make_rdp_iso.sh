@@ -46,6 +46,7 @@ function check_pkg_integrity() {
         echo -e "$errors" | sed -e 's/^/    /'
         return 1
     fi
+    cd $old_pwd
 }
 
 function check_required_pkgs {
