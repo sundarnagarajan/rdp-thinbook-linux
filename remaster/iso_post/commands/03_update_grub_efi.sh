@@ -119,7 +119,7 @@ function create_1_efi_file {
     echo 'set prefix=/boot/grub' >> $grub_embedded_cfg
     echo 'normal' >> $grub_embedded_cfg
     grub-mkimage --prefix=$GRUB_PREFIX --format=$grub_format --config=$grub_embedded_cfg --output=${efi_directory}/${efi_filename} ${GRUB_BUILTIN_MODLIST}
-    if [ $?-ne 0 ]; then
+    if [ $? -ne 0 ]; then
         echo "grub-mkimage failed"
         return 1
     fi
