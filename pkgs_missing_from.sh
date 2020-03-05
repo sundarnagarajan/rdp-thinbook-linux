@@ -1,6 +1,10 @@
 #!/bin/bash
 REQD_PKGS="$*"
 
+if [ -z "$REQD_PKGS" ]; then
+    echo "No packages specified as required"
+    exit 0
+fi
 MISSING_PKGS=$(dpkg -l $REQD_PKGS 2>/dev/null | sed -e '1,4d'| grep -v '^ii' | awk '{printf("%s ", $2)}')
 MISSING_PKGS="$MISSING_PKGS $(dpkg -l $REQD_PKGS 2>&1 1>/dev/null | sed -e 's/^dpkg-query: no packages found matching //' | tr '\n' ' ')"
 MISSING_PKGS="$(echo ${MISSING_PKGS} | sed -e 's/^[ \t]*//' -e 's/[ \t]*$//')"
