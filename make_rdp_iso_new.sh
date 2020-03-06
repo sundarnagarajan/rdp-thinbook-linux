@@ -8,7 +8,7 @@ PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
 SCRIPT_DIR="${PROG_DIR}"
 
-. ${SCRIPT_DIR}/build_kernel_functions.sh || exit 1
+. ${SCRIPT_DIR}/rdp_iso_functions.sh || exit 1
 
 
 function setvars() {
