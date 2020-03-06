@@ -118,6 +118,15 @@ function update_gitdir {
     fi
     if [ -d "$1" ]; then
         cd "$1"
+        local git_remote=$(git config --get remote.origin.url 2>/dev/null)
+        if [ $? -ne 0 ]; then
+            >&2 echo "Does not appear to be a git repository: $git_dir"
+            return 1
+        fi
+        if [ "$git_remote" != "$git_url" ]; then
+            >&2 echo "Wrong git remote URL: $git_remote"
+            return 1
+        fi
         echo "Pulling latest changes to $(basename $gitdir)"
         git pull
         if [ $? -ne 0 ]; then
