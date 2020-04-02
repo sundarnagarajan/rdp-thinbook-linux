@@ -51,6 +51,12 @@ fi
 REQD_PKGS="virtualbox-guest-utils virtualbox-guest-x11"
 apt-get update 1>/dev/null
 apt install -y $REQD_PKGS 1>/dev/null
+ret=$?
+dpkg -l $REQD_PKGS 2>/dev/null | sed -e '1,5d' | awk '{print $1, $2}' 
+if [ $ret -ne 0 ]; then
+    echo "Install failed: $REQD_PKGS"
+    apt-get -f install 1>/dev/null
+fi
 
 # Restore original /etc/resolv.conf if we had moved it
 if [ -f  $ORIG_RESOLV_CONF -o -L $ORIG_RESOLV_CONF ]; then
