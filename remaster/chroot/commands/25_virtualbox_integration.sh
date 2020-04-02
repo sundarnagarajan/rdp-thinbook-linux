@@ -46,7 +46,7 @@ function install_virtualbox_guest_dkms() {
         echo "Installing downloaded DEB: $EXISTING_DEB"
         dpkg -i "$EXISTING_DEB"
         if [ $? -ne 0 ]; then
-            apt-get -f install --no-install-recommends --no-install-suggests
+            apt-get -y -f install --no-install-recommends --no-install-suggests
             return $?
         fi
     else
@@ -58,7 +58,7 @@ function install_virtualbox_guest_dkms() {
         local ret=$?
         if [ $ret -ne 0 ]; then
             echo "Install failed: $REQUIRED_PKGS"
-            apt-get -f install 2>/dev/null
+            apt-get -y -f install 2>/dev/null
             return 1
         fi
     fi
