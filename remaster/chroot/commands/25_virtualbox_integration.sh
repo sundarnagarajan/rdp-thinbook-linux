@@ -48,7 +48,7 @@ if [ $? -ne 0 ]; then
     echo -e "nameserver   8.8.8.8\nnameserver  8.8.4.4" > /etc/resolv.conf
 fi
 
-REQD_PKGS="virtualbox-guest-utils virtualbox-guest--x11"
+REQD_PKGS="virtualbox-guest-utils virtualbox-guest-x11"
 apt-get update 1>/dev/null
 apt install -y $REQD_PKGS 1>/dev/null
 
@@ -69,11 +69,11 @@ fi
 svc_dir=${VBOX_DIR}/services
 for svc_file in vbox_client_integration.service virt_what_virtualbox.service
 do
-    if [ ! -f ${svc_dir}/svc_file ]; then
+    if [ ! -f ${svc_dir}/$svc_file ]; then
         echo "Service file not found: ${svc_dir}/svc_file"
         continue
     fi
-    cp ${svc_dir}/svc_file /etc/systemd/system/
+    cp ${svc_dir}/$svc_file /etc/systemd/system/
 done    
 
 cd /etc/systemd/system
