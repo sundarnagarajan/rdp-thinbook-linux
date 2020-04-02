@@ -65,7 +65,7 @@ if [ $ret -ne 0 ]; then
     apt-get -f install
 fi
 if [ "$BUILD_ESSENTIAL_INSTALLED" = "yes" ]; then
-    apt remove --purge build-essential 1>/dev/null 2>&1
+    apt autoremove --purge build-essential 1>/dev/null 2>&1
 fi
 # Restore original /etc/resolv.conf if we had moved it
 if [ -f  $ORIG_RESOLV_CONF -o -L $ORIG_RESOLV_CONF ]; then
