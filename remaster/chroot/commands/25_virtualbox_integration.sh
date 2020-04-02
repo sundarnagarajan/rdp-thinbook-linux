@@ -80,6 +80,7 @@ if [ $? -ne 0 ]; then
 fi
 
 install_virtualbox_guest_dkms
+apt-get -y --no-install-recommends --no-install-suggests virt-what 1>/dev/null 2>&1
 
 # Restore original /etc/resolv.conf if we had moved it
 if [ -f  $ORIG_RESOLV_CONF -o -L $ORIG_RESOLV_CONF ]; then
