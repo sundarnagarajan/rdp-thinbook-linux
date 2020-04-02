@@ -4,7 +4,7 @@
 # Will restart automatically on restart of virtualbox-guest-utils.service
 
 [Install]
-RequiredBy=default.target
+WantedBy=default.target
 
 [Unit]
 Description=VBoxClient clipboard and display integration

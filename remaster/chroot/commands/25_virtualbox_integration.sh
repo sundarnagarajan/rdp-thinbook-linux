@@ -57,7 +57,6 @@ if [ $ret -ne 0 ]; then
     echo "Install failed: $REQD_PKGS"
     apt-get -f install 1>/dev/null
 fi
-
 # Restore original /etc/resolv.conf if we had moved it
 if [ -f  $ORIG_RESOLV_CONF -o -L $ORIG_RESOLV_CONF ]; then
     echo "Restoring original /etc/resolv.conf"
@@ -82,6 +81,22 @@ do
     cp ${svc_dir}/$svc_file /etc/systemd/system/
 done    
 
+# Don't ENABLE services if REQD_PKGS could not be installed
+for pkg in $REQD_PKGS
+do
+    dpkg -l $pkg > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+        echo "Install failed: $pkg"
+        exit 0
+    fi
+done
+
+# Another check - using systemd
+SYSTEMD_PAGER="" systemctl --plain list-unit-files virtualbox-guest-utils.service | grep -q virtualbox-guest-utils.service
+if [ $? -ne 0 ]; then
+    echo "virtualbox-guest-utils.service not found"
+    exit 0
+fi
 cd /etc/systemd/system
 systemctl daemon-reload
 for svc in vbox_client_integration.service virt_what_virtualbox.service
