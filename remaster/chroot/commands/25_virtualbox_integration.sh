@@ -41,17 +41,20 @@ cp -r ${VBOX_DIR}/virtualbox /root/
 
 function install_virtualbox_guest_dkms() {
     local EXISTING_DEB="${VBOX_DIR}/virtualbox-guest-dkms.deb"
-    if [ -f "$EXISTING_DEB" ]; then
+    test "$(ls -A ${VBOX_DIR}/*.deb)"
+    if [ $? -eq 0 ]; then
+        echo "Installing downloaded DEBs: "
+        local oldpwd=$(pwd)
+        cd "${VBOX_DIR}"
+        ls -1 *.deb | sed -e 's/^/    /'
+        cd "$oldpwd"
         # we know we need dkms
         apt-get -y --no-install-recommends --no-install-suggests install dkms
-        echo "Installing downloaded DEB: $EXISTING_DEB"
-        dpkg -i "$EXISTING_DEB"
+        dpkg -i "${VBOX_DIR}/*.deb"
         if [ $? -ne 0 ]; then
             apt-get -y --no-install-recommends --no-install-suggests -f install
             return $?
         fi
-        # Install was successful - now we need virtualbox-guest-utils
-        apt-get -y --no-install-recommends --no-install-suggests install virtualbox-guest-utils
     else
         echo "DEB not found: $EXISTING_DEB"
         local REQUIRED_PKGS="virtualbox-guest-dkms"
