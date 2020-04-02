@@ -185,13 +185,14 @@ function download_virtualbox_guest_dkms_deb() {
     # is executable
     if [ -x $TOP_DIR/rdp-thinbook-linux/remaster/chroot/commands/25_virtualbox_integration.sh ]; then
         if [ -x $TOP_DIR/rdp-thinbook-linux/remaster/chroot/virtualbox ]; then
-            echo "Downloading virtualbox-guest-dkms DEB"
+            echo "Downloading virtualbox-guest DEBs"
             local oldpwd=$(pwd)
             cd $TOP_DIR/rdp-thinbook-linux/remaster/chroot/virtualbox
             wget -q -nd 'http://archive.ubuntu.com/ubuntu/pool/multiverse/v/virtualbox/virtualbox-guest-dkms_6.1.4-dfsg-2_all.deb' -O virtualbox-guest-dkms.deb
             wget -q -nd 'http://archive.ubuntu.com/ubuntu/pool/multiverse/v/virtualbox/virtualbox-guest-utils_6.1.4-dfsg-2_amd64.deb' -O virtualbox-guest-utils.deb
             wget -q -nd 'http://archive.ubuntu.com/ubuntu/pool/multiverse/v/virtualbox/virtualbox-guest-x11_6.1.4-dfsg-2_amd64.deb' -O virtualbox-guest-x11.deb
-            ls -l virtualbox-guest-dkms.deb virtualbox-guest-utils.deb virtualbox-guest-x11.deb 2>/dev/null | sed -e 's/^/    /'
+            ls -l *.deb 2>/dev/null | sed -e 's/^/    /'
+            cd "$oldpwd"
         fi
     fi
 }
