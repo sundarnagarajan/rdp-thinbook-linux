@@ -45,7 +45,7 @@ function install_virtualbox_guest_dkms() {
         echo "Installing downloaded DEB: $EXISTING_DEB"
         dpkg -i "$EXISTING_DEB" 1>/dev/null 2>&1
         if [ $? -ne 0 ]; then
-            apt-get -f install --no-install-recommends --no-install-suggests 2>/dev/null 1>&1
+            apt-get -f install --no-install-recommends --no-install-suggests 1>/dev/null 2>&1
             return 1
         fi
     else
