@@ -178,6 +178,21 @@ function compile_kernel {
     cd $TOP_DIR
 }
 
+function download_virtualbox_guest_dkms_deb() {
+    # We need virtualbox-guest-dkms version 6.1.2+
+    # Only available in focal fossa
+    # So we download it into chroot/virtualbox IFF commands/25_virtualbox_integration.sh
+    # is executable
+    if [ -x $TOP_DIR/rdp-thinbook-linux/remaster/chroot/commands/25_virtualbox_integration.sh ]; then
+        if [ -x $TOP_DIR/rdp-thinbook-linux/remaster/chroot/virtualbox ]; then
+            echo "Downloading virtualbox-guest-dkms DEB"
+            local oldpwd=$(pwd)
+            cd $TOP_DIR/rdp-thinbook-linux/remaster/chroot/virtualbox
+            wget -q -nd 'http://archive.ubuntu.com/ubuntu/pool/multiverse/v/virtualbox/virtualbox-guest-dkms_6.1.4-dfsg-2_all.deb' -O virtualbox-guest-dkms.deb
+        fi
+    fi
+}
+
 function remaster_iso {
     if [ $(id -u) -ne 0 ]; then
         echo "Must be run as root"
@@ -228,6 +243,7 @@ check_avail_disk_space
 
 update_from_git
 copy_linuxutils
+download_virtualbox_guest_dkms_deb
 # compile_kernel
 remaster_iso
 echo "Start: $START_TIME" ; echo "Ended: $(date)"

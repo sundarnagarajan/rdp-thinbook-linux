@@ -39,6 +39,28 @@ cp -r ${VBOX_DIR}/virtualbox /root/
 # replace it with a file pointing at Google Public DNS
 # At the end of the script we restore the original /etc/resolv.conf
 
+function install_virtualbox_guest_dkms() {
+    local EXISTING_DBE="${VBOX_DIR}/virtualbox-guest-dkms.deb"
+    if [ -f "$EXISTING_DEB" ]; then
+        dpkg -i "$EXISTING_DEB" 1>/dev/null 2>&1
+        if [ $? -ne 0 ]; then
+            apt-get -f install 2>/dev/null 1>&1
+            return 1
+        fi
+    else
+        local REQUIRED_PKGS="virtualbox-guest-dkms"
+        apt-get update 2>/dev/null
+        echo "Installing $REQUIRED_PKGS"
+        apt-get install -y $REQUIRED_PKGS 2>/dev/null
+        local ret=$?
+        if [ $ret -ne 0 ]; then
+            echo "Install failed: $REQUIRED_PKGS"
+            return 1
+            apt-get -f install 2>/dev/null
+            return 1
+        fi
+    fi
+}
 
 ORIG_RESOLV_CONF=/etc/resolv.conf.remaster_orig
 cat /etc/resolv.conf 2>/dev/null | grep -q '^nameserver'
@@ -48,26 +70,8 @@ if [ $? -ne 0 ]; then
     echo -e "nameserver   8.8.8.8\nnameserver  8.8.4.4" > /etc/resolv.conf
 fi
 
-REQUIRED_PKGS="virtualbox-guest-utils virtualbox-guest-x11"
-dpkg -l build-essential 2>/dev/null | grep '^ii' | awk '{print $2}' | grep -q build-essential
-if [ $? -ne 0 ]; then
-    BUILD_ESSENTIAL_INSTALLED=yes
-    REQUIRED_PKGS="build-essential $REQUIRED_PKGS"
-else
-    BUILD_ESSENTIAL_INSTALLED=yes
-fi
-apt-get update 2>/dev/null
-echo "Installing $REQUIRED_PKGS"
-apt-get install -y $REQUIRED_PKGS 2>/dev/null
-ret=$?
-dpkg -l $REQUIRED_PKGS 2>/dev/null | sed -e '1,5d' | awk '{print $1, $2}' 
-if [ $ret -ne 0 ]; then
-    echo "Install failed: $REQUIRED_PKGS"
-    apt-get -f install 2>/dev/null
-fi
-if [ "$BUILD_ESSENTIAL_INSTALLED" = "yes" ]; then
-    apt-get autoremove --purge build-essential 1>/dev/null 2>&1
-fi
+install_virtualbox_guest_dkms
+
 # Restore original /etc/resolv.conf if we had moved it
 if [ -f  $ORIG_RESOLV_CONF -o -L $ORIG_RESOLV_CONF ]; then
     echo "Restoring original /etc/resolv.conf"
@@ -91,16 +95,6 @@ do
     fi
     cp ${svc_dir}/$svc_file /etc/systemd/system/
 done    
-
-# Don't ENABLE services if REQUIRED_PKGS could not be installed
-for pkg in $REQUIRED_PKGS
-do
-    dpkg -l $pkg > /dev/null 2>&1
-    if [ $? -ne 0 ]; then
-        echo "Install failed: $pkg"
-        exit 0
-    fi
-done
 
 # Another check - using systemd
 SYSTEMD_PAGER="" systemctl --plain list-unit-files virtualbox-guest-utils.service | grep -q virtualbox-guest-utils.service
