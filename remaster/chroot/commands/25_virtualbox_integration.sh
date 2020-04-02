@@ -40,28 +40,29 @@ cp -r ${VBOX_DIR}/virtualbox /root/
 # At the end of the script we restore the original /etc/resolv.conf
 
 function install_virtualbox_guest_dkms() {
-    local EXISTING_DEB="${VBOX_DIR}/virtualbox-guest-dkms.deb"
     test "$(ls -A ${VBOX_DIR}/*.deb)"
+    local ret=1
     if [ $? -eq 0 ]; then
         echo "Installing downloaded DEBs: "
         local oldpwd=$(pwd)
         cd "${VBOX_DIR}"
         ls -1 *.deb | sed -e 's/^/    /'
-        cd "$oldpwd"
         # we know we need dkms
-        apt-get -y --no-install-recommends --no-install-suggests install dkms
+        apt-get -y --no-install-recommends --no-install-suggests install dkms || return 1
         dpkg -i ${VBOX_DIR}/*.deb
-        if [ $? -ne 0 ]; then
+        ret=$?
+        cd "$oldpwd"
+        if [ $ret -ne 0 ]; then
             apt-get -y --no-install-recommends --no-install-suggests -f install
             return $?
         fi
     else
-        echo "DEB not found: $EXISTING_DEB"
+        echo "No DEBS under ${VBOX_DIR}"
         local REQUIRED_PKGS="virtualbox-guest-dkms"
         apt-get update 2>/dev/null
         echo "Installing $REQUIRED_PKGS"
         apt-get install -y $REQUIRED_PKGS 2>/dev/null
-        local ret=$?
+        ret=$?
         if [ $ret -ne 0 ]; then
             echo "Install failed: $REQUIRED_PKGS"
             apt-get -y --no-install-recommends --no-install-suggests -f install 2>/dev/null
