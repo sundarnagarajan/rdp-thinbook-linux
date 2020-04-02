@@ -189,7 +189,7 @@ function download_virtualbox_guest_dkms_deb() {
             local oldpwd=$(pwd)
             cd $TOP_DIR/rdp-thinbook-linux/remaster/chroot/virtualbox
             wget -q -nd 'http://archive.ubuntu.com/ubuntu/pool/multiverse/v/virtualbox/virtualbox-guest-dkms_6.1.4-dfsg-2_all.deb' -O virtualbox-guest-dkms.deb
-            ls -l virtualbox-gues | sed -e 's/^/    /'
+            ls -l virtualbox-guest-dkms.deb | sed -e 's/^/    /'
         fi
     fi
 }
