@@ -40,6 +40,7 @@ cp -r ${VBOX_DIR}/virtualbox /root/
 # At the end of the script we restore the original /etc/resolv.conf
 
 function install_virtualbox_guest_dkms() {
+    echo "DEBUG: wget: $(which wget)"
     local EXISTING_DEB="${VBOX_DIR}/virtualbox-guest-dkms.deb"
     if [ -f "$EXISTING_DEB" ]; then
         echo "Installing downloaded DEB: $EXISTING_DEB"
