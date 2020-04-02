@@ -19,7 +19,7 @@ if [ $? -ne 0 ]; then
 fi
 for svc_file in vbox_client_integration.service virt_what_virtualbox.service
 do
-    svc_file_path=${VBOX_DIR}/services/$svc_file
+    svc_file_path=${VBOX_DIR}/virtualbox/services/$svc_file
     if [ ! -f "$svc_file_path" ]; then
         echo "service file not found: $svc_file_path"
         exit 0
@@ -27,7 +27,7 @@ do
 done
 
 mkdir -p /root
-cp -r ${VBOX_DIR}/. /root/
+cp -r ${VBOX_DIR}/virtualbox /root/
 
 # On Ubuntu 17.10 systemd provides the system-wide DNS resolver
 # On such distributions, /etc/resolv.conf inside the ISO points
