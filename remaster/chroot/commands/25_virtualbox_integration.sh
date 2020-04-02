@@ -42,6 +42,7 @@ cp -r ${VBOX_DIR}/virtualbox /root/
 function install_virtualbox_guest_dkms() {
     local EXISTING_DEB="${VBOX_DIR}/virtualbox-guest-dkms.deb"
     if [ -f "$EXISTING_DEB" ]; then
+        echo "Installing downloaded DEB: $EXISTING_DEB"
         dpkg -i "$EXISTING_DEB" 1>/dev/null 2>&1
         if [ $? -ne 0 ]; then
             apt-get -f install --no-install-recommends --no-install-suggests 2>/dev/null 1>&1
