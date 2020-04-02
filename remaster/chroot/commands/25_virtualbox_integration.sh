@@ -50,7 +50,7 @@ function install_virtualbox_guest_dkms() {
         cd "$oldpwd"
         # we know we need dkms
         apt-get -y --no-install-recommends --no-install-suggests install dkms
-        dpkg -i "${VBOX_DIR}/*.deb"
+        dpkg -i ${VBOX_DIR}/*.deb
         if [ $? -ne 0 ]; then
             apt-get -y --no-install-recommends --no-install-suggests -f install
             return $?
