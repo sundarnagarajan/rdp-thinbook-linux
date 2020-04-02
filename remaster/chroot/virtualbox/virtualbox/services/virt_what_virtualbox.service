@@ -1,0 +1,25 @@
+# This service is linked to run BEFORE virtualbox-guest-utils.service
+# virtualbox-guest-utils.service will ONLY start if this unit starts successfully
+# i.e.: returns exit code zero
+# Will stop automatically on stop of virtualbox-guest-utils.service
+# Will restart automatically on restart of virtualbox-guest-utils.service
+# ExecStart command is external because it needs to do a complex check:
+#   if virt-what command is not found - proceed with return code = 0
+#   if virt-what command is found:
+#       if virt-what returns virtualbox - return code = 0
+#       else - return code = 1
+
+[Install]
+RequiredBy=virtualbox-guest-utils.service
+
+[Unit]
+Description=Test Guard service (runs before virtualbox-guest-utils.service)
+Before=virtualbox-guest-utils.service
+PartOf=virtualbox-guest-utils.service
+RefuseManualStart=true
+RefuseManualStop=true
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/root/virtualbox/scripts/virt_what_check_cmd.sh

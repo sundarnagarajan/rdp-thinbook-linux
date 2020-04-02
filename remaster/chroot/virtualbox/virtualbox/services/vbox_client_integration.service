@@ -1,0 +1,17 @@
+# This service is linked to run after virtualbox-guest-utils.service
+# Will start automatically on successful start of virtualbox-guest-utils.service
+# Will stop automatically on stop of virtualbox-guest-utils.service
+# Will restart automatically on restart of virtualbox-guest-utils.service
+
+[Unit]
+Description=VBoxClient clipboard and display integration
+Requires=virtualbox-guest-utils.service
+After=virtualbox-guest-utils.service
+BindsTo=virtualbox-guest-utils.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/sh -c '>&2 /usr/bin/VBoxClient --clipboard'
+ExecStart=/bin/sh -c '>&2 /usr/bin/VBoxClient --display'
+ExecStop=/bin/sh -c 'killall VBoxClient'
