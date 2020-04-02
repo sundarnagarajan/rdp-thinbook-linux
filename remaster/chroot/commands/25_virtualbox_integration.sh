@@ -48,7 +48,7 @@ if [ $? -ne 0 ]; then
     echo -e "nameserver   8.8.8.8\nnameserver  8.8.4.4" > /etc/resolv.conf
 fi
 
-REQUIRED_PKGS="xorg-video-abi-23 xserver-xorg-core virtualbox-guest-utils virtualbox-guest-x11"
+REQUIRED_PKGS="virtualbox-guest-utils virtualbox-guest-x11"
 dpkg -l build-essential 2>/dev/null | grep '^ii' | awk '{print $2}' | grep -q build-essential
 if [ $? -ne 0 ]; then
     BUILD_ESSENTIAL_INSTALLED=yes
@@ -58,15 +58,15 @@ else
 fi
 apt-get update 2>/dev/null
 echo "Installing $REQUIRED_PKGS"
-apt install -y $REQUIRED_PKGS 
+apt-get install -y $REQUIRED_PKGS 2>/dev/null
 ret=$?
 dpkg -l $REQUIRED_PKGS 2>/dev/null | sed -e '1,5d' | awk '{print $1, $2}' 
 if [ $ret -ne 0 ]; then
     echo "Install failed: $REQUIRED_PKGS"
-    apt-get -f install
+    apt-get -f install 2>/dev/null
 fi
 if [ "$BUILD_ESSENTIAL_INSTALLED" = "yes" ]; then
-    apt autoremove --purge build-essential 1>/dev/null 2>&1
+    apt-get autoremove --purge build-essential 1>/dev/null 2>&1
 fi
 # Restore original /etc/resolv.conf if we had moved it
 if [ -f  $ORIG_RESOLV_CONF -o -L $ORIG_RESOLV_CONF ]; then
