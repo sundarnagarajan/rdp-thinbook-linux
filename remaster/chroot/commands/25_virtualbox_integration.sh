@@ -48,14 +48,24 @@ if [ $? -ne 0 ]; then
     echo -e "nameserver   8.8.8.8\nnameserver  8.8.4.4" > /etc/resolv.conf
 fi
 
-REQD_PKGS="virtualbox-guest-utils virtualbox-guest-x11"
-apt-get update 1>/dev/null
-apt install -y $REQD_PKGS 1>/dev/null
+REQUIRED_PKGS="virtualbox-guest-utils virtualbox-guest-x11"
+dpkg -l build-essential 2>/dev/null | grep '^ii' | awk '{print $2}' | grep -q build-essential
+if [ $? -ne 0 ]; then
+    BUILD_ESSENTIAL_INSTALLED=yes
+    REQUIRED_PKGS="build-essential $REQUIRED_PKGS"
+else
+    BUILD_ESSENTIAL_INSTALLED=yes
+fi
+apt-get update
+apt install -y $REQUIRED_PKGS
 ret=$?
-dpkg -l $REQD_PKGS 2>/dev/null | sed -e '1,5d' | awk '{print $1, $2}' 
+dpkg -l $REQUIRED_PKGS 2>/dev/null | sed -e '1,5d' | awk '{print $1, $2}' 
 if [ $ret -ne 0 ]; then
-    echo "Install failed: $REQD_PKGS"
-    apt-get -f install 1>/dev/null
+    echo "Install failed: $REQUIRED_PKGS"
+    apt-get -f install
+fi
+if [ "$BUILD_ESSENTIAL_INSTALLED" = "yes" ]; then
+    apt remove --purge build-essential 1>/dev/null 2>&1
 fi
 # Restore original /etc/resolv.conf if we had moved it
 if [ -f  $ORIG_RESOLV_CONF -o -L $ORIG_RESOLV_CONF ]; then
@@ -81,8 +91,8 @@ do
     cp ${svc_dir}/$svc_file /etc/systemd/system/
 done    
 
-# Don't ENABLE services if REQD_PKGS could not be installed
-for pkg in $REQD_PKGS
+# Don't ENABLE services if REQUIRED_PKGS could not be installed
+for pkg in $REQUIRED_PKGS
 do
     dpkg -l $pkg > /dev/null 2>&1
     if [ $? -ne 0 ]; then
