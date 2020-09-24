@@ -25,10 +25,29 @@ if [ ! -f $KP_LIST ]; then
     exit 0
 fi
 
+function filter_installed_pkgs() {
+    # Parameters: Package name pattern (if any) - can be multiple package names also
+    # Outputs package names on stdout - 1 per line WITHOUT ':$ARCH'
+    dpkg-query -W --showformat='${db:Status-Status} ${Section} ${Package}\n' $* 2>/dev/null | awk '$1=="installed" {print $3}'
+}
+
+function filter_installed_pkgs_by_section() {
+    # $1: section name (optional)
+    # Outputs package names on stdout - 1 per line WITHOUT ':$ARCH'
+    if [ -z "$1" ]; then
+        dpkg-query -W --showformat='${db:Status-Status} ${Package}\n' $* 2>/dev/null | awk '$1=="installed" {print $2}'
+    else
+        dpkg-query -W --showformat='${db:Status-Status} ${Section} ${Package}\n' 2>/dev/null | awk '$1=="installed" && $2=="kernel" {print $3}'
+    fi
+}
+
+
+
 # First check that all new kernel packages are actually installed
-for p in $(cat $KP_LIST)
+for p in $(cat $KP_LIST | cut -d_ -f1)
 do
-	inst=$(dpkg -l $p 2>/dev/null | grep '^ii' | awk '{print $2}')
+	# inst=$(dpkg -l $p 2>/dev/null | grep '^ii' | awk '{print $2}' | cut-d: -f1)
+    inst=$(filter_installed_pkgs $p)
 	if [ "$p" != "$inst" ]; then
 		echo "Expected package not installed: $p"
 		echo "Not uninstalling anything"
@@ -38,28 +57,32 @@ done
 
 # Remove kernel-related packages EXCEPT those in $KP_LIST
 REMOVE_LIST=""
-for p in $(dpkg -l 'linux-image*' | grep '^ii' | awk '{print $2}')
+# for p in $(dpkg -l 'linux-image*' | grep '^ii' | awk '{print $2}' | cut-d: -f1)
+for p in $(filter_installed_pkgs 'linux-image*')
 do
 	fgrep -qx $p $KP_LIST
 	if [ $? -ne 0 ]; then
 		REMOVE_LIST="$REMOVE_LIST $p"
 	fi
 done
-for p in $(dpkg -l 'linux-modules-*' | grep '^ii' | awk '{print $2}')
+# for p in $(dpkg -l 'linux-modules-*' | grep '^ii' | awk '{print $2}' | cut-d: -f1)
+for p in $(filter_installed_pkgs 'linux-modules-*')
 do
 	fgrep -qx $p $KP_LIST
 	if [ $? -ne 0 ]; then
 		REMOVE_LIST="$REMOVE_LIST $p"
 	fi
 done
-for p in $(dpkg -l 'linux-headers*' | grep '^ii' | awk '{print $2}')
+# for p in $(dpkg -l 'linux-headers*' | grep '^ii' | awk '{print $2}' | cut-d: -f1)
+for p in $(filter_installed_pkgs 'linux-headers*')
 do
 	fgrep -qx $p $KP_LIST
 	if [ $? -ne 0 ]; then
 		REMOVE_LIST="$REMOVE_LIST $p"
 	fi
 done
-for p in linux-signed-image-generic linux-generic
+# for p in linux-signed-image-generic linux-generic
+for p in $(filter_installed_pkgs linux-signed-image-generic linux-generic)
 do
 	fgrep -qx $p $KP_LIST
 	if [ $? -ne 0 ]; then
@@ -94,7 +117,7 @@ else
     for f in ${KERNEL_DEB_DIR}/*.deb
     do
         PKG_VER=$(dpkg-deb -W --showformat '${Package}___${Version}\n' $f)
-        dpkg-query -W --showformat '${Package}___${Version}\n' | fgrep -q "${PKG_VER}"
+        dpkg-query -W --showformat '${Package}___${Version}\n' 2>/dev/null | fgrep -q "${PKG_VER}"
         if [ $? -ne 0 ]; then
             echo "Reinstalling ${PKG_VER}"
             dpkg -i $f
@@ -108,4 +131,4 @@ else
 fi
 
 echo "Kernel-related packages remaining:"
-dpkg -l 'linux-image*' 'linux-headers*' 'linux-firmware-image*' linux-signed-image-generic linux-generic 2>/dev/null | grep '^ii' | awk '{print $2}' | sed -u -e 's/^/    /'
+filter_installed_pkgs_by_section kernel  | sed -e 's/^/    /'

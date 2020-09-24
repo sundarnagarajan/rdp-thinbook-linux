@@ -7,6 +7,11 @@ PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
 REMASTER_DIR=/root/remaster
 
+
+# ------------------------------------------------------------------------
+# Actual script starts after this
+# ------------------------------------------------------------------------
+
 KERNEL_DEB_DIR=${PROG_DIR}/../kernel-debs
 
 if [ ! -d ${KERNEL_DEB_DIR} ]; then
@@ -22,7 +27,6 @@ if [ $? -ne 0 ]; then
 fi
 KP_LIST=kernel_pkgs.list
 KP_LIST=${KERNEL_DEB_DIR}/$KP_LIST
-rm -f ${KP_LIST}
 
 if [ -x /etc/grub.d/30_os-prober ]; then
     chmod -x /etc/grub.d/30_os-prober
@@ -33,8 +37,10 @@ if [ $? -ne 0 ]; then
     exit 255
 fi
 echo overlay >> /etc/initramfs-tools/modules
-update-initramfs -u 2>/dev/null
+update-initramfs -u -k all 1>/dev/null 2>&1
 
+
+\cp -f /dev/null ${KP_LIST}
 for f in ${KERNEL_DEB_DIR}/*.deb
 do
     dpkg-deb -f $f Package >> ${KP_LIST}
@@ -44,4 +50,7 @@ if [ -f ${KP_LIST} ]; then
     cat ${KP_LIST} | sed -u -e 's/^/    /'
     mkdir -p $REMASTER_DIR
     cp ${KP_LIST} ${REMASTER_DIR}/
+else
+    exit 0
 fi
+

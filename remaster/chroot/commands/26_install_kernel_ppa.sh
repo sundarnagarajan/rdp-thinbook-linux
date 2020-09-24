@@ -21,6 +21,24 @@ KP_LIST=${KERNEL_DEB_DIR}/$KP_LIST
 PPASCRIPTS_DIR_NAME=cherrytux_ppa
 PPA_SCRIPTS_DIR=${PROG_DIR}/../$PPASCRIPTS_DIR_NAME
 
+function unused_initrd_hack() {
+    # "Hack" for Ubuntu 20.04 (Focal Fossa)
+    # Explicitly /boot/initrd.img using mkinitramfs
+    # ASSUME that ${KP_LIST} contains only one package named linux-image-*
+    # Else use the HIGHEST version of such package
+    if [ ! -f "$KP_LIST" ]; then
+        exit 0
+    fi
+    NEW_INSTALLED_KERN_VER=$(cat ${KP_LIST} | grep '^linux-image-' | sed -e 's/^linux-image-//' | sort -V | head -1 | cut -d_ -f1)
+    if [ -n "$NEW_INSTALLED_KERN_VER" ]; then
+        echo "Creating initrd.img-${NEW_INSTALLED_KERN_VER} using mkinitramfs"
+        mkinitramfs -o /boot/initrd.img-${NEW_INSTALLED_KERN_VER} ${NEW_INSTALLED_KERN_VER} 1>/dev/null 2>&1 || exit 0
+    else
+        echo "linux-image not found in ${KP_LIST}"
+    fi
+    exit 0
+}
+
 if [ ! -d ${PPA_SCRIPTS_DIR} ]; then
     echo "PPA_SCRIPTS_DIR not a directory: $PPA_SCRIPTS_DIR"
     exit 0
@@ -47,17 +65,6 @@ if [ ! -x /root/$PPASCRIPTS_DIR_NAME/$INSTALL_SCRIPT_FILENAME ]; then
     echo "Install script not found: /root/$PPASCRIPTS_DIR_NAME/$INSTALL_SCRIPT_FILENAME"
     exit 1
 fi
-
-# On Ubuntu 17.10 systemd provides the system-wide DNS resolver
-# On such distributions, /etc/resolv.conf inside the ISO points
-# at ../run/systemd/resolve/stub-resolv.conf and the target will not
-# exist IFF you are remastering on an older distribution
-
-# We detect that there is no nameserver line in /etc/resolv.conf
-# and if so, we move the existing /etc/resolv.conf aside and 
-# replace it with a file pointing at Google Public DNS
-# At the end of the script we restore the original /etc/resolv.conf
-
 
 ORIG_RESOLV_CONF=/etc/resolv.conf.remaster_orig
 cat /etc/resolv.conf 2>/dev/null | grep -q '^nameserver'
@@ -91,7 +98,8 @@ if [ -x /etc/grub.d/30_os-prober ]; then
     chmod -x /etc/grub.d/30_os-prober
 fi
 echo overlay >> /etc/initramfs-tools/modules
-update-initramfs -u 2>/dev/null
+# update-initramfs -u 2>/dev/null
+update-initramfs -u -k all
 
 # Add kernel we installed to $KP_LIST
 mkdir -p $KERNEL_DEB_DIR
