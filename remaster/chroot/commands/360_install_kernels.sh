@@ -6,6 +6,12 @@ PROG_PATH=${PROG_PATH:-$(readlink -e $0)}
 PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
 REMASTER_DIR=/root/remaster
+FAILED_EXIT_CODE=127
+
+
+# ------------------------------------------------------------------------
+# Actual script starts after this
+# ------------------------------------------------------------------------
 
 KERNEL_DEB_DIR=${PROG_DIR}/../kernel-debs
 
@@ -22,7 +28,6 @@ if [ $? -ne 0 ]; then
 fi
 KP_LIST=kernel_pkgs.list
 KP_LIST=${KERNEL_DEB_DIR}/$KP_LIST
-rm -f ${KP_LIST}
 
 if [ -x /etc/grub.d/30_os-prober ]; then
     chmod -x /etc/grub.d/30_os-prober
@@ -30,11 +35,11 @@ fi
 dpkg -i ${KERNEL_DEB_DIR}/*.deb 2>/dev/null 1>/dev/null
 if [ $? -ne 0 ]; then
     echo "Install of kernel DEBs failed"
-    exit 255
+    exit $FAILED_EXIT_CODE
 fi
-echo overlay >> /etc/initramfs-tools/modules
-update-initramfs -u 2>/dev/null
+# postpone update-initramfs to 920_update_initramfs.sh
 
+\cp -f /dev/null ${KP_LIST}
 for f in ${KERNEL_DEB_DIR}/*.deb
 do
     dpkg-deb -f $f Package >> ${KP_LIST}
@@ -44,4 +49,6 @@ if [ -f ${KP_LIST} ]; then
     cat ${KP_LIST} | sed -u -e 's/^/    /'
     mkdir -p $REMASTER_DIR
     cp ${KP_LIST} ${REMASTER_DIR}/
+else
+    exit 0
 fi

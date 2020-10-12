@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # On Ubuntu 18.04 live server ISO, when running update-initramfs -u
-# you get errors that look like:
+# avoid errors that look like:
 #
 # perl: warning: Setting locale failed.
 # perl: warning: Please check that your locale settings:
