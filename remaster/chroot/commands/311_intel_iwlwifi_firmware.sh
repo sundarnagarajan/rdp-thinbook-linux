@@ -35,6 +35,7 @@ rm -rf ${FIRMWARE_DEST_DIR}/.git
 # Copy (ONLY) additional firmware file from intel-firmware to firmware
 # In particular only iwlwifi-*.ucode and intel/*
 cd $FIRMWARE_DEST_DIR
+# Comment
 ( find -maxdepth 1 -type f -name 'iwlwifi-*.ucode'; find -mindepth 2 -type f -path './intel/*' ) | while read fn; do dest=$(dirname /lib/firmware/$fn); if [ ! -e  $dest ]; then mkdir -p $dest; cp -v $fn $dest; fi; done ; cd - 1>/dev/null 2>&1
 cd $FIRMWARE_DEST_PARENT_DIR
 rm -rf $FIRMWARE_DEST_DIR
