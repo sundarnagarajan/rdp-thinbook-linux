@@ -131,4 +131,4 @@ else
 fi
 
 echo "Kernel-related packages remaining:"
-filter_installed_pkgs_by_section kernel  | sed -e 's/^/    /'
+filter_installed_pkgs_by_section kernel  | grep '^linux' | sed -e 's/^/    /' 

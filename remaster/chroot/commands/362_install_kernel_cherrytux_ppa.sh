@@ -31,6 +31,15 @@ if [ -z "$APT_KEY_OUT" ]; then
     exit 1
 fi
 
+MIN_KERNEL=5.10
+MAX_KERNEL_VER_INSTALLED=$(dpkg -l 'linux-image*' | grep '^ii' | awk '{print $3}' |sort -Vr | head -1)
+[[ "$( (echo $MIN_KERNEL; echo $MAX_KERNEL_VER_INSTALLED) | sort -Vr | tail -1)" = "$MIN_KERNEL" ]] && {
+    echo "Current kernel (${MAX_KERNEL_VER_INSTALLED}) meets minimum requirements (${MIN_KERNEL})"
+    echo "Not installing new kernel"
+    echo "cherrytux PPA setup and ready to use"
+    exit 0
+}
+
 if [ -f $KP_LIST -a -s $KP_LIST ]; then
     grep -q '^linux-image' $KP_LIST
     if [ $? -eq 0 ]; then

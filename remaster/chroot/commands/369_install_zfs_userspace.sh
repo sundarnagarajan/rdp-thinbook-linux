@@ -8,10 +8,45 @@ PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
 FAILED_EXIT_CODE=127
 REMASTER_DIR=/root/remaster
 
+KERNEL_DEB_DIR=${PROG_DIR}/../kernel-debs
+KERNEL_DEB_DIR=$(readlink -e $KERNEL_DEB_DIR)
+KP_LIST=${KERNEL_DEB_DIR}/kernel_pkgs.list
+
+function filter_installed_pkgs() {
+    # Parameters: Package name pattern (if any) - can be multiple package names also
+    # Outputs package names on stdout - 1 per line WITHOUT ':$ARCH'
+    dpkg-query -W --showformat='${db:Status-Status} ${Section} ${Package}\n' $* 2>/dev/null | awk '$1=="installed" {print $3}'
+}
+
+function filter_installed_pkgs_by_section() {
+    # $1: section name (optional)
+    # Outputs package names on stdout - 1 per line WITHOUT ':$ARCH'
+    if [ -z "$1" ]; then
+        dpkg-query -W --showformat='${db:Status-Status} ${Package}\n' $* 2>/dev/null | awk '$1=="installed" {print $2}'
+    else
+        dpkg-query -W --showformat='${db:Status-Status} ${Section} ${Package}\n' 2>/dev/null | awk '$1=="installed" && $2=="kernel" {print $3}'
+    fi
+}
 
 # ------------------------------------------------------------------------
 # Actual script starts after this
 # ------------------------------------------------------------------------
+
+if [ ! -f $KP_LIST ]; then
+    echo "kernel_pkgs.list not found: $KP_LIST"
+    exit 0
+fi
+
+# First check that all new kernel packages are actually installed
+for p in $(cat $KP_LIST | cut -d_ -f1)
+do
+    inst=$(filter_installed_pkgs $p)
+	if [ "$p" != "$inst" ]; then
+		echo "Expected package not installed: $p"
+		echo "Not installing ZFS userspace DEBs"
+		exit 0
+	fi
+done
 
 SRC_DEB_DIR=${PROG_DIR}/../zfs-userspace-debs
 
@@ -38,7 +73,9 @@ else
     echo "No packages to remove"
 fi
 # Remove packages with 'alternative' names that get in the way
-apt autoremove -y libnvpair1linux libuutil1linux libzpool2linux 1>/dev/null 2>&1
+UNINSTALL_PKGS="libnvpair1linux libuutil1linux libzpool2linux zsys zfs-zed zfsutils-linux"
+echo "Removing $UNINSTALL_PKGS"
+apt autoremove -y  $UNINSTALL_PKGS 1>/dev/null 2>&1
 
 dpkg -i ${SRC_DEB_DIR}/*.deb 1>/dev/null 2>&1
 if [ $? -ne 0 ]; then

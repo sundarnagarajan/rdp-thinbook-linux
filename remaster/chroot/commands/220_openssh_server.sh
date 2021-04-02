@@ -13,4 +13,3 @@ if [ $? -ne 0 ]; then
     echo "Install failed: $MISSING_PKGS"
     exit $FAILED_EXIT_CODE
 fi
-# dpkg -l $REQUIRED_PKGS 2>/dev/null | sed -e '1,5d' | awk '{print $1, $2}' | sed -e 's/^/    /'

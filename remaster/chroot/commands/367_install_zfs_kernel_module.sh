@@ -10,10 +10,46 @@ PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
 FAILED_EXIT_CODE=127
 REMASTER_DIR=/root/remaster
 
+KERNEL_DEB_DIR=${PROG_DIR}/../kernel-debs
+KERNEL_DEB_DIR=$(readlink -e $KERNEL_DEB_DIR)
+KP_LIST=${KERNEL_DEB_DIR}/kernel_pkgs.list
+
+function filter_installed_pkgs() {
+    # Parameters: Package name pattern (if any) - can be multiple package names also
+    # Outputs package names on stdout - 1 per line WITHOUT ':$ARCH'
+    dpkg-query -W --showformat='${db:Status-Status} ${Section} ${Package}\n' $* 2>/dev/null | awk '$1=="installed" {print $3}'
+}
+
+function filter_installed_pkgs_by_section() {
+    # $1: section name (optional)
+    # Outputs package names on stdout - 1 per line WITHOUT ':$ARCH'
+    if [ -z "$1" ]; then
+        dpkg-query -W --showformat='${db:Status-Status} ${Package}\n' $* 2>/dev/null | awk '$1=="installed" {print $2}'
+    else
+        dpkg-query -W --showformat='${db:Status-Status} ${Section} ${Package}\n' 2>/dev/null | awk '$1=="installed" && $2=="kernel" {print $3}'
+    fi
+}
 
 # ------------------------------------------------------------------------
 # Actual script starts after this
 # ------------------------------------------------------------------------
+
+if [ ! -f $KP_LIST ]; then
+    echo "kernel_pkgs.list not found: $KP_LIST"
+    exit 0
+fi
+
+# First check that all new kernel packages are actually installed
+for p in $(cat $KP_LIST | cut -d_ -f1)
+do
+    inst=$(filter_installed_pkgs $p)
+	if [ "$p" != "$inst" ]; then
+		echo "Expected package not installed: $p"
+		echo "Not installing ZFS kernel DEBs"
+		exit 0
+	fi
+done
+
 
 SRC_DEB_DIR=${PROG_DIR}/../zfs-kernel-debs
 
@@ -31,11 +67,17 @@ fi
 
 # We need dkms and dkms needs python3-distutils (undeclared ?)
 apt install --no-install-recommends --no-install-suggests -y dkms python3-distutils 1>/dev/null 2>&1
+# Remove zfsutils-linux that conflicts with zfs-dkms
+echo "Removing zfsutils-linux that conflicts with zfs-dkms"
+apt autoremove -y zsys zfs-zed zfsutils-linux 1>/dev/null 2>&1
+
+echo "Installing ZFS kernel DEBs"
 dpkg -i ${SRC_DEB_DIR}/*.deb 1>/dev/null 2>&1
 if [ $? -ne 0 ]; then
     echo "Install of ZFS kernel DEBs failed"
     exit $FAILED_EXIT_CODE
 fi
+
 # postpone update-initramfs to 920_update_initramfs.s
 
 echo "New ZFS kernel packages installed:"

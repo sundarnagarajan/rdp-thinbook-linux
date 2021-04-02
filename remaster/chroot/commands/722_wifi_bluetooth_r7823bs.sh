@@ -7,6 +7,20 @@ PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
 
 R8723_SCRIPTS_DIR=${PROG_DIR}/../r8723bs-bluetooth
 
+# No longer required starting with Groovy (20.10) kernel 5.8
+MIN_RELEASE=20.10
+CUR_RELEASE=$(cat /etc/os-release | grep '^VERSION_ID' | cut -d= -f2 | sed -e 's/^"//' -e 's/"$//')
+[[ "$( (echo $MIN_RELEASE; echo $CUR_RELEASE) | sort -Vr | tail -1)" = "$MIN_RELEASE" ]] && {
+    MIN_KERNEL=5.8
+    MAX_KERNEL_VER_INSTALLED=$(dpkg -l 'linux-image*' | grep '^ii' | awk '{print $3}' |sort -Vr | head -1)
+    [[ "$( (echo $MIN_KERNEL; echo $MAX_KERNEL_VER_INSTALLED) | sort -Vr | tail -1)" = "$MIN_KERNEL" ]] && {
+        echo "Current kernel (${MAX_KERNEL_VER_INSTALLED}) meets minimum requirements (${MIN_KERNEL})"
+        echo "Current release (${CUR_RELEASE}) meets minimum release (${MIN_RELEASE})"
+        echo "Not installing fixes for r8723bs wifi / bluetooth"
+        exit 0
+    }
+}
+
 if [ ! -d ${R8723_SCRIPTS_DIR} ]; then
     echo "R8723_SCRIPTS_DIR not a directory: $R8723_SCRIPTS_DIR"
     exit 0
