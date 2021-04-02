@@ -1,8 +1,11 @@
 #!/bin/bash
 
-# The directory containing generic remastering recpies
-GIT_REMASTER_DIR=rdp-thinbook-linux
-
+function exit_if_not_root {
+    if [ $(id -u) -ne 0 ]; then
+        echo "Need to be root"
+        exit 1
+    fi
+}
 
 function check_host_arch() {
     # We _NEED_ x86_64 (amd64)
@@ -14,11 +17,6 @@ function check_host_arch() {
     fi
     return 0
 }
-
-check_host_arch
-if [ $? -ne 0 ]; then
-    exit 1
-fi
 
 function check_pkg_integrity() {
     # $1: package name
@@ -59,10 +57,7 @@ function check_pkg_integrity() {
 }
 
 function check_required_pkgs {
-    # IDEALLY REQD_PKGS should be calculated based on whether kernel compilation is requested
-    local REQD_PKGS="grub-efi-ia32-bin grub-efi-amd64-bin grub-pc-bin grub2-common grub-common util-linux parted gdisk mount xorriso genisoimage squashfs-tools rsync git build-essential kernel-package fakeroot libncurses5-dev libssl-dev ccache libfile-fcntllock-perl curl "
-    # ZFS compilation additionally requries:
-    REQD_PKGS="$REQD_PKGS autoconf automake libtool gawk alien dkms libblkid-dev uuid-dev libudev-dev zlib1g-dev libaio-dev libattr1-dev libelf-dev python3 python3-setuptools python3-cffi libffi-dev python3-dev"
+    local REQD_PKGS="grub-efi-ia32-bin grub-efi-amd64-bin grub-pc-bin grub2-common grub-common util-linux parted gdisk mount xorriso genisoimage squashfs-tools rsync git build-essential kernel-package fakeroot libncurses5-dev libssl-dev ccache libfile-fcntllock-perl curl"
     local MISSING_PKGS=$(dpkg -l $REQD_PKGS 2>/dev/null | sed -e '1,4d'| grep -v '^ii' | awk '{printf("%s ", $2)}')
     MISSING_PKGS="$MISSING_PKGS $(dpkg -l $REQD_PKGS 2>&1 1>/dev/null | sed -e 's/^dpkg-query: no packages found matching //')"
     MISSING_PKGS="${MISSING_PKGS%% *}"
@@ -99,7 +94,6 @@ function check_required_pkgs {
 }
 
 function check_avail_disk_space {
-    # IDEALLY REQD_SPACE_BYTES should be calculated based on whether kernel compilation is requested
     REQD_SPACE_BYTES=10000000000
     AVAIL_SPACE_BYTES=$(df -B1 --output=avail . | sed -e '1d')
     printf "Required space : %18d\n" $REQD_SPACE_BYTES
@@ -122,34 +116,33 @@ function update_gitdir {
         echo "Usage: update_gitdir <directory_path> <git_url>"
         return 1
     fi
-    gitdir=$(basename "$gitdir")
-
-    cd "$TOP_DIR"
     if [ -d "$1" ]; then
         cd "$1"
-        echo "Pulling latest changes to $gitdir"
+        echo "Pulling latest changes to $(basename $gitdir)"
         git pull
         if [ $? -ne 0 ]; then
             echo "Could not update $gitdir"
-            cd "$oldpwd"
+            cd $oldpwd
             exit 1
         fi
+        cd $oldpwd
     else
-        echo "Cloning to $gitdir"
-        git clone --depth 1 "$git_url" 2>/dev/null "$gitdir"
+        cd $(dirname $gitdir)
+        echo "Cloning $(basename $gitdir)"
+        git clone --depth 1 "$git_url" 2>/dev/null
+        cd $oldpwd
     fi
-    cd $oldpwd
 }
 
 function update_from_git {
-    # Remote git URLs are ONLY in this function
     cd $TOP_DIR
-    update_gitdir bootutils 'https://github.com/sundarnagarajan/bootutils.git' || exit 1
-    update_gitdir $GIT_REMASTER_DIR 'https://github.com/sundarnagarajan/rdp-thinbook-linux.git' || exit 1
+    update_gitdir ${TOP_DIR}/bootutils 'https://github.com/sundarnagarajan/bootutils.git' || exit 1
+    update_gitdir ${TOP_DIR}/kernel_build 'https://github.com/sundarnagarajan/kernel_build.git' || exit 1
+    update_gitdir ${TOP_DIR}/rdp-thinbook-linux 'https://github.com/sundarnagarajan/rdp-thinbook-linux.git' || exit 1
 
     # Copy scripts from bootutils
-    \rm -rf $TOP_DIR/$GIT_REMASTER_DIR/remaster/chroot/scripts
-    cp -a $TOP_DIR/bootutils/scripts $TOP_DIR/$GIT_REMASTER_DIR/remaster/chroot/
+    \rm -rf $TOP_DIR/rdp-thinbook-linux/remaster/chroot/scripts
+    cp -a $TOP_DIR/bootutils/scripts $TOP_DIR/rdp-thinbook-linux/remaster/chroot/
 }
 
 function copy_linuxutils()
@@ -159,47 +152,36 @@ function copy_linuxutils()
         echo "Directory not found: $LINUXUTILS_DIR"
         return
     fi
-    cp -a "$LINUXUTILS_DIR" $TOP_DIR/$GIT_REMASTER_DIR/remaster/chroot/
+    cp -a "$LINUXUTILS_DIR" $TOP_DIR/rdp-thinbook-linux/remaster/chroot/
     for file_dir in .git fixrandr.py fixrandr_wrapper.py get_hosts_from_router ipmimon.py ipmimon_type_fan ipmimon_type_temperature ipmimon_type_voltage movewindow_fixes rdp.py repo_ppa_lib.py sas2ircu show_lsisas show_scanners sign_sha256_dir_hierarchy.sh show_ssh ssh_functions.sh sudoers.txt watch_md_iostat.sh xrandr_settings
     do
-        rm -rf $TOP_DIR/$GIT_REMASTER_DIR/remaster/chroot/$(basename "$LINUXUTILS_DIR")/$file_dir
+        rm -rf $TOP_DIR/rdp-thinbook-linux/remaster/chroot/$(basename "$LINUXUTILS_DIR")/$file_dir
     done
 }
 
 
 function compile_kernel {
-    # Config values are in kernel_build.config
-    \rm -rf "$TOP_DIR/__kernel_build" "$TOP_DIR/__zfs_build"
-    \rm -rf "$TOP_DIR/$GIT_REMASTER_DIR/remaster/chroot/kernel-debs" "$TOP_DIR/$GIT_REMASTER_DIR/remaster/chroot/zfs-kernel-debs" "$TOP_DIR/$GIT_REMASTER_DIR/remaster/chroot/zfs-userspace-debs"
-
     cd $TOP_DIR
-    update_gitdir kernel_build 'https://github.com/sundarnagarajan/kernel_build.git' || exit 1
+    # We only need kernel_build if we are compiling the kernel
+    #update_gitdir ${TOP_DIR}/kernel_build 'https://github.com/sundarnagarajan/kernel_build.git' || exit 1
+
+    # Config values are in kernel_build.config
+    # Avoid kernel 4.17 - has issues with RDP 1130i
+    # Because 4.17 had a huge set of ALSA changes?
+    # export KERNEL_TYPE=stable
+    # export KERNEL_BUILD_DIR=$TOP_DIR/kernel_build/debs
+    # KERNEL_BUILD_CONFIG="./kernel_build.config" KERNEL__NO_SRC_PKG=yes KERNEL_BUILD_DIR=$TOP_DIR/kernel_build/debs ./patch_and_build_kernel.sh
+    
     KERNEL_BUILD_CONFIG="$TOP_DIR/kernel_build.config" $TOP_DIR/kernel_build/scripts/patch_and_build_kernel.sh
+
     if [ $? -ne 0 ]; then
         exit 1
     fi
+    echo "Moving compiled debs:"
+    ls $TOP_DIR/__kernel_build/debs/*.deb | sed -e 's/^/    /'
+    rm -f $TOP_DIR/rdp-thinbook-linux/remaster/chroot/kernel-debs/*.deb
+    mv $TOP_DIR/__kernel_build/debs/*.deb $TOP_DIR/rdp-thinbook-linux/remaster/chroot/kernel-debs/
 
-    # Copy kernel DEBs
-    if [ $(ls -1 "$TOP_DIR/__kernel_build/debs"/*.deb 2>/dev/null | wc -l) -gt 0 ]; then
-        echo "Moving kernel DEBs:"
-        mkdir -p "$TOP_DIR/$GIT_REMASTER_DIR/remaster/chroot/kernel-debs"
-        mv "$TOP_DIR/__kernel_build/debs/"*.deb "$TOP_DIR/$GIT_REMASTER_DIR/remaster/chroot/kernel-debs"/
-        ( cd "$TOP_DIR/$GIT_REMASTER_DIR/remaster/chroot/kernel-debs"; ls -1 *.deb 2>/dev/null | sed -e 's/^/  /')
-    fi
-
-    # Copy ZFS debs if present
-    if [ $(ls -1 "$TOP_DIR/__zfs_build/zfs_kernel_debs"/*.deb 2>/dev/null | wc -l) -gt 0 ]; then
-        echo "Moving ZFS kernel DEBs:"
-        mkdir -p "$TOP_DIR/$GIT_REMASTER_DIR/remaster/chroot/zfs-kernel-debs"
-        mv "$TOP_DIR/__zfs_build/zfs_kernel_debs"/*.deb "$TOP_DIR/$GIT_REMASTER_DIR/remaster/chroot/zfs-kernel-debs"/
-        ( cd "$TOP_DIR/$GIT_REMASTER_DIR/remaster/chroot/zfs-kernel-debs"; ls -1 *.deb 2>/dev/null | sed -e 's/^/  /')
-    fi
-    if [ $(ls -1 "$TOP_DIR/__zfs_build/zfs_userspace_debs"/*.deb 2>/dev/null | wc -l) -gt 0 ]; then
-        echo "Moving ZFS userspace DEBs:"
-        mkdir -p "$TOP_DIR/$GIT_REMASTER_DIR/remaster/chroot/zfs-userspace-debs"
-        mv "$TOP_DIR/__zfs_build/zfs_userspace_debs"/*.deb "$TOP_DIR/$GIT_REMASTER_DIR/remaster/chroot/zfs-userspace-debs"/
-        ( cd "$TOP_DIR/$GIT_REMASTER_DIR/remaster/chroot/zfs-userspace-debs"; ls -1 *.deb 2>/dev/null | sed -e 's/^/  /')
-    fi
     cd $TOP_DIR
 }
 
@@ -208,11 +190,11 @@ function download_virtualbox_guest_dkms_deb() {
     # Only available in focal fossa
     # So we download it into chroot/virtualbox IFF commands/25_virtualbox_integration.sh
     # is executable
-    if [ -x $TOP_DIR/$GIT_REMASTER_DIR/remaster/chroot/commands/25_virtualbox_integration.sh ]; then
-        if [ -x $TOP_DIR/$GIT_REMASTER_DIR/remaster/chroot/virtualbox ]; then
+    if [ -x $TOP_DIR/rdp-thinbook-linux/remaster/chroot/commands/25_virtualbox_integration.sh ]; then
+        if [ -x $TOP_DIR/rdp-thinbook-linux/remaster/chroot/virtualbox ]; then
             echo "Downloading virtualbox-guest DEBs"
             local oldpwd=$(pwd)
-            cd $TOP_DIR/$GIT_REMASTER_DIR/remaster/chroot/virtualbox
+            cd $TOP_DIR/rdp-thinbook-linux/remaster/chroot/virtualbox
             wget -q -nd 'http://archive.ubuntu.com/ubuntu/pool/multiverse/v/virtualbox/virtualbox-guest-dkms_6.1.4-dfsg-2_all.deb' -O virtualbox-guest-dkms.deb
             wget -q -nd 'http://archive.ubuntu.com/ubuntu/pool/multiverse/v/virtualbox/virtualbox-guest-utils_6.1.4-dfsg-2_amd64.deb' -O virtualbox-guest-utils.deb
             wget -q -nd 'http://archive.ubuntu.com/ubuntu/pool/multiverse/v/virtualbox/virtualbox-guest-x11_6.1.4-dfsg-2_amd64.deb' -O virtualbox-guest-x11.deb
@@ -237,43 +219,3 @@ function remaster_iso {
     fi
     sudo REMASTER_CMDS_DIR=${R_DIR} ${TOP_DIR}/bootutils/scripts/ubuntu_remaster_iso.sh ${INPUT_ISO} ${EXTRACT_DIR} ${OUTPUT_ISO}
 }
-
-# ------------------------------------------------------------------------
-# Main script starts after this
-# ------------------------------------------------------------------------
-
-START_TIME=$(date)
-export TOP_DIR=$(readlink -e $(dirname $0))
-export R_DIR=${TOP_DIR}/$GIT_REMASTER_DIR/remaster
-export INPUT_ISO=${TOP_DIR}/ISO/in/source.iso
-export EXTRACT_DIR=${TOP_DIR}/ISO/extract
-export OUTPUT_ISO=${TOP_DIR}/ISO/out/modified.iso
-
-function cleanup_mounts()
-{
-    if [ -z "$EXTRACT_DIR" ]; then
-        return
-    fi
-    which findmnt 1>/dev/null 2>&1 || return
-    for d in $(findmnt -n -l | grep "$EXTRACT_DIR" | awk '{print $1}' | sort -r)
-    do
-        echo "Unmounting $d"
-        umount $d
-    done
-    rm -rf "$EXTRACT_DIR"
-}
-
-trap cleanup_mounts 1 2 3 15
-
-
-check_required_pkgs
-check_avail_disk_space
-
-
-update_from_git
-copy_linuxutils
-download_virtualbox_guest_dkms_deb
-
-# compile_kernel
-remaster_iso
-echo "Start: $START_TIME" ; echo "Ended: $(date)"
