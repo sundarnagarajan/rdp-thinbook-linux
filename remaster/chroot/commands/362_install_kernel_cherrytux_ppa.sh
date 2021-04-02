@@ -19,6 +19,7 @@ FAILED_EXIT_CODE=127
 REMASTER_DIR=/root/remaster
 CHERRYTUX_PPA_GPG_KEYID=ABF7C302A5B662BDE68E0EFE883F04480A577E61
 KERNEL_DEB_DIR=${PROG_DIR}/../kernel-debs
+mkdir -p $KERNEL_DEB_DIR
 KERNEL_DEB_DIR=$(readlink -e $KERNEL_DEB_DIR)
 KP_LIST=kernel_pkgs.list
 KP_LIST=${KERNEL_DEB_DIR}/$KP_LIST
@@ -30,15 +31,6 @@ if [ -z "$APT_KEY_OUT" ]; then
     echo "Not installing anything"
     exit 1
 fi
-
-MIN_KERNEL=5.10
-MAX_KERNEL_VER_INSTALLED=$(dpkg -l 'linux-image*' | grep '^ii' | awk '{print $3}' |sort -Vr | head -1)
-[[ "$( (echo $MIN_KERNEL; echo $MAX_KERNEL_VER_INSTALLED) | sort -Vr | tail -1)" = "$MIN_KERNEL" ]] && {
-    echo "Current kernel (${MAX_KERNEL_VER_INSTALLED}) meets minimum requirements (${MIN_KERNEL})"
-    echo "Not installing new kernel"
-    echo "cherrytux PPA setup and ready to use"
-    exit 0
-}
 
 if [ -f $KP_LIST -a -s $KP_LIST ]; then
     grep -q '^linux-image' $KP_LIST
