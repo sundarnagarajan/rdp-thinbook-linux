@@ -114,6 +114,23 @@ function create_1_efi_file {
     esac
     echo "Creating EFI image: $efi_filename"
 
+    # Earlier code creates an EFI file with very limited builtin modules
+    # that DEPENDSon /boot/grub/<ARCH> dir for remaining modules
+    # Though we put  /boot/grub/<ARCH> on the ISO, some installers
+    # do not copy this to the target wheninstalling - specifically seen
+    # with Ubuntu Mate Groovy 20.10 for i386-efi
+    # So we create an EFI image containing ALL modules
+
+    grub-mkstandalone --output=${efi_directory}/${efi_filename} --format=$grub_format --compress=gz
+
+    # COPY any EFI we created under /root/efi to be able to handle
+    # any installer failures more easily
+
+    mkdir -p /root/efi
+    cp ${efi_directory}/${efi_filename} /root/efi/
+
+    return
+
     \rm -f $grub_embedded_cfg
     echo 'set root=(hd0)' > $grub_embedded_cfg
     echo 'set prefix=/boot/grub' >> $grub_embedded_cfg
