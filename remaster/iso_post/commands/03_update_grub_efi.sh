@@ -1,13 +1,23 @@
 #!/bin/bash
 # To see look devices use the command: losetup -l
 
-# Expected max TOTAL size of EFI files in bytes
-NEW_EFI_IMG_SIZE_BYTES=3145728
-
-# List of grub modules to build into EFI images
-# Module names should NOT have '.mod' ending!
-GRUB_BUILTIN_MODLIST="iso9660 memdisk extcmd search search_fs_file minix normal configfile"
-GRUB_REMOVE_MODULES="affs.mod afs.mod extcmd.mod fshelp.mod functional_test.mod hello.mod nilfs2.mod search_fs_file.mod search_fs_uuid.mod search_label.mod search.mod sfs.mod tar.mod zfsinfo.mod zfs.mod"
+# Expected max TOTAL size of EFI files in bytes - should be multiple of 512
+#  1 MB 1048576
+#  2 MB 2097152
+#  3 MB 3145728
+#  4 MB 4194304
+#  5 MB 5242880
+#  6 MB 6291456
+#  7 MB 7340032
+#  8 MB 8388608
+#  9 MB 9437184
+# 10 MB 10485760
+# 11 MB 11534336
+# 12 MB 12582912
+# 13 MB 13631488
+# 14 MB 14680064
+# 15 MB 15728640
+NEW_EFI_IMG_SIZE_BYTES=15000064
 
 # grub prefix - used with grub-mkimage
 GRUB_PREFIX="/boot/grub"
@@ -17,9 +27,24 @@ PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
 ISO_EXTRACT_DIR=${PROG_DIR}/../..
 ISO_EXTRACT_DIR=$(readlink -e $ISO_EXTRACT_DIR)
-
-
 SCRIPT_DIR=${PROG_DIR}
+FAILED_EXIT_CODE=127
+
+GRUB_EMBEDDED_CFG_FILE=${PROG_DIR}/../grub/grub_embedded.cfg
+GRUB_EMBEDDED_CFG_FILE=$(readlink -m "$GRUB_EMBEDDED_CFG_FILE")
+
+[[ ! -f "$GRUB_EMBEDDED_CFG_FILE" ]] && {
+    >&2 echo "Required grub config file not found: $GRUB_EMBEDDED_CFG_FILE"
+    exit $FAILED_EXIT_CODE
+}
+
+GRUB_EXT_CFG_FILE=${PROG_DIR}/../grub/grub.cfg
+GRUB_EXT_CFG_FILE=$(readlink -m "$GRUB_EXT_CFG_FILE")
+
+[[ ! -f "$GRUB_EXT_CFG_FILE" ]] && {
+    >&2 echo "Required grub config file not found: $GRUB_EXT_CFG_FILE"
+    exit $FAILED_EXIT_CODE
+}
 
 # All changes happen in GRUB_DIR
 GRUB_DIR=${ISO_EXTRACT_DIR}/boot/grub
@@ -99,14 +124,17 @@ function create_1_efi_file {
     local grub_format=$2
     local boot_grub_dir=$3
     local efi_filename=""
-    local grub_embedded_cfg=${boot_grub_dir}/grub_embedded.cfg
+    local grub_efi_filename=""
+    local grub_embedded_file=grub_embedded.cfg
 
     case $grub_format in
         i386-efi)
             efi_filename=bootia32.efi
+            grub_efi_filename=grubia32.efi
             ;;
         x86_64-efi)
             efi_filename=bootx64.efi
+            grub_efi_filename=grubx64.efi
             ;;
         *)
             echo "Invalid format: $grub_format"
@@ -114,41 +142,25 @@ function create_1_efi_file {
     esac
     echo "Creating EFI image: $efi_filename"
 
-    # Earlier code creates an EFI file with very limited builtin modules
-    # that DEPENDSon /boot/grub/<ARCH> dir for remaining modules
-    # Though we put  /boot/grub/<ARCH> on the ISO, some installers
-    # do not copy this to the target wheninstalling - specifically seen
-    # with Ubuntu Mate Groovy 20.10 for i386-efi
-    # So we create an EFI image containing ALL modules
+    # Create an EFI image containing ALL modules
+    local built_in_mods=$((cd /usr/lib/grub/${grub_format}; ls -1 *.mod ) | sed -e 's/\.mod$//' | tr '\n' ' ')
 
-    grub-mkstandalone --output=${efi_directory}/${efi_filename} --format=$grub_format --compress=gz
+    # See:https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Technical_information
+    # $cmdpath gives full path to directory where EFI file was loaded from
+    # See: https://www.gnu.org/software/grub/manual/grub/grub.html#cmdpath
+    grub-mkstandalone --format=$grub_format --compress=gz --output=${efi_directory}/${efi_filename} "boot/grub/grub.cfg=$GRUB_EMBEDDED_CFG_FILE"
+    local ret=$?
 
-    # COPY any EFI we created under /root/efi to be able to handle
-    # any installer failures more easily
-
-    mkdir -p /root/efi
-    cp ${efi_directory}/${efi_filename} /root/efi/
-
-    return
-
-    \rm -f $grub_embedded_cfg
-    echo 'set root=(hd0)' > $grub_embedded_cfg
-    echo 'set prefix=/boot/grub' >> $grub_embedded_cfg
-    echo 'normal' >> $grub_embedded_cfg
-    grub-mkimage --prefix=$GRUB_PREFIX --format=$grub_format --config=$grub_embedded_cfg --output=${efi_directory}/${efi_filename} ${GRUB_BUILTIN_MODLIST}
-    if [ $? -ne 0 ]; then
-        echo "grub-mkimage failed"
+    if [ $ret -ne 0 ]; then
+        echo "$grub_format EFI creation failed"
         return 1
     fi
-    \rm -f $grub_embedded_cfg
+    \cp -f "$GRUB_EXT_CFG_FILE" ${efi_directory}/
 
-    # Delete builtin modules
-    if [ -n "$boot_grub_dir" -a -d "${boot_grub_dir}/${grub_format}" ]; then
-        for m in $GRUB_BUILTIN_MODLIST
-        do
-            \rm -f ${boot_grub_dir}/${grub_format}/$(basename $m .mod)
-        done
-    fi
+    # COPY any EFI we created under /root/efi to handle installer failures
+    mkdir -p /root/efi
+    \cp -f ${efi_directory}/${efi_filename} /root/efi/
+    \cp -f ${efi_directory}/$(basename "$GRUB_EXT_CFG_FILE") /root/efi/
 }
 
 function create_reqd_efi_files {
@@ -171,12 +183,6 @@ function create_reqd_efi_files {
             return 1
         fi
     fi
-    if [ -f "${efi_directory}/grubx64.efi" ]; then
-        echo "grubx64.efi already exists: ${efi_directory}/grubx64.efi"
-    else
-        echo "Creating grubx64.efi"
-        cp ${efi_directory}/bootx64.efi ${efi_directory}/grubx64.efi
-    fi
     if [ -f "${efi_directory}/bootia32.efi" ]; then
         echo "bootia32.efi already exists: ${efi_directory}/bootia32.efi"
     else
@@ -197,51 +203,30 @@ function create_1_grub_module_dir {
     fi
     local boot_grub_dir=$1
     local grub_format=$2
-    local template_dir=""
+    local grub_src_dir=""
+    local target_dir=""
 
     case $grub_format in
         i386-efi)
-            template_dir=${boot_grub_dir}/x86_64-efi
+            target_dir=${boot_grub_dir}/$grub_format
+            grub_src_dir=/usr/lib/grub/${grub_format}
             ;;
         x86_64-efi)
-            template_dir=${boot_grub_dir}/i386-efi
+            target_dir=${boot_grub_dir}/$grub_format
+            grub_src_dir=/usr/lib/grub/${grub_format}
             ;;
         *)
             echo "Invalid format: $grub_format"
             return 1
     esac
-    local grub_src_dir=/usr/lib/grub/${grub_format}
-    local target_dir=${boot_grub_dir}/${grub_format}
     if [ ! -d "$grub_src_dir" ]; then
         echo "Directory not found: $grub_src_dir"
         return 1
     fi
-    echo "Emptying and creating grub module dir: $target_dir"
-    find ${target_dir} -exec rm -rf {} \; 2>/dev/null
-    mkdir -p $target_dir
-
-    if [ -d "${template_dir}" ]; then
-        echo "Copying from template_dir: $template_dir"
-        for f in $template_dir/*.mod $template_dir/*.lst $template_dir/grub.cfg
-        do
-            local fn=$(basename $f)
-            if [ -f $grub_src_dir/$fn ]; then
-                \cp -f $grub_src_dir/$fn $target_dir/
-            fi
-        done
-        if [ -f "$template_dir/grub.cfg" ]; then
-            \cp -f $template_dir/grub.cfg $target_dir/
-        fi
-    else
-        echo "Copying from grub_src_dir: $grub_src_dir"
-        # Only copy .mod and .lst
-        \cp -fa $grub_src_dir/*.mod $target_dir/
-        \cp -fa $grub_src_dir/*.lst $target_dir/
-        # Remove some modules that are not normally present
-        for m in $GRUB_REMOVE_MODULES
-        do
-            \rm -f  $target_dir/$m
-        done
+    if [[ ! -d "$target_dir" ]]; then
+        echo "Creating grub module dir: $target_dir from $grub_src_dir"
+        mkdir -p $target_dir
+        rsync -a $grub_src_dir/. $target_dir/.
     fi
 }
 
@@ -323,7 +308,7 @@ function all_efi_files_present {
     fi
     local efi_directory=$1
     local old_pwd=$(readlink -f $(pwd))
-    local efi_files="BOOTIA32.EFI BOOTX64.EFI GRUBX64.EFI"
+    local efi_files="BOOTIA32.EFI BOOTX64.EFI"
     local efi_files_present=""
 
     cd $efi_directory
@@ -376,7 +361,7 @@ if [ "$EFI_FILES_OK" = "no" ]; then
     dd if=/dev/zero of=$NEW_IMG_FILE bs=$NEW_SIZE count=1 status=progress 2>/dev/null
 
     NEW_LOOPDEV=$(setup_loop_dev $NEW_IMG_FILE)
-    mkfs.vfat $NEW_LOOPDEV 1>/dev/null
+    mkfs.vfat -n LIVE_EFI $NEW_LOOPDEV 1>/dev/null
 
     \rm -rf "$MOUNT_NEW_DIR"; mkdir -p "$MOUNT_NEW_DIR"
     mount $NEW_LOOPDEV "$MOUNT_NEW_DIR"

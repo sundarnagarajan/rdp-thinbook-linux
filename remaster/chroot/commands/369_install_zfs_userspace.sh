@@ -85,7 +85,26 @@ fi
 # postpone update-initramfs to 920_update_initramfs.s
 
 echo "New ZFS userspace packages installed:"
+NEW_PKG_LIST=""
 for f in ${SRC_DEB_DIR}/*.deb
 do
-    dpkg-deb -W --showformat='${Package}\n' "$f" 2>/dev/null
+    PKG=$(dpkg-deb -W --showformat='${Package}' "$f" 2>/dev/null)
+    NEW_PKG_LIST="$NEW_PKG_LIST $PKG"
+    echo $PKG
 done | sort | sed -e 's/^/    /'
+
+# ------------------------------------------------------------------------
+# Create script to uninstall ZFS packages installed
+# ------------------------------------------------------------------------
+
+REMASTER_DIR=/root/remaster
+UNINSTALL_ZFS_DIR=${REMASTER_DIR}/zfs
+UNINSTALL_ZFS_SCRIPT="$UNINSTALL_ZFS_DIR"/uninstall_new_zfs.sh
+
+mkdir -p "$UNINSTALL_ZFS_DIR" || {
+    >&2 echo "Could not create dir: $UNINSTALL_ZFS_DIR"
+    exit 1
+}
+echo '#!/bin/bash' > "$UNINSTALL_ZFS_SCRIPT"
+echo "sudo apt autoremove --purge -y $NEW_PKG_LIST" >> "$UNINSTALL_ZFS_SCRIPT"
+chmod +x "$UNINSTALL_ZFS_SCRIPT"

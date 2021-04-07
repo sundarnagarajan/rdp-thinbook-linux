@@ -14,6 +14,10 @@ FIRMWARE_DEST_DIR=/lib/firmware
 FIRMWARE_DEST_PARENT_DIR=$(dirname $FIRMWARE_DEST_DIR)
 FIRMWARE_DEST_BASENAME=$(basename $FIRMWARE_DEST_DIR)
 
+# We can still update linux-firmware package
+# apt upgrade -y linux-firmware 1>/dev/null 2>&1
+# echo "Updated linux-firmware package"
+
 # Installing linux firmware BREAKS Wifi, Sound and Bluetooth on the RDP ThinBook
 MIN_RELEASE=20.10
 CUR_RELEASE=$(cat /etc/os-release | grep '^VERSION_ID' | cut -d= -f2 | sed -e 's/^"//' -e 's/"$//')

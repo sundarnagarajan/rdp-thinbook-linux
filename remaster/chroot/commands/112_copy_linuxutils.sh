@@ -18,7 +18,7 @@ LINUXUTILS_DIR=$(readlink -e $LINUXUTILS_DIR)
 \cp -r $LINUXUTILS_DIR ${REMASTER_DIR}/
 
 # Install required packages for linuxutils (show_storage, mostly)
-REQUIRED_PKGS="udev coreutils util-linux hddtemp parted lvm2 hdparm nvme-cli lsscsi udisks2"
+REQUIRED_PKGS="udev coreutils util-linux hddtemp parted lvm2 hdparm nvme-cli lsscsi udisks2 smartmontools"
 
 MISSING_PKGS=""
 for pkg in $REQUIRED_PKGS
