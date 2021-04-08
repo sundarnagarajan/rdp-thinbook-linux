@@ -27,6 +27,8 @@ PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
 ISO_EXTRACT_DIR=${PROG_DIR}/../..
 ISO_EXTRACT_DIR=$(readlink -e $ISO_EXTRACT_DIR)
+ISO_CHROOT_DIR=${PROG_DIR}/../../../iso-chroot
+ISO_CHROOT_DIR=$(readlink-e $ISO_CHROOT_DIR)
 SCRIPT_DIR=${PROG_DIR}
 FAILED_EXIT_CODE=127
 
@@ -143,11 +145,7 @@ function create_1_efi_file {
     echo "Creating EFI image: $efi_filename"
 
     # Create an EFI image containing ALL modules
-    local built_in_mods=$((cd /usr/lib/grub/${grub_format}; ls -1 *.mod ) | sed -e 's/\.mod$//' | tr '\n' ' ')
-
     # See:https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Technical_information
-    # $cmdpath gives full path to directory where EFI file was loaded from
-    # See: https://www.gnu.org/software/grub/manual/grub/grub.html#cmdpath
     grub-mkstandalone --format=$grub_format --compress=gz --output=${efi_directory}/${efi_filename} "boot/grub/grub.cfg=$GRUB_EMBEDDED_CFG_FILE"
     local ret=$?
 
@@ -158,9 +156,9 @@ function create_1_efi_file {
     \cp -f "$GRUB_EXT_CFG_FILE" ${efi_directory}/
 
     # COPY any EFI we created under /root/efi to handle installer failures
-    mkdir -p /root/efi
-    \cp -f ${efi_directory}/${efi_filename} /root/efi/
-    \cp -f ${efi_directory}/$(basename "$GRUB_EXT_CFG_FILE") /root/efi/
+    mkdir -p $ISO_CHROOT_DIR/root/efi
+    \cp -f ${efi_directory}/${efi_filename} $ISO_CHROOT_DIR/root/efi/
+    \cp -f ${efi_directory}/$(basename "$GRUB_EXT_CFG_FILE") $ISO_CHROOT_DIR/root/efi/
 }
 
 function create_reqd_efi_files {
