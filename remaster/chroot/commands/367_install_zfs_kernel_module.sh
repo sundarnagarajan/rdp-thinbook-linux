@@ -67,9 +67,12 @@ fi
 
 # We need dkms and dkms needs python3-distutils (undeclared ?)
 apt install --no-install-recommends --no-install-suggests -y dkms python3-distutils 1>/dev/null 2>&1
+# Stop zsys if it is running
+sudo systemctl stop zsysd.service zsysd.socket zsys-commit.service zsys-gc.service zsys-gc.timer 1>/dev/null 2>&1
 # Remove zfsutils-linux that conflicts with zfs-dkms
-echo "Removing zfsutils-linux that conflicts with zfs-dkms"
-apt autoremove -y zsys zfs-zed zfsutils-linux 1>/dev/null 2>&1
+ZFS_REMOVE_PKGS="zsys zfs-zed zfsutils-linux libnvpair3linux libuutil3linux"
+echo "Removing packages that conflicts with zfs-dkms: $ZFS_REMOVE_PKGS"
+apt autoremove -y $ZFS_REMOVE_PKGS 1>/dev/null 2>&1
 
 echo "Installing ZFS kernel DEBs"
 dpkg -i ${SRC_DEB_DIR}/*.deb 1>/dev/null 2>&1

@@ -73,7 +73,7 @@ else
     echo "No packages to remove"
 fi
 # Remove packages with 'alternative' names that get in the way
-UNINSTALL_PKGS="libnvpair1linux libuutil1linux libzpool2linux zsys zfs-zed zfsutils-linux"
+UNINSTALL_PKGS="libnvpair1linux libuutil1linux libzpool2linux zsys zfs-zed zfsutils-linux libnvpair3linux libuutil3linux"
 echo "Removing $UNINSTALL_PKGS"
 apt autoremove -y  $UNINSTALL_PKGS 1>/dev/null 2>&1
 
