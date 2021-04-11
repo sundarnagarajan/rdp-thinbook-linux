@@ -1,0 +1,5 @@
+remaster/chroot/kernel-debs/
+remaster/chroot/linuxutils/
+remaster/chroot/scripts/
+remaster/chroot/zfs-kernel-debs/
+remaster/chroot/zfs-userspace-debs/
