@@ -97,7 +97,7 @@ function install_git_if_required(){
     local GIT_ALREADY_INSTALLED=$(dpkg-query -W --showformat='${Package}\n' | fgrep -x git)
     if [ -z "$GIT_ALREADY_INSTALLED" ]; then
         echo "Installing git"
-        apt-get -y install --no-install-recommends --no-install-suggests git $1>/dev/null 2>&1 || {
+        apt-get -y install --no-install-recommends --no-install-suggests git 1>/dev/null 2>&1 || {
             echo "Install failed: git"
             return 1
         }
