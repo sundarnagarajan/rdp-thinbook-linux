@@ -1,12 +1,8 @@
 #!/bin/bash
+# ------------------------------------------------------------------------
 # This only assumes that linux firmware is under /lib/firmware
 # should be true for most / all distributions
-# Requires 020_set_dns.sh and 045_apt_update.sh
-
-PROG_PATH=${PROG_PATH:-$(readlink -e $0)}
-PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
-PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
-
+#
 # 3 guard variables - all can be 'no (default) or 'yes:
 # FIRMWARE_UPDATE_PACKAGE:
 #   - update linux-firmware PACKAGE from repository
@@ -18,12 +14,27 @@ PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
 #   - Pull Intel firmware (ONLY) from iwlwifi firmware git
 #   - FIRMWARE_UPDATE_FIRMWARE_GIT_INTEL implies FIRMWARE_UPDATE_FIRMWARE_GIT
 #       and automatically ignores FIRMWARE_UPDATE_PACKAGE
+#
+# Requires 020_set_dns.sh if ANY of the guard variables are set to "yes"
+# Requires 045_apt_update.sh if FIRMWARE_UPDATE_PACKAGE = "yes"
+# ------------------------------------------------------------------------
+
+PROG_PATH=${PROG_PATH:-$(readlink -e $0)}
+PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
+PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
+
+
+set -eu -o pipefail
+
 
 FIRMWARE_UPDATE_PACKAGE=no
 FIRMWARE_UPDATE_FIRMWARE_GIT=no
 FIRMWARE_UPDATE_FIRMWARE_GIT_INTEL=no
 # Was git installed in this script
 GIT_REMOVE_REQUIRED=no
+# Temporary firmware dirs
+FIRMWARE_DIR_LINUX_NEW=/lib/firmware-new
+FIRMWARE_DIR_INTEL_NEW=/lib/firmware-intel
 
 
 # Utility function that compares 2 version values and returns 0 if $2 >= $1
@@ -61,6 +72,13 @@ function set_opts(){
     [[ "$FIRMWARE_UPDATE_FIRMWARE_GIT" = "yes" ]] && FIRMWARE_UPDATE_PACKAGE=no
 }
 
+function cleanup_firmware_dirs(){
+    rm -rf $FIRMWARE_DIR_LINUX_NEW $FIRMWARE_DIR_INTEL_NEW    
+    [[ "$GIT_REMOVE_REQUIRED" = "yes" ]] && {
+        apt-get autoremove -y --purge git 1>/dev/null 2>/dev/null
+    }
+}
+
 function update_firmware_package(){
     echo "Updating linux-firmware package"
     apt upgrade -y linux-firmware 1>/dev/null 2>&1 || {
@@ -77,6 +95,7 @@ function install_git_if_required(){
     GIT_REMOVE_REQUIRED=no
     local GIT_ALREADY_INSTALLED=$(dpkg-query -W --showformat='${Package}\n' | fgrep -x git)
     if [ -z "$GIT_ALREADY_INSTALLED" ]; then
+        echo "Installing git"
         apt-get -y install --no-install-recommends --no-install-suggests git 1>/dev/null 2>&1 || {
             echo "Install failed: git"
             return 1
@@ -87,44 +106,39 @@ function install_git_if_required(){
 
 function update_firmware_linux_firmware_git(){
     local LINUX_FIRMWARE_GIT='https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git'
-    local oldpwd=$(pwd)
-    cd /lib
-    rm -rf firmware
-    git clone --depth 1 "$LINUX_FIRMWARE_GIT" firmware 1>/dev/null 2>&1 || {
+    rm -rf $FIRMWARE_DIR_LINUX_NEW
+    git clone --depth 1 "$LINUX_FIRMWARE_GIT" $FIRMWARE_DIR_LINUX_NEW 1>/dev/null 2>&1 || {
         echo "git clone of linux-firmware git failed"
-        cd "$oldpwd"
         return 1
     }
     echo "Updated firmware from linux firmware git"
-    cd "$oldpwd"
 }
 
 function update_firmware_intel_firmware_git(){
+    # ASSUMES that update_firmware_linux_firmware_git would have been called and
+    # dir FIRMWARE_DIR_LINUX_NEW was already created
     local INTEL_FIRMWARE_GIT='https://git.kernel.org/pub/scm/linux/kernel/git/iwlwifi/linux-firmware.git'
-    local oldpwd=$(pwd)
-    cd /lib
-    rm -rf intel-firmware
-    git clone --depth 1 "INTELX_FIRMWARE_GIT" intel-firmware 1>/dev/null 2>&1 || {
+    rm -rf $FIRMWARE_DIR_INTEL_NEW
+    git clone --depth 1 "$INTEL_FIRMWARE_GIT" $FIRMWARE_DIR_INTEL_NEW 1>/dev/null 2>&1 || {
         echo "git clone of intel-firmware git failed"
-        cd "$oldpwd"
-        exit 1
+        return 1
     }
 
     
     # iwlwifi-*.ucode
-    for f in intel-firmware/iwlwifi-*.ucode
+    for f in $FIRMWARE_DIR_INTEL_NEW/iwlwifi-*.ucode
     do
         local bn=$(basename $f)
-        [[ -f /lib/firmware/$bn ]] && {
-            diff --brief $f /lib/firmware/$bn || {
-                \cp -f $f /lib/firmware/$bn && echo "    $f" || {
+        [[ -f $FIRMWARE_DIR_LINUX_NEW/$bn ]] && {
+            diff --brief $f $FIRMWARE_DIR_LINUX_NEW/$bn || {
+                \cp -f $f $FIRMWARE_DIR_LINUX_NEW/$bn && echo "    $f" || {
                     echo "Copy failed: $f"
                     cd "$oldpwd"
                     return 1
                 }
             }
         } || {
-            \cp -f $f /lib/firmware/$bn && echo "    $f" || {
+            \cp -f $f $FIRMWARE_DIR_LINUX_NEW/$bn && echo "    $f" || {
                 echo "Copy failed: $f"
                 cd "$oldpwd"
                 return 1
@@ -133,22 +147,22 @@ function update_firmware_intel_firmware_git(){
     done
     
     # intel/*
-    [[ -d /lib/firmware/intel ]] || {
-        mkdir -p /lib/firmware/intel
+    [[ -d $FIRMWARE_DIR_LINUX_NEW/intel ]] || {
+        mkdir -p $FIRMWARE_DIR_LINUX_NEW/intel
     }
-    cd /lib/intel-firmware/intel
+    cd $FIRMWARE_DIR_INTEL_NEW/intel
     for f in $(find -type f)
     do
-        [[ -f /lib/firmware/$f ]] && {
-            diff --brief $f /lib/firmware/$f || {
-                \cp --parents -f $f /lib/firmware/$f && echo "    $f" || {
+        [[ -f $FIRMWARE_DIR_LINUX_NEW/$f ]] && {
+            diff --brief $f $FIRMWARE_DIR_LINUX_NEW/$f || {
+                \cp --parents -f $f $FIRMWARE_DIR_LINUX_NEW/$f && echo "    $f" || {
                     echo "Copy failed: $f"
                     cd "$oldpwd"
                     return 1
                 }
             }
         } || {
-            \cp --parents -f $f /lib/firmware/$f && echo "    $f" || {
+            \cp --parents -f $f $FIRMWARE_DIR_LINUX_NEW/$f && echo "    $f" || {
                 echo "Copy failed: $f"
                 cd "$oldpwd"
                 return 1
@@ -156,9 +170,8 @@ function update_firmware_intel_firmware_git(){
         }
     done
 
-    echo "Updated firmware from linux firmware git"
+    echo "Updated firmware from iwlwfi firmware git"
     cd "$oldpwd"
-    rm -rf /lib/intel-firmware
 }
 
 
@@ -168,6 +181,10 @@ set_opts
 [[ "$FIRMWARE_UPDATE_PACKAGE" = "yes" ]] && {
     update_firmware_package || exit 1
 }
+
+# Setup trap to cleanup
+trap cleanup_firmware_dirs 1 2 3 15
+
 
 # Install git if required and not installed
 [[ "$FIRMWARE_UPDATE_FIRMWARE_GIT" = "yes" || "$FIRMWARE_UPDATE_FIRMWARE_GIT_INTEL" = "yes" ]] && {
@@ -182,8 +199,7 @@ set_opts
     update_firmware_intel_firmware_git || exit 1
 }
 
-
-# Uninstall git if we installed
-[[ "$GIT_REMOVE_REQUIRED" = "yes" ]] && {
-    apt-get autoremove -y --purge git 1>/dev/null 2>/dev/null
-}
+# Flip FIRMWARE_DIR_LINUX_NEW to /lib/firmware if all was successful
+mv /lib/firmware /lib/firmware-old
+mv $FIRMWARE_DIR_LINUX_NEW /lib/firmware
+rm -rf /lib/firmware-old
