@@ -22,6 +22,9 @@
 PROG_PATH=${PROG_PATH:-$(readlink -e $0)}
 PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
+FAILED_EXIT_CODE=1
+DEBUG_REDIRECT=''
+DEBUG_REDIRECT='1>/dev/null 2>&1'
 
 
 set -eu -o pipefail
@@ -76,13 +79,13 @@ function cleanup_firmware_dirs(){
     rm -rf $FIRMWARE_DIR_LINUX_NEW $FIRMWARE_DIR_INTEL_NEW    
     [[ "$GIT_REMOVE_REQUIRED" = "yes" ]] && {
         echo "Uninstalling git"
-        apt-get autoremove -y --purge git 1>/dev/null 2>/dev/null
+        apt-get autoremove -y --purge git $DEBUG_REDIRECT
     }
 }
 
 function update_firmware_package(){
     echo "Updating linux-firmware package"
-    apt upgrade -y linux-firmware 1>/dev/null 2>&1 || {
+    apt upgrade -y linux-firmware $DEBUG_REDIRECT || {
         echo "linux-firmware upgrade failed"
         return 1
     }
@@ -97,7 +100,7 @@ function install_git_if_required(){
     local GIT_ALREADY_INSTALLED=$(dpkg-query -W --showformat='${Package}\n' | fgrep -x git)
     if [ -z "$GIT_ALREADY_INSTALLED" ]; then
         echo "Installing git"
-        apt-get -y install --no-install-recommends --no-install-suggests git 1>/dev/null 2>&1 || {
+        apt-get -y install --no-install-recommends --no-install-suggests git $DEBUG_REDIRECT || {
             echo "Install failed: git"
             return 1
         }
@@ -108,7 +111,7 @@ function install_git_if_required(){
 function update_firmware_linux_firmware_git(){
     local LINUX_FIRMWARE_GIT='https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git'
     rm -rf $FIRMWARE_DIR_LINUX_NEW
-    git clone --depth 1 "$LINUX_FIRMWARE_GIT" $FIRMWARE_DIR_LINUX_NEW 1>/dev/null 2>&1 || {
+    git clone --depth 1 "$LINUX_FIRMWARE_GIT" $FIRMWARE_DIR_LINUX_NEW $DEBUG_REDIRECT || {
         echo "git clone of linux-firmware git failed"
         return 1
     }
@@ -120,7 +123,7 @@ function update_firmware_intel_firmware_git(){
     # dir FIRMWARE_DIR_LINUX_NEW was already created
     local INTEL_FIRMWARE_GIT='https://git.kernel.org/pub/scm/linux/kernel/git/iwlwifi/linux-firmware.git'
     rm -rf $FIRMWARE_DIR_INTEL_NEW
-    git clone --depth 1 "$INTEL_FIRMWARE_GIT" $FIRMWARE_DIR_INTEL_NEW 1>/dev/null 2>&1 || {
+    git clone --depth 1 "$INTEL_FIRMWARE_GIT" $FIRMWARE_DIR_INTEL_NEW $DEBUG_REDIRECT || {
         echo "git clone of intel-firmware git failed"
         return 1
     }
@@ -158,21 +161,18 @@ function update_firmware_intel_firmware_git(){
             diff --brief $f $FIRMWARE_DIR_LINUX_NEW/$f || {
                 \cp --parents -f $f $FIRMWARE_DIR_LINUX_NEW/ && echo "    $f" || {
                     echo "Copy failed: $f"
-                    cd "$oldpwd"
                     return 1
                 }
             }
         } || {
             \cp --parents -f $f $FIRMWARE_DIR_LINUX_NEW/ && echo "    $f" || {
                 echo "Copy failed: $f"
-                cd "$oldpwd"
                 return 1
             }
         }
     done
 
     echo "Updated firmware from iwlwfi firmware git"
-    cd "$oldpwd"
 }
 
 
@@ -180,7 +180,7 @@ function update_firmware_intel_firmware_git(){
 set_opts
 
 [[ "$FIRMWARE_UPDATE_PACKAGE" = "yes" ]] && {
-    update_firmware_package || exit 1
+    update_firmware_package || exit $FAILED_EXIT_CODE
 }
 
 # Setup trap to cleanup
@@ -189,18 +189,16 @@ trap cleanup_firmware_dirs 1 2 3 15
 
 # Install git if required and not installed
 [[ "$FIRMWARE_UPDATE_FIRMWARE_GIT" = "yes" || "$FIRMWARE_UPDATE_FIRMWARE_GIT_INTEL" = "yes" ]] && {
-    install_git_if_required || exit 1
+    install_git_if_required || exit $FAILED_EXIT_CODE
 }
 
 [[ "$FIRMWARE_UPDATE_FIRMWARE_GIT" = "yes" ]] && {
-    update_firmware_linux_firmware_git || exit 1
+    update_firmware_linux_firmware_git || exit $FAILED_EXIT_CODE
 }
 
 [[ "$FIRMWARE_UPDATE_FIRMWARE_GIT_INTEL" = "yes" ]] && {
-    update_firmware_intel_firmware_git || exit 1
+    update_firmware_intel_firmware_git || exit $FAILED_EXIT_CODE
 }
 
 # Flip FIRMWARE_DIR_LINUX_NEW to /lib/firmware if all was successful
-mv /lib/firmware /lib/firmware-old
-mv $FIRMWARE_DIR_LINUX_NEW /lib/firmware
-rm -rf /lib/firmware-old
+( mv /lib/firmware /lib/firmware-old && mv $FIRMWARE_DIR_LINUX_NEW /lib/firmware && rm -rf /lib/firmware-old ) || exit $FAILED_EXIT_CODE
