@@ -86,10 +86,13 @@ KP_LIST=${KERNEL_DEB_DIR}/$KP_LIST
 
 # ------------------------------------------------------------------------
 # Source these from prefs file
-NEED_ZSYS=yes
+NEED_ZSYS=no
 WANT_CUSTOM_KERNEL=yes
 WANT_CUSTOM_ZFS=yes
 # ------------------------------------------------------------------------
+NEED_ZSYS=${NEED_ZSYS:-no}
+WANT_CUSTOM_KERNEL=${WANT_CUSTOM_KERNEL:-no}
+WANT_CUSTOM_ZFS=${WANT_CUSTOM_ZFS:-no}
 
 
 function dir_contains_debs(){
@@ -170,15 +173,24 @@ function set_opts() {
     [[ "$NEED_ZSYS" = "yes" ]] && {
         [[ "$KERNEL_DEBS_AVAIL" = "yes" ]] && {
             echo "NEED_ZSYS=yes: Ignoring kernel DEBS in $KERNEL_DEB_DIR"
-            ls -1 "$KERNEL_DEB_DIR"/*.deb | sed -e 's/^/    /'
+            for f in "$KERNEL_DEB_DIR"/*.deb
+            do
+                echo $(basename "$f") | sed -e 's/^/    /'
+            done
         }    
         [[ "$ZFS_KERNEL_DEBS_AVAIL" = "yes" ]] && {
             echo "NEED_ZSYS=yes: Ignoring kernel DEBS in $ZFS_KERNEL_DEB_DIR"
-            ls -1 "$ZFS_KERNEL_DEB_DIR"/*.deb | sed -e 's/^/    /'
+            for f in "$ZFS_KERNEL_DEB_DIR"/*.deb
+            do
+                echo $(basename "$f") | sed -e 's/^/    /'
+            done
         }    
         [[ "$ZFS_USERSPACE_DEBS_AVAIL" = "yes" ]] && {
             echo "NEED_ZSYS=yes: Ignoring kernel DEBS in $ZFS_USERSPACE_DEB_DIR"
-            ls -1 "$ZFS_USERSPACE_DEB_DIR"/*.deb | sed -e 's/^/    /'
+            for f in "$ZFS_USERSPACE_DEB_DIR"/*.deb
+            do
+                echo $(basename "$f") | sed -e 's/^/    /'
+            done
         }    
         echo "Not installing custom kernel or custom ZFS because NEED_ZSYS=yes"
         WANT_CUSTOM_ZFS=no
