@@ -129,7 +129,7 @@ function update_firmware_intel_firmware_git(){
     # iwlwifi-*.ucode
     for f in $FIRMWARE_DIR_INTEL_NEW/iwlwifi-*.ucode
     do
-        f=$(echo "$f" | sed -e 's/^\.\///'
+        f=$(echo "$f" | sed -e 's/^\.\///')
         local bn=$(basename $f)
         [[ -f $FIRMWARE_DIR_LINUX_NEW/$bn ]] && {
             diff --brief $f $FIRMWARE_DIR_LINUX_NEW/$bn || {
@@ -155,7 +155,7 @@ function update_firmware_intel_firmware_git(){
     cd $FIRMWARE_DIR_INTEL_NEW/intel
     for f in $(find -type f)
     do
-        f=$(echo "$f" | sed -e 's/^\.\///'
+        f=$(echo "$f" | sed -e 's/^\.\///')
         [[ -f $FIRMWARE_DIR_LINUX_NEW/$f ]] && {
             diff --brief $f $FIRMWARE_DIR_LINUX_NEW/$f || {
                 \cp --parents -f $f $FIRMWARE_DIR_LINUX_NEW/ && echo "    $f" || {
