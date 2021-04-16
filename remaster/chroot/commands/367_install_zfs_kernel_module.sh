@@ -66,16 +66,18 @@ if [ $? -ne 0 ]; then
 fi
 
 # We need dkms and dkms needs python3-distutils (undeclared ?)
-apt install --no-install-recommends --no-install-suggests -y dkms python3-distutils 1>/dev/null 2>&1
+apt install --no-install-recommends --no-install-suggests -y build-essential dkms python3-distutils 1>/dev/null 2>&1
 # Stop zsys if it is running
 sudo systemctl stop zsysd.service zsysd.socket zsys-commit.service zsys-gc.service zsys-gc.timer 1>/dev/null 2>&1
 # Remove zfsutils-linux that conflicts with zfs-dkms
 ZFS_REMOVE_PKGS="zsys zfs-zed zfsutils-linux libnvpair3linux libuutil3linux"
 echo "Removing packages that conflicts with zfs-dkms: $ZFS_REMOVE_PKGS"
-apt autoremove -y $ZFS_REMOVE_PKGS 1>/dev/null 2>&1
+# apt autoremove -y $ZFS_REMOVE_PKGS 1>/dev/null 2>&1
+apt autoremove -y $ZFS_REMOVE_PKGS
 
 echo "Installing ZFS kernel DEBs"
-dpkg -i ${SRC_DEB_DIR}/*.deb 1>/dev/null 2>&1
+# dpkg -i ${SRC_DEB_DIR}/*.deb 1>/dev/null 2>&1
+dpkg -i ${SRC_DEB_DIR}/*.deb
 if [ $? -ne 0 ]; then
     echo "Install of ZFS kernel DEBs failed"
     exit $FAILED_EXIT_CODE
