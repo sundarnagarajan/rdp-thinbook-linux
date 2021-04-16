@@ -170,6 +170,11 @@ function set_opts() {
     [[ -d "$ZFS_KERNEL_DEB_DIR" ]] && dir_contains_debs "$ZFS_KERNEL_DEB_DIR" && ZFS_KERNEL_DEBS_AVAIL=yes
     [[ -d "$ZFS_USERSPACE_DEB_DIR" ]] && dir_contains_debs "$ZFS_USERSPACE_DEB_DIR" && ZFS_USERSPACE_DEBS_AVAIL=yes
 
+    for v NEED_ZSYS WANT_CUSTOM_KERNEL WANT_CUSTOM_ZFS KERNEL_DEB_DIR ZFS_KERNEL_DEB_DIR ZFS_USERSPACE_DEB_DIR KERNEL_DEBS_AVAIL ZFS_KERNEL_DEBS_AVAIL ZFS_USERSPACE_DEBS_AVAIL
+    do
+        printf '-32s  : %s\n' $v ${!v}
+    done
+
     [[ "$NEED_ZSYS" = "yes" ]] && {
         [[ "$KERNEL_DEBS_AVAIL" = "yes" ]] && {
             echo "NEED_ZSYS=yes: Ignoring kernel DEBS in $KERNEL_DEB_DIR"
