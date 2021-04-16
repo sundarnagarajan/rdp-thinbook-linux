@@ -156,14 +156,14 @@ function update_firmware_intel_firmware_git(){
     do
         [[ -f $FIRMWARE_DIR_LINUX_NEW/$f ]] && {
             diff --brief $f $FIRMWARE_DIR_LINUX_NEW/$f || {
-                \cp --parents -f $f $FIRMWARE_DIR_LINUX_NEW/$f && echo "    $f" || {
+                \cp --parents -f $f $FIRMWARE_DIR_LINUX_NEW/ && echo "    $f" || {
                     echo "Copy failed: $f"
                     cd "$oldpwd"
                     return 1
                 }
             }
         } || {
-            \cp --parents -f $f $FIRMWARE_DIR_LINUX_NEW/$f && echo "    $f" || {
+            \cp --parents -f $f $FIRMWARE_DIR_LINUX_NEW/ && echo "    $f" || {
                 echo "Copy failed: $f"
                 cd "$oldpwd"
                 return 1
