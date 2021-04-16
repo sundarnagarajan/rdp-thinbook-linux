@@ -272,7 +272,7 @@ check_avail_disk_space
 
 update_from_git
 copy_linuxutils
-download_virtualbox_guest_dkms_deb
+# download_virtualbox_guest_dkms_deb
 
 # compile_kernel
 remaster_iso
