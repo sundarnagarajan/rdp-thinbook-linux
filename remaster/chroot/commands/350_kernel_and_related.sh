@@ -154,7 +154,7 @@ function filter_installed_pkgs_by_section() {
 function pkgs_installed_among() {
     # $@: package names
     # Outputs (to stdout) packages that are installed - 1 per line
-    dpkg -l $@ 2>/dev/null | grep '^ii' | awk '{print $2}'
+    ( dpkg -l $@ 2>/dev/null || true ) | grep '^ii' | awk '{print $2}'
 }
 
 function set_opts() {
