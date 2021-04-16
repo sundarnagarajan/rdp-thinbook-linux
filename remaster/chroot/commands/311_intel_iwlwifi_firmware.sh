@@ -6,8 +6,7 @@ PROG_PATH=${PROG_PATH:-$(readlink -e $0)}
 PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
 
-# FIRMWARE_GIT='git://git.kernel.org/pub/scm/linux/kernel/git/iwlwifi/iwlwifi-next.git'
-FIRMWARE_GIT='git://git.kernel.org/pub/scm/linux/kernel/git/iwlwifi/linux-firmware.git'
+FIRMWARE_GIT='https://git.kernel.org/pub/scm/linux/kernel/git/iwlwifi/linux-firmware.git'
 FIRMWARE_DEST_DIR=/lib/intel-firmware
 
 FIRMWARE_DEST_PARENT_DIR=$(dirname $FIRMWARE_DEST_DIR)
