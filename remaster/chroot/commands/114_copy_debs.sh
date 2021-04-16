@@ -8,6 +8,8 @@ for src_dir in "${PROG_DIR}/../kernel-debs" "${PROG_DIR}/../zfs-kernel-debs" "${
 do
     src_dir=$(readlink -m "$src_dir")
     if [ -d "$src_dir" ]; then
+        \cp -rv "$src_dir" "${REMASTER_DIR}"/
+        continue
         dest_dir=${REMASTER_DIR}/$(basename $src_dir)
         ls "$src_dir"/*.deb 2>/dev/null grep -q '\.deb$' || continue
         mkdir -p "$dest_dir"
