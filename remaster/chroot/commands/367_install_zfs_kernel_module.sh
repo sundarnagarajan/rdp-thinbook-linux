@@ -72,12 +72,10 @@ sudo systemctl stop zsysd.service zsysd.socket zsys-commit.service zsys-gc.servi
 # Remove zfsutils-linux that conflicts with zfs-dkms
 ZFS_REMOVE_PKGS="zsys zfs-zed zfsutils-linux libnvpair3linux libuutil3linux"
 echo "Removing packages that conflicts with zfs-dkms: $ZFS_REMOVE_PKGS"
-# apt autoremove -y $ZFS_REMOVE_PKGS 1>/dev/null 2>&1
-apt autoremove -y $ZFS_REMOVE_PKGS
+# apt autoremove -y $ZFS_REMOVE_PKGS
 
 echo "Installing ZFS kernel DEBs"
-# dpkg -i ${SRC_DEB_DIR}/*.deb 1>/dev/null 2>&1
-dpkg -i ${SRC_DEB_DIR}/*.deb
+dpkg -i ${SRC_DEB_DIR}/*.deb 1>/dev/null 2>&1
 if [ $? -ne 0 ]; then
     echo "Install of ZFS kernel DEBs failed"
     exit $FAILED_EXIT_CODE
