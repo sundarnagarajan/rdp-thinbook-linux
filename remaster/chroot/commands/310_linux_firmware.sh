@@ -175,6 +175,9 @@ function update_firmware_intel_firmware_git(){
 }
 
 
+# ------------------------------------------------------------------------
+# Actual script starts after this
+# ------------------------------------------------------------------------
 
 set_opts
 
@@ -200,4 +203,7 @@ trap cleanup_firmware_dirs 1 2 3 15
 }
 
 # Flip FIRMWARE_DIR_LINUX_NEW to /lib/firmware if all was successful
-( mv /lib/firmware /lib/firmware-old && mv $FIRMWARE_DIR_LINUX_NEW /lib/firmware && rm -rf /lib/firmware-old ) || exit $FAILED_EXIT_CODE
+( mv /lib/firmware /lib/firmware-old && mv $FIRMWARE_DIR_LINUX_NEW /lib/firmware && rm -rf /lib/firmware-old ) || {
+    echo "Failed to flip FIRMWARE_DIR_LINUX_NEW to /lib/firmware"
+    exit $FAILED_EXIT_CODE
+}
