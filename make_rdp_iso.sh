@@ -274,6 +274,6 @@ update_from_git
 copy_linuxutils
 # download_virtualbox_guest_dkms_deb
 
-# compile_kernel
+compile_kernel
 remaster_iso
 echo "Start: $START_TIME" ; echo "Ended: $(date)"
