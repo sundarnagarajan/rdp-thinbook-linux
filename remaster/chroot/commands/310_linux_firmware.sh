@@ -75,6 +75,7 @@ function set_opts(){
 function cleanup_firmware_dirs(){
     rm -rf $FIRMWARE_DIR_LINUX_NEW $FIRMWARE_DIR_INTEL_NEW    
     [[ "$GIT_REMOVE_REQUIRED" = "yes" ]] && {
+        echo "Uninstalling git"
         apt-get autoremove -y --purge git 1>/dev/null 2>/dev/null
     }
 }
