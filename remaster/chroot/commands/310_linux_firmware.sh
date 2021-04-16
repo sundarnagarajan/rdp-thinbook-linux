@@ -127,6 +127,7 @@ function update_firmware_intel_firmware_git(){
 
     
     # iwlwifi-*.ucode
+    echo "Updating iwlwifi microcode"
     for f in $FIRMWARE_DIR_INTEL_NEW/iwlwifi-*.ucode
     do
         f=$(echo "$f" | sed -e 's/^\.\///')
@@ -149,6 +150,7 @@ function update_firmware_intel_firmware_git(){
     done
     
     # intel/*
+    echo 'Updating intel-firmware/intel/'
     [[ -d $FIRMWARE_DIR_LINUX_NEW/intel ]] || {
         mkdir -p $FIRMWARE_DIR_LINUX_NEW/intel
     }
