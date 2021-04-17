@@ -204,15 +204,15 @@ function set_opts() {
     }
 
     [[ "$WANT_CUSTOM_ZFS" = "yes" ]] && {
-        [[ "$ZFS_KERNEL_DEBS_AVAIL" = "no" ]] || {
+        [[ "$ZFS_KERNEL_DEBS_AVAIL" = "no" ]] && {
             echo "WANT_CUSTOM_ZFS=yes, but no DEBs in $ZFS_KERNEL_DEB_DIR"
             return 1
         }    
-        [[ "$KERNEL_DEBS_AVAIL" = "no" ]] || {
+        [[ "$KERNEL_DEBS_AVAIL" = "no" ]] && {
             echo "WANT_CUSTOM_ZFS=yes, but no DEBs in $KERNEL_DEB_DIR"
             return 1
         }    
-        [[ "$ZFS_USERSPACE_DEBS_AVAIL" = "no" ]] || {
+        [[ "$ZFS_USERSPACE_DEBS_AVAIL" = "no" ]] && {
             echo "WANT_CUSTOM_ZFS=yes, but no DEBs in $ZFS_USERSPACE_DEB_DIR"
             return 1
         }    
