@@ -170,7 +170,7 @@ function set_opts() {
     [[ -d "$ZFS_KERNEL_DEB_DIR" ]] && dir_contains_debs "$ZFS_KERNEL_DEB_DIR" && ZFS_KERNEL_DEBS_AVAIL=yes
     [[ -d "$ZFS_USERSPACE_DEB_DIR" ]] && dir_contains_debs "$ZFS_USERSPACE_DEB_DIR" && ZFS_USERSPACE_DEBS_AVAIL=yes
 
-    for v in NEED_ZSYS WANT_CUSTOM_KERNEL WANT_CUSTOM_ZFS KERNEL_DEB_DIR ZFS_KERNEL_DEB_DIR ZFS_USERSPACE_DEB_DIR KERNEL_DEBS_AVAIL ZFS_KERNEL_DEBS_AVAIL ZFS_USERSPACE_DEBS_AVAIL
+    for v in NEED_ZSYS WANT_CUSTOM_KERNEL WANT_CUSTOM_ZFS KERNEL_DEBS_AVAIL ZFS_KERNEL_DEBS_AVAIL ZFS_USERSPACE_DEBS_AVAIL
     do
         printf '%-32s  : %s\n' $v ${!v}
     done
@@ -425,10 +425,13 @@ function install_zfs_kernel_module() {
     # Remove zfsutils-linux that conflicts with zfs-dkms
     local ZFS_REMOVE_PKGS="zsys zfs-zed zfsutils-linux libnvpair3linux libuutil3linux"
     ZFS_REMOVE_PKGS=$(pkgs_installed_among $ZFS_REMOVE_PKGS)
+    ZFS_REMOVE_PKGS=$(echo "ZFS_REMOVE_PKGS" | tr '\n' ' ')
     [[ -n "$ZFS_REMOVE_PKGS" ]] && {
-        echo "Removing packages that conflicts with zfs-dkms: $ZFS_REMOVE_PKGS"
+        echo "install_zfs_kernel_module : Removing packages that conflicts with zfs-dkms: $ZFS_REMOVE_PKGS"
         apt autoremove -y $ZFS_REMOVE_PKGS 1>/dev/null 2>&1
         echo "$ZFS_REMOVE_PKGS" >> $UNINSTALLED_TXT
+    } || {
+        echo "install_zfs_kernel_module : No packages to remove"
     }
 
     echo "Installing ZFS kernel DEBs"
@@ -448,12 +451,13 @@ function install_zfs_userspace_packages() {
     # Remove packages with 'alternative' names that get in the way
     UNINSTALL_PKGS="$UNINSTALL_PKGS libnvpair1linux libuutil1linux libzpool2linux zsys zfs-zed zfsutils-linux libnvpair3linux libuutil3linux"
     UNINSTALL_PKGS=$( pkgs_installed_among "$UNINSTALL_PKGS")
+    UNINSTALL_PKGS=$(echo "$UNINSTALL_PKGS" | tr '\n' ' ')
     if [ -n "$UNINSTALL_PKGS" ]; then
-        echo "Removing $UNINSTALL_PKGS"
+        echo "install_zfs_userspace_packages : Removing $UNINSTALL_PKGS"
         apt autoremove -y $UNINSTALL_PKGS 1>/dev/null 2>&1 || return 1
         echo "$UNINSTALL_PKGS" | tr ' ' '\n' >> $UNINSTALLED_TXT
     else
-        echo "No packages to remove"
+        echo "install_zfs_userspace_packages : No packages to remove"
     fi
 
     install_debs_in_dir "${ZFS_USERSPACE_DEB_DIR}" || return 1
