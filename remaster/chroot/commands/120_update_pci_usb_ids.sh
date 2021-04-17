@@ -22,13 +22,15 @@ if [ -n "$MISSING_PKGS" ]; then
     fi
 fi
 
-which update-pciids 1>/dev/null 2>&1
-if [ $? -eq 0 ]; then
+which update-pciids 1>/dev/null 2>&1 && {
     echo "Updating PCI IDs"
     update-pciids -q
-fi
-which update-usbids 1>/dev/null 2>&1
-if [ $? -eq 0 ]; then
+} || {
+    echo "update-pciids not found"
+}
+which update-usbids 1>/dev/null 2>&1 && {
     echo "Updating USB IDs"
     update-usbids -q
-fi
+} || {
+    echo "update-usbids not found"
+}
