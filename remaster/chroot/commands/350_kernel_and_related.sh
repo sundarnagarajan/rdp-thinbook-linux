@@ -425,9 +425,9 @@ function install_zfs_kernel_module() {
     # Remove zfsutils-linux that conflicts with zfs-dkms
     local ZFS_REMOVE_PKGS="zsys zfs-zed zfsutils-linux libnvpair3linux libuutil3linux"
     ZFS_REMOVE_PKGS=$(pkgs_installed_among $ZFS_REMOVE_PKGS)
-    ZFS_REMOVE_PKGS=$(echo "ZFS_REMOVE_PKGS" | tr '\n' ' ')
     [[ -n "$ZFS_REMOVE_PKGS" ]] && {
-        echo "install_zfs_kernel_module : Removing packages that conflicts with zfs-dkms: $ZFS_REMOVE_PKGS"
+        echo "install_zfs_kernel_module : Removing packages that conflicts with zfs-dkms:"
+        echo "$ZFS_REMOVE_PKGS" | sed -e 's/^/    /'
         apt autoremove -y $ZFS_REMOVE_PKGS 1>/dev/null 2>&1
         echo "$ZFS_REMOVE_PKGS" >> $UNINSTALLED_TXT
     } || {
@@ -451,9 +451,9 @@ function install_zfs_userspace_packages() {
     # Remove packages with 'alternative' names that get in the way
     UNINSTALL_PKGS="$UNINSTALL_PKGS libnvpair1linux libuutil1linux libzpool2linux zsys zfs-zed zfsutils-linux libnvpair3linux libuutil3linux"
     UNINSTALL_PKGS=$( pkgs_installed_among "$UNINSTALL_PKGS")
-    UNINSTALL_PKGS=$(echo "$UNINSTALL_PKGS" | tr '\n' ' ')
     if [ -n "$UNINSTALL_PKGS" ]; then
-        echo "install_zfs_userspace_packages : Removing $UNINSTALL_PKGS"
+        echo "install_zfs_userspace_packages : Removing:"
+        echo "$UNINSTALL_PKGS" | sed -e 's/^/    /'
         apt autoremove -y $UNINSTALL_PKGS 1>/dev/null 2>&1 || return 1
         echo "$UNINSTALL_PKGS" | tr ' ' '\n' >> $UNINSTALLED_TXT
     else
