@@ -86,7 +86,7 @@ KP_LIST=${KERNEL_DEB_DIR}/$KP_LIST
 
 # ------------------------------------------------------------------------
 # Source these from prefs file
-NEED_ZSYS=no
+NEED_ZSYS=yes
 WANT_CUSTOM_KERNEL=yes
 WANT_CUSTOM_ZFS=yes
 # ------------------------------------------------------------------------
