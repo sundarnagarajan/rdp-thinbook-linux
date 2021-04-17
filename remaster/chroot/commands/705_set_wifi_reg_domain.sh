@@ -6,20 +6,6 @@ PROG_PATH=${PROG_PATH:-$(readlink -e $0)}
 PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
 
-# No longer required starting with Groovy (20.10) kernel 5.8
-MIN_RELEASE=20.10
-CUR_RELEASE=$(cat /etc/os-release | grep '^VERSION_ID' | cut -d= -f2 | sed -e 's/^"//' -e 's/"$//')
-[[ "$( (echo $MIN_RELEASE; echo $CUR_RELEASE) | sort -Vr | tail -1)" = "$MIN_RELEASE" ]] && {
-    MIN_KERNEL=5.8
-    MAX_KERNEL_VER_INSTALLED=$(dpkg -l 'linux-image*' | grep '^ii' | awk '{print $3}' |sort -Vr | head -1)
-    [[ "$( (echo $MIN_KERNEL; echo $MAX_KERNEL_VER_INSTALLED) | sort -Vr | tail -1)" = "$MIN_KERNEL" ]] && {
-        echo "Current kernel (${MAX_KERNEL_VER_INSTALLED}) meets minimum requirements (${MIN_KERNEL})"
-        echo "Current release (${CUR_RELEASE}) meets minimum release (${MIN_RELEASE})"
-        echo "Not installing wireless-regdb and crda"
-        exit 0
-    }
-}
-
 # Install / upgrade wireless-regdb and crda
 apt-get -y --no-install-recommends --no-install-suggests install wireless-regdb crda 1>/dev/null 2>&1
 
@@ -41,3 +27,21 @@ if [ -f /lib/crda/setregdomain ]; then
 else
     echo "File not found: /lib/crda/setregdomain"
 fi
+
+
+exit 0
+
+# No longer required starting with Groovy (20.10) kernel 5.8
+MIN_RELEASE=20.10
+CUR_RELEASE=$(cat /etc/os-release | grep '^VERSION_ID' | cut -d= -f2 | sed -e 's/^"//' -e 's/"$//')
+[[ "$( (echo $MIN_RELEASE; echo $CUR_RELEASE) | sort -Vr | tail -1)" = "$MIN_RELEASE" ]] && {
+    MIN_KERNEL=5.8
+    MAX_KERNEL_VER_INSTALLED=$(dpkg -l 'linux-image*' | grep '^ii' | awk '{print $3}' |sort -Vr | head -1)
+    [[ "$( (echo $MIN_KERNEL; echo $MAX_KERNEL_VER_INSTALLED) | sort -Vr | tail -1)" = "$MIN_KERNEL" ]] && {
+        echo "Current kernel (${MAX_KERNEL_VER_INSTALLED}) meets minimum requirements (${MIN_KERNEL})"
+        echo "Current release (${CUR_RELEASE}) meets minimum release (${MIN_RELEASE})"
+        echo "Not installing wireless-regdb and crda"
+        exit 0
+    }
+}
+
