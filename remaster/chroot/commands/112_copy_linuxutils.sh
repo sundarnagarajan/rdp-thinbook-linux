@@ -30,8 +30,7 @@ do
 done
 if [ -n "$MISSING_PKGS" ]; then
     echo "Installing $MISSING_PKGS"
-    # apt-get install --no-install-recommends --no-install-suggests -y $MISSING_PKGS 1>/dev/null 2>&1
-    apt-get install --no-install-recommends --no-install-suggests -y $MISSING_PKGS || {
+    apt-get install --no-install-recommends --no-install-suggests -y $MISSING_PKGS 1>/dev/null 2>&1 || {
         echo "Install failed: $MISSING_PKGS"
     }
 fi
