@@ -6,7 +6,7 @@ FAILED_EXIT_CODE=127
 
 # Depends on 020_set_dns.sh and 025_apt_update.sh
 
-REQUIRED_PKGS="grub-efi-ia32-bin grub-efi-amd64-bin grub-pc-bin"
+REQUIRED_PKGS="grub-efi-ia32-bin grub-efi-amd64-bin grub-pc-bin efibootmgr"
 echo "Installing $REQUIRED_PKGS"
 apt install -y --no-install-recommends --no-install-suggests $REQUIRED_PKGS 1>/dev/null 2>&1
 if [ $? -ne 0 ]; then
