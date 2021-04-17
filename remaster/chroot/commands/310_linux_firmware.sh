@@ -173,7 +173,7 @@ function update_firmware_intel_firmware_git(){
         }
     done
 
-    echo "Updated firmware from iwlwfi firmware git"
+    echo "Updated firmware from iwlwifi firmware git"
 }
 
 

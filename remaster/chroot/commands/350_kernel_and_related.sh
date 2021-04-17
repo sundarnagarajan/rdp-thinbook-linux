@@ -426,7 +426,7 @@ function install_zfs_kernel_module() {
     local ZFS_REMOVE_PKGS="zsys zfs-zed zfsutils-linux libnvpair3linux libuutil3linux"
     ZFS_REMOVE_PKGS=$(pkgs_installed_among $ZFS_REMOVE_PKGS)
     [[ -n "$ZFS_REMOVE_PKGS" ]] && {
-        echo "install_zfs_kernel_module : Removing packages that conflicts with zfs-dkms:"
+        echo "install_zfs_kernel_module : Removing packages that conflict with zfs-dkms:"
         echo "$ZFS_REMOVE_PKGS" | sed -e 's/^/    /'
         apt autoremove -y $ZFS_REMOVE_PKGS 1>/dev/null 2>&1
         echo "$ZFS_REMOVE_PKGS" >> $UNINSTALLED_TXT
