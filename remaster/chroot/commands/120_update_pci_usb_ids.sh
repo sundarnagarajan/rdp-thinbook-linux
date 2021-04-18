@@ -6,6 +6,12 @@ PROG_PATH=${PROG_PATH:-$(readlink -e $0)}
 PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
 
+REMASTER_DIR=/root/remaster
+ALTERNATE_SCRIPT_DIR="${PROG_DIR}"/../update_pci_usb_ids
+ALTERNATE_SCRIPT_DIR=$(readlink -m "$ALTERNATE_SCRIPT_DIR")
+ALTERNATE_INSTALL_DIR=${REMASTER_DIR}/update_pci_usb_ids
+
+
 MISSING_PKGS=""
 for pkg in pciutils usbutils
 do
@@ -23,14 +29,24 @@ if [ -n "$MISSING_PKGS" ]; then
 fi
 
 which update-pciids 1>/dev/null 2>&1 && {
-    echo "Updating PCI IDs"
-    update-pciids -q
+    update-pciids -q && echo "Updated PCI IDs"
 } || {
     echo "update-pciids not found"
+    [[ -f "$ALTERNATE_SCRIPT_DIR"/update-pciids ]] && {
+        mkdir -p $ALTERNATE_INSTALL_DIR && \cp -f "$ALTERNATE_SCRIPT_DIR"/update-pciids ${ALTERNATE_INSTALL_DIR}/ && {
+            echo "Installed $ALTERNATE_SCRIPT_DIR/update-pciids"
+            "$ALTERNATE_SCRIPT_DIR"/update-pciids -q && echo "Updated PCI IDs"
+        } || echo "Could not install $ALTERNATE_SCRIPT_DIR/update-pciids"
+    } || echo "File not found: $ALTERNATE_SCRIPT_DIR/update-pciids"
 }
 which update-usbids 1>/dev/null 2>&1 && {
-    echo "Updating USB IDs"
-    update-usbids -q
+    update-usbids -q && echo "Updated USB IDs"
 } || {
     echo "update-usbids not found"
+    [[ -f "$ALTERNATE_SCRIPT_DIR"/update-usbids ]] && {
+        mkdir -p $ALTERNATE_INSTALL_DIR && \cp -f "$ALTERNATE_SCRIPT_DIR"/update-usbids ${ALTERNATE_INSTALL_DIR}/ && {
+            echo "Installed $ALTERNATE_SCRIPT_DIR/update-usbids"
+            "$ALTERNATE_SCRIPT_DIR"/update-usbids -q && echo "Updated USB IDs"
+        } || echo "Could not install $ALTERNATE_SCRIPT_DIR/update-usbids"
+    } || echo "File not found: $ALTERNATE_SCRIPT_DIR/update-usbids"
 }
