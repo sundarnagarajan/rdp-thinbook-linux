@@ -1,0 +1,17 @@
+[Unit]
+Description=Set console font for /dev/tty1
+After=local-fs.target
+After=console-setup.service 
+After=plymouth-quit-wait.service
+ConditionPathExists=/bin/setupcon
+ConditionPathExists=/usr/bin/openvt
+
+[Service]
+Type=oneshot
+# Following ExecStart commands will run serially
+ExecStart=/usr/bin/openvt -c 1 -f -w /bin/setupcon 
+ExecStart=/bin/systemctl restart getty@tty1.service
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
