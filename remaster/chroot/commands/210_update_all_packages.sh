@@ -8,4 +8,4 @@ PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
 
 echo "Updating all packages - this may take quite a while"
 echo "- depending on your network speed and machine configuration"
-(apt-get update && apt-get -y upgrade && apt-get dist-upgrade -y) 1>/dev/null 2>&1
+(apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y) 1>/dev/null 2>&1
