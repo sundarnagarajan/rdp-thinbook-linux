@@ -204,6 +204,32 @@ trap cleanup_firmware_dirs 1 2 3 15
     update_firmware_intel_firmware_git || exit $FAILED_EXIT_CODE
 }
 
+# Uninstall linux-firmware if installed - SHOULD remove /lib/firmware
+# Several Ubuntu linux-image-XYZ packages depend on linux-firmware package
+# TODO
+#   - Updating firmware should happen AFTER updating kernels
+#       310_linux_firmware.sh should run AFTER 350_kernel_related.sh
+#   - Updating firmware should have behavior DEPENDENT on whether older kernels were removed
+#       If older kernels were removed:
+#           - Pull linux-firmware-git
+#           - Update from iwlwifi firmware git
+#           - REMOVE linux-firmware package (will remove /lib/firmware
+#           - Replace with /lib/firmware-new
+#       Otherwise:
+#           - Add only NEW firmware files from linux-firmware git
+#           - Add only NEW firmware files from iwlwifi firmware git
+#       SIMPLEST (not necessarily BEST) way will be to EMBED 310_linux_firmware.sh
+#           INSIDE 350_kernel_related.sh
+#       Alternate (more complex, but better) way is to use a STATE file
+#           set by 350_kernel_related.sh and checked by 310_linux_firmware.sh
+#
+#   - When pulling linux-firmware-git ADD a file '.firmware_date' to /lib/firmware
+#       containing date, time timestamp from git repo (or pull date/time)
+#       which could be checked by hardware-enablement scripts
+#
+# apt remove --purge linux-firmware 1>/dev/null 2>&1 
+
+
 # Flip FIRMWARE_DIR_LINUX_NEW to /lib/firmware if all was successful
 ( mv /lib/firmware /lib/firmware-old && mv $FIRMWARE_DIR_LINUX_NEW /lib/firmware && rm -rf /lib/firmware-old ) || {
     echo "Failed to flip FIRMWARE_DIR_LINUX_NEW to /lib/firmware"
