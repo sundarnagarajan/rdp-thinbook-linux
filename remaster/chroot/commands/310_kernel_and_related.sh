@@ -430,7 +430,7 @@ function install_zfs_kernel_module() {
     [[ -n "$ZFS_REMOVE_PKGS" ]] && {
         echo "install_zfs_kernel_module : Removing packages that conflict with zfs-dkms:"
         echo "$ZFS_REMOVE_PKGS" | sed -e 's/^/    /'
-        apt autoremove -y $ZFS_REMOVE_PKGS 1>/dev/null 2>&1
+        apt autoremove --purge -y $ZFS_REMOVE_PKGS 1>/dev/null 2>&1
         echo "$ZFS_REMOVE_PKGS" >> $UNINSTALLED_TXT
     } || {
         echo "install_zfs_kernel_module : No packages to remove"
