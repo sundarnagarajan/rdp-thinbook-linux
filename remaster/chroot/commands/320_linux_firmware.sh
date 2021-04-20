@@ -225,7 +225,7 @@ trap cleanup_firmware_dirs 1 2 3 15
     # In future we COULD use pkg_apt_op_analysis to check whether removing
     # linux-firmware WOULD remove any other package instead of using marker
 
-    apt remove --purge linux-firmware 1>/dev/null 2>&1 && {
+    apt remove -y --purge linux-firmware 1>/dev/null 2>&1 && {
         mv /lib/firmware /lib/firmware-old || true
         mv $FIRMWARE_DIR_LINUX_NEW /lib/firmware 
     }
