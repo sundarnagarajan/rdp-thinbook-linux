@@ -226,6 +226,7 @@ trap cleanup_firmware_dirs 1 2 3 15
     # linux-firmware WOULD remove any other package instead of using marker
 
     apt remove -y --purge linux-firmware 1>/dev/null 2>&1 && {
+        echo "Removed package linux-firmware"
         mv /lib/firmware /lib/firmware-old || true
         mv $FIRMWARE_DIR_LINUX_NEW /lib/firmware 
     }
