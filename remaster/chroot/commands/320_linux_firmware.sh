@@ -19,6 +19,17 @@
 # Requires 045_apt_update.sh if FIRMWARE_UPDATE_PACKAGE = "yes"
 # ------------------------------------------------------------------------
 
+# ------------------------------------------------------------------------
+# The README for xterm said:
+#   Abandon All Hope, Ye Who Enter Here
+#
+# Restrict to setting:
+#   FIRMWARE_UPDATE_PACKAGE
+#   FIRMWARE_UPDATE_FIRMWARE_GIT
+#   FIRMWARE_UPDATE_FIRMWARE_GIT_INTEL
+# ------------------------------------------------------------------------
+
+
 PROG_PATH=${PROG_PATH:-$(readlink -e $0)}
 PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}

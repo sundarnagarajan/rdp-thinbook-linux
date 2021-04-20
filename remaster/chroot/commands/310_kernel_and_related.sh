@@ -67,6 +67,13 @@
 # postpone update-initramfs to 920_update_initramfs.sh
 # ------------------------------------------------------------------------
 
+# ------------------------------------------------------------------------
+# The README for xterm said:
+#   Abandon All Hope, Ye Who Enter Here
+#
+# Restrict to setting NEED_ZSYS WANT_CUSTOM_KERNEL WANT_CUSTOM_ZFS
+# ------------------------------------------------------------------------
+
 PROG_PATH=${PROG_PATH:-$(readlink -e $0)}
 PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
