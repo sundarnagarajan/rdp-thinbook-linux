@@ -27,6 +27,10 @@
 #   FIRMWARE_UPDATE_PACKAGE
 #   FIRMWARE_UPDATE_FIRMWARE_GIT
 #   FIRMWARE_UPDATE_FIRMWARE_GIT_INTEL
+#
+# Luckily commands in this directory are executed within the chroot, so
+# the worst case is yout remastered ISO will have no kernel or no
+# firmware and will fail to boot
 # ------------------------------------------------------------------------
 
 

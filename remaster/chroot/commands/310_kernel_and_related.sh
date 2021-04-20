@@ -72,6 +72,10 @@
 #   Abandon All Hope, Ye Who Enter Here
 #
 # Restrict to setting NEED_ZSYS WANT_CUSTOM_KERNEL WANT_CUSTOM_ZFS
+#
+# Luckily commands in this directory are executed within the chroot, so
+# the worst case is yout remastered ISO will have no kernel or no
+# firmware and will fail to boot
 # ------------------------------------------------------------------------
 
 PROG_PATH=${PROG_PATH:-$(readlink -e $0)}
