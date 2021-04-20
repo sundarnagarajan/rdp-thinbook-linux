@@ -74,9 +74,10 @@ function set_opts(){
 }
 
 function cleanup_firmware_dirs(){
-    rm -rf $FIRMWARE_DIR_LINUX_NEW $FIRMWARE_DIR_INTEL_NEW    
+    rm -rf $FIRMWARE_DIR_LINUX_NEW $FIRMWARE_DIR_INTEL_NEW || true
     [[ "$GIT_REMOVE_REQUIRED" = "yes" ]] && {
         echo "Uninstalling git"
+        apt autoremove --purge git 1>/dev/null 2>&1 || return 1
     }
 }
 
@@ -134,14 +135,18 @@ function update_firmware_intel_firmware_git(){
         local bn=$(basename $f)
         [[ -f $FIRMWARE_DIR_LINUX_NEW/$bn ]] && {
             diff --brief $f $FIRMWARE_DIR_LINUX_NEW/$bn || {
-                \cp -f $f $FIRMWARE_DIR_LINUX_NEW/$bn && echo "    $f" || {
+                # Users will not be interested in actual firmware files updated
+                # \cp -f $f $FIRMWARE_DIR_LINUX_NEW/$bn && echo "    $f" || {
+                \cp -f $f $FIRMWARE_DIR_LINUX_NEW/$bn || {
                     echo "Copy failed: $f"
                     cd "$oldpwd"
                     return 1
                 }
             }
         } || {
-            \cp -f $f $FIRMWARE_DIR_LINUX_NEW/$bn && echo "    $f" || {
+            # Users will not be interested in actual firmware files updated
+            # \cp -f $f $FIRMWARE_DIR_LINUX_NEW/$bn && echo "    $f" || {
+            \cp -f $f $FIRMWARE_DIR_LINUX_NEW/$bn || {
                 echo "Copy failed: $f"
                 cd "$oldpwd"
                 return 1
@@ -185,6 +190,8 @@ set_opts
 
 [[ "$FIRMWARE_UPDATE_PACKAGE" = "yes" ]] && {
     update_firmware_package || exit $FAILED_EXIT_CODE
+    # Meaning less to download linux-firmware-git after updating linux-firmware package
+    exit 0
 }
 
 # Setup trap to cleanup
@@ -204,32 +211,23 @@ trap cleanup_firmware_dirs 1 2 3 15
     update_firmware_intel_firmware_git || exit $FAILED_EXIT_CODE
 }
 
-# Uninstall linux-firmware if installed - SHOULD remove /lib/firmware
-# Several Ubuntu linux-image-XYZ packages depend on linux-firmware package
-# TODO
-#   - Updating firmware should have behavior DEPENDENT on whether older kernels were removed
-#       If older kernels were removed:
-#           - Pull linux-firmware-git
-#           - Update from iwlwifi firmware git
-#           - REMOVE linux-firmware package (will remove /lib/firmware
-#           - Replace with /lib/firmware-new
-#       Otherwise:
-#           - Add only NEW firmware files from linux-firmware git
-#           - Add only NEW firmware files from iwlwifi firmware git
-#       SIMPLEST (not necessarily BEST) way will be to EMBED 310_linux_firmware.sh
-#           INSIDE 350_kernel_related.sh
-#       Alternate (more complex, but better) way is to use a STATE file
-#           set by 350_kernel_related.sh and checked by 310_linux_firmware.sh
-#
-#   - When pulling linux-firmware-git ADD a file '.firmware_date' to /lib/firmware
-#       containing date, time timestamp from git repo (or pull date/time)
-#       which could be checked by hardware-enablement scripts
-#
-# apt remove --purge linux-firmware 1>/dev/null 2>&1 
-
-
+# Remove linux-firmware package if dependent kernels were removed
 # Flip FIRMWARE_DIR_LINUX_NEW to /lib/firmware if all was successful
-( mv /lib/firmware /lib/firmware-old && mv $FIRMWARE_DIR_LINUX_NEW /lib/firmware && rm -rf /lib/firmware-old ) || {
-    echo "Failed to flip FIRMWARE_DIR_LINUX_NEW to /lib/firmware"
-    exit $FAILED_EXIT_CODE
+# Use mark placed by 310_kernel_related.sh
+
+[[ -f "$REMASTER_DIR"/ubuntu_kernels_removed ]] && {
+    # No dependent kernels left - we can remove linux-firmware safely
+    # In future we COULD use pkg_apt_op_analysis to check whether removing
+    # linux-firmware WOULD remove any other package instead of using marker
+
+    apt remove --purge linux-firmware 1>/dev/null 2>&1 && {
+        mv /lib/firmware /lib/firmware-old || true
+        mv $FIRMWARE_DIR_LINUX_NEW /lib/firmware 
+    }
+} || {
+    # linux-firmware needs to be held - no updates or deletion
+    apt-mark hold linux-firmware
+    echo "linux-firmware package held"
+    mv /lib/firmware /lib/firmware-old
+    mv $FIRMWARE_DIR_LINUX_NEW /lib/firmware
 }

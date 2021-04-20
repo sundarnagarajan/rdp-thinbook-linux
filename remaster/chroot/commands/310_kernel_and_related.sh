@@ -357,6 +357,8 @@ function remove_old_kernels() {
         done
         apt-get autoremove -y --purge $REMOVE_LIST 2>/dev/null 1>/dev/null || return 1
         echo "$REMOVE_LIST" | tr ' ' '\n' >> "$UNINSTALLED_TXT"
+        # Store state for 320_linux_firmware.sh
+        touch "$REMASTER_DIR"/ubuntu_kernels_removed
     else
         echo "No kernel packages to remove"
     fi
