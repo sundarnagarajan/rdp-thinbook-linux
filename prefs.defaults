@@ -82,20 +82,20 @@ ENABLE_OPENSSH_SERVER=yes
 
 
 # ------------------------------------------------------------------------
-# Used by: chroot/commands/310_linux_firmware.sh
-# ------------------------------------------------------------------------
-FIRMWARE_UPDATE_PACKAGE=no
-FIRMWARE_UPDATE_FIRMWARE_GIT=yes
-FIRMWARE_UPDATE_FIRMWARE_GIT_INTEL=yes
-
-
-# ------------------------------------------------------------------------
 # Used by: top-level remaster script
-# Used by: chroot/commands/350_kernel_and_related.sh
+# Used by: chroot/commands/310_kernel_and_related.sh
 # ------------------------------------------------------------------------
 NEED_ZSYS=no
 WANT_CUSTOM_KERNEL=yes
 WANT_CUSTOM_ZFS=yes
+
+
+# ------------------------------------------------------------------------
+# Used by: chroot/commands/320_linux_firmware.sh
+# ------------------------------------------------------------------------
+FIRMWARE_UPDATE_PACKAGE=no
+FIRMWARE_UPDATE_FIRMWARE_GIT=yes
+FIRMWARE_UPDATE_FIRMWARE_GIT_INTEL=yes
 
 
 # ------------------------------------------------------------------------
