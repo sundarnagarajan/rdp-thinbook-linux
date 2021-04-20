@@ -443,6 +443,8 @@ function install_zfs_kernel_module() {
         echo "$ZFS_REMOVE_PKGS" | sed -e 's/^/    /'
         apt autoremove --purge -y $ZFS_REMOVE_PKGS 1>/dev/null 2>&1
         echo "$ZFS_REMOVE_PKGS" >> $UNINSTALLED_TXT
+        # EXPLICITLY purge zsys
+        apt purge -y zsys 1>/dev/null 2>&1
     } || {
         echo "install_zfs_kernel_module : No packages to remove"
     }
