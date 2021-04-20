@@ -1,5 +1,27 @@
 #!/bin/bash
-# To see look devices use the command: losetup -l
+
+# ------------------------------------------------------------------------
+# The README for xterm said:
+#   Abandon All Hope, Ye Who Enter Here
+#
+# Restrict to setting:
+#
+#
+# Unlike chroot/commands, the scripts in this directory are executed
+# OUTSIDE the chroot and AS ROOT! Mistakes in these scripts could make
+# unintended changes to your HOST machine environment
+#
+# 1. Check that ISO_EXTRACT_DIR env var is set and is not empty or '/'
+# 2. Identify ALL directories the script uses at the TOP (globals)
+# 3. For EACH directory used in the script (globals):
+#       a. Check that the variable is set and is not empty and not '/'
+#       b. Check that the value starts with $ISO_EXTRACT_DIR
+#
+# If any of above conditions are not met, bail with exit code 127
+# ------------------------------------------------------------------------
+
+
+# To see loop devices use the command: losetup -l
 
 # Expected max TOTAL size of EFI files in bytes - should be multiple of 512
 #  1 MB 1048576
