@@ -22,6 +22,7 @@
 PROG_PATH=${PROG_PATH:-$(readlink -e $0)}
 PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
+REMASTER_DIR=/root/remaster
 FAILED_EXIT_CODE=1
 
 
@@ -165,13 +166,17 @@ function update_firmware_intel_firmware_git(){
         f=$(echo "$f" | sed -e 's/^\.\///')
         [[ -f $FIRMWARE_DIR_LINUX_NEW/$f ]] && {
             diff --brief $f $FIRMWARE_DIR_LINUX_NEW/$f || {
-                \cp --parents -f $f $FIRMWARE_DIR_LINUX_NEW/ && echo "    $f" || {
+                # Users will not be interested in actual firmware files updated
+                # \cp --parents -f $f $FIRMWARE_DIR_LINUX_NEW/ && echo "    $f" || {
+                \cp --parents -f $f $FIRMWARE_DIR_LINUX_NEW/ || {
                     echo "Copy failed: $f"
                     return 1
                 }
             }
         } || {
-            \cp --parents -f $f $FIRMWARE_DIR_LINUX_NEW/ && echo "    $f" || {
+            # Users will not be interested in actual firmware files updated
+            # \cp --parents -f $f $FIRMWARE_DIR_LINUX_NEW/ && echo "    $f" || {
+            \cp --parents -f $f $FIRMWARE_DIR_LINUX_NEW/ || {
                 echo "Copy failed: $f"
                 return 1
             }
