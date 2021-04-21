@@ -198,6 +198,8 @@ function update_firmware_intel_firmware_git(){
         }
     done
 
+    cd /lib
+    \rm -rf  $FIRMWARE_DIR_INTEL_NEW
     echo "Updated firmware from iwlwifi firmware git"
 }
 
@@ -232,23 +234,23 @@ trap cleanup_firmware_dirs 1 2 3 15
 }
 
 # Remove linux-firmware package if dependent kernels were removed
-# Flip FIRMWARE_DIR_LINUX_NEW to /lib/firmware if all was successful
+# cp -al FIRMWARE_DIR_LINUX_NEW to /lib/firmware if all was successful
 # Use mark placed by 310_kernel_related.sh
 
+# In future we COULD use pkg_apt_op_analysis to check whether removing
+# linux-firmware WOULD remove any other package instead of using marker
 [[ -f "$REMASTER_DIR"/ubuntu_kernels_removed ]] && {
     # No dependent kernels left - we can remove linux-firmware safely
-    # In future we COULD use pkg_apt_op_analysis to check whether removing
-    # linux-firmware WOULD remove any other package instead of using marker
 
     apt remove -y --purge linux-firmware 1>/dev/null 2>&1 && {
         echo "Removed package linux-firmware"
-        mv /lib/firmware /lib/firmware-old || true
+        mv /lib/firmware /lib/firmware-old-remaster || true
         mv $FIRMWARE_DIR_LINUX_NEW /lib/firmware 
     }
 } || {
     # linux-firmware needs to be held - no updates or deletion
     apt-mark hold linux-firmware
     echo "linux-firmware package held"
-    mv /lib/firmware /lib/firmware-old
+    mv /lib/firmware /lib/firmware-old-remaster
     mv $FIRMWARE_DIR_LINUX_NEW /lib/firmware
 }
