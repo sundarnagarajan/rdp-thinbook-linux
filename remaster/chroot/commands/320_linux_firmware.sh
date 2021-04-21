@@ -37,6 +37,7 @@
 PROG_PATH=${PROG_PATH:-$(readlink -e $0)}
 PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
+APT_CMD=apt-get
 REMASTER_DIR=/root/remaster
 FAILED_EXIT_CODE=1
 
@@ -93,13 +94,13 @@ function cleanup_firmware_dirs(){
     rm -rf $FIRMWARE_DIR_LINUX_NEW $FIRMWARE_DIR_INTEL_NEW || true
     [[ "$GIT_REMOVE_REQUIRED" = "yes" ]] && {
         echo "Uninstalling git"
-        apt autoremove --purge git 1>/dev/null 2>&1 || return 1
+        DEBIAN_FRONTEND=noninteractive $APT_CMD autoremove --purge git 1>/dev/null 2>&1 || true
     }
 }
 
 function update_firmware_package(){
     echo "Updating linux-firmware package"
-    apt upgrade -y linux-firmware 1>/dev/null 2>&1 || {
+    DEBIAN_FRONTEND=noninteractive $APT_CMD upgrade -y linux-firmware 1>/dev/null 2>&1 || {
         echo "linux-firmware upgrade failed"
         return 1
     }
@@ -114,7 +115,7 @@ function install_git_if_required(){
     local GIT_ALREADY_INSTALLED=$(dpkg-query -W --showformat='${Package}\n' | fgrep -x git)
     if [ -z "$GIT_ALREADY_INSTALLED" ]; then
         echo "Installing git"
-        apt-get -y install --no-install-recommends --no-install-suggests git 1>/dev/null 2>&1 || {
+        $APT_CMD -y install --no-install-recommends --no-install-suggests git 1>/dev/null 2>&1 || {
             echo "Install failed: git"
             return 1
         }
@@ -242,10 +243,12 @@ trap cleanup_firmware_dirs 1 2 3 15
 [[ -f "$REMASTER_DIR"/ubuntu_kernels_removed ]] && {
     # No dependent kernels left - we can remove linux-firmware safely
 
-    apt remove -y --purge linux-firmware 1>/dev/null 2>&1 && {
+    DEBIAN_FRONTEND=noninteractive $APT_CMD remove -y --purge linux-firmware 1>/dev/null 2>&1 && {
         echo "Removed package linux-firmware"
         mv /lib/firmware /lib/firmware-old-remaster || true
         mv $FIRMWARE_DIR_LINUX_NEW /lib/firmware 
+    } || {
+        echo "Could not remove package linux-firmware"
     }
 } || {
     # linux-firmware needs to be held - no updates or deletion

@@ -5,6 +5,7 @@
 PROG_PATH=${PROG_PATH:-$(readlink -e $0)}
 PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
+APT_CMD=apt-get
 
 ORIG_RESOLV_CONF=/etc/resolv.conf.remaster_orig
 cat /etc/resolv.conf 2>/dev/null | grep -q '^nameserver'
@@ -14,4 +15,4 @@ if [ $? -ne 0 ]; then
     echo -e "nameserver   8.8.8.8\nnameserver  8.8.4.4" > /etc/resolv.conf
 fi
 
-apt-get update 1>/dev/null
+$APT_CMD update 1>/dev/null

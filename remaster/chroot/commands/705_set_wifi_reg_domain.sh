@@ -5,9 +5,10 @@
 PROG_PATH=${PROG_PATH:-$(readlink -e $0)}
 PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
+APT_CMD=apt-get
 
 # Install / upgrade wireless-regdb and crda
-apt-get -y --no-install-recommends --no-install-suggests install wireless-regdb crda 1>/dev/null 2>&1
+$APT_CMD -y --no-install-recommends --no-install-suggests install wireless-regdb crda 1>/dev/null 2>&1
 
 if [ -f /lib/crda/setregdomain ]; then
     if [ ! -f /etc/udev/rules.d/40-crda.rules ]; then

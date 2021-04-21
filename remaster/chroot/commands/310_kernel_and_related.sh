@@ -81,6 +81,7 @@
 PROG_PATH=${PROG_PATH:-$(readlink -e $0)}
 PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
+APT_CMD=apt-get
 REMASTER_DIR=/root/remaster
 FAILED_EXIT_CODE=127
 
@@ -251,21 +252,19 @@ function cherrytux_ppa_trusted(){
 function install_kernel_cherrytux() {
     # Used to be 362_install_kernel_cherrytux_ppa.sh
     if [ -f $KP_LIST -a -s $KP_LIST ]; then
-        grep -q '^linux-image' $KP_LIST
-        if [ $? -eq 0 ]; then
+        grep -q '^linux-image' $KP_LIST && {
             echo "Kernels already installed - not using cherrytux PPA"
             echo "cherrytux PPA setup and ready to use"
             exit 0
-        fi
+        }
     fi
 
     local REQUIRED_PKGS="cherrytux-image cherrytux-headers"
     echo "Installing $REQUIRED_PKGS"
-    apt install -y --no-install-recommends --no-install-suggests $REQUIRED_PKGS 1>/dev/null 2>&1
-    if [ $? -ne 0 ]; then
+    DEBIAN_FRONTEND=noninteractive $APT_CMD install -y --no-install-recommends --no-install-suggests $REQUIRED_PKGS 1>/dev/null 2>&1 || {
         echo "Install failed: $REQUIRED_PKGS"
         exit $FAILED_EXIT_CODE
-    fi
+    }
     # Add kernel we installed to $KP_LIST
     mkdir -p $KERNEL_DEB_DIR
     touch $KP_LIST
@@ -330,34 +329,30 @@ function remove_old_kernels() {
     # for p in $(dpkg -l 'linux-image*' | grep '^ii' | awk '{print $2}' | cut-d: -f1)
     for p in $(filter_installed_pkgs 'linux-image*')
     do
-        fgrep -qx $p $KP_LIST
-        if [ $? -ne 0 ]; then
+        fgrep -qx $p $KP_LIST || {
             REMOVE_LIST="$REMOVE_LIST $p"
-        fi
+        }
     done
     # for p in $(dpkg -l 'linux-modules-*' | grep '^ii' | awk '{print $2}' | cut-d: -f1)
     for p in $(filter_installed_pkgs 'linux-modules-*')
     do
-        fgrep -qx $p $KP_LIST
-        if [ $? -ne 0 ]; then
+        fgrep -qx $p $KP_LIST || {
             REMOVE_LIST="$REMOVE_LIST $p"
-        fi
+        }
     done
     # for p in $(dpkg -l 'linux-headers*' | grep '^ii' | awk '{print $2}' | cut-d: -f1)
     for p in $(filter_installed_pkgs 'linux-headers*')
     do
-        fgrep -qx $p $KP_LIST
-        if [ $? -ne 0 ]; then
+        fgrep -qx $p $KP_LIST || {
             REMOVE_LIST="$REMOVE_LIST $p"
-        fi
+        }
     done
     # for p in linux-signed-image-generic linux-generic
     for p in $(filter_installed_pkgs linux-signed-image-generic linux-generic)
     do
-        fgrep -qx $p $KP_LIST
-        if [ $? -ne 0 ]; then
+        fgrep -qx $p $KP_LIST || {
             REMOVE_LIST="$REMOVE_LIST $p"
-        fi
+        }
     done
 
     if [ -n "$REMOVE_LIST" ]; then
@@ -366,7 +361,10 @@ function remove_old_kernels() {
         do
             echo $p | sed -e 's/^/    /'
         done
-        apt-get autoremove -y --purge $REMOVE_LIST 2>/dev/null 1>/dev/null || return 1
+        $APT_CMD autoremove -y --purge $REMOVE_LIST 2>/dev/null 1>/dev/null || {
+            echo "Package remove failed: $REMOVE_LIST"
+            return 1
+        }
         echo "$REMOVE_LIST" | tr ' ' '\n' >> "$UNINSTALLED_TXT"
         # Store state for 320_linux_firmware.sh
         touch "$REMASTER_DIR"/ubuntu_kernels_removed
@@ -375,32 +373,30 @@ function remove_old_kernels() {
     fi
 
     # While we check not to DIRECTLY remove any package in $KP_LIST,
-    # because we use apt-get autoremove, the autoremove may remove
+    # because we use $APT_CMD autoremove, the autoremove may remove
     # things like linux-firmware-image - happens when linux-firmware-image
     # we are installing in 01_install_kernels.sh is the SAME as the 
     # linux-firmware-image version shipped by the distro
     # To deal with this, we RE-CHECK and REINSTALL any debs in
     # $KERNEL_DEB_DIR that are no longer installed!
 
-    ls ${KERNEL_DEB_DIR}/ | grep -q '\.deb$'
-    if [ $? -ne 0 ]; then
+    ls ${KERNEL_DEB_DIR}/ | grep -q '\.deb$' || {
         echo "No deb files in $KERNEL_DEB_DIR"
-    else
+    } && {
         local REINSTALLED=no
         for f in ${KERNEL_DEB_DIR}/*.deb
         do
             local PKG_VER=$(dpkg-deb -W --showformat '${Package}___${Version}\n' $f)
-            dpkg-query -W --showformat '${Package}___${Version}\n' 2>/dev/null | fgrep -q "${PKG_VER}"
-            if [ $? -ne 0 ]; then
+            dpkg-query -W --showformat '${Package}___${Version}\n' 2>/dev/null | fgrep -q "${PKG_VER}" || {
                 echo "Reinstalling ${PKG_VER}"
                 dpkg -i $f
                 REINSTALLED=yes
-            fi
+            }
         done
         if [ "${REINSTALLED}" = "yes" ]; then
             echo "Some packages needed reinstallation"
         fi
-    fi
+    }
 
     echo "Kernel-related packages remaining:"
     filter_installed_pkgs_by_section kernel  | grep '^linux' | sed -e 's/^/    /' 
@@ -426,7 +422,7 @@ function install_zfs_kernel_module() {
 
     # We need dkms and dkms needs python3-distutils (undeclared ?)
     local NEW_INSTALLED="build-essential dkms python3-distutils"
-    apt install --no-install-recommends --no-install-suggests -y $NEW_INSTALLED 1>/dev/null 2>&1 || {
+    DEBIAN_FRONTEND=noninteractive $APT_CMD install --no-install-recommends --no-install-suggests -y $NEW_INSTALLED 1>/dev/null 2>&1 || {
         echo "Install failed: $NEW_INSTALLED"
         return 1
     } && {
@@ -441,10 +437,13 @@ function install_zfs_kernel_module() {
     [[ -n "$ZFS_REMOVE_PKGS" ]] && {
         echo "install_zfs_kernel_module : Removing packages that conflict with zfs-dkms:"
         echo "$ZFS_REMOVE_PKGS" | sed -e 's/^/    /'
-        apt autoremove --purge -y $ZFS_REMOVE_PKGS 1>/dev/null 2>&1
+        DEBIAN_FRONTEND=noninteractive $APT_CMD autoremove --purge -y $ZFS_REMOVE_PKGS 1>/dev/null 2>&1 || {
+            echo "Package remove failed: $ZFS_REMOVE_PKGS"
+            return 1
+        }
         echo "$ZFS_REMOVE_PKGS" >> $UNINSTALLED_TXT
         # EXPLICITLY purge zsys
-        apt purge -y zsys 1>/dev/null 2>&1
+        DEBIAN_FRONTEND=noninteractive $APT_CMD purge -y zsys 1>/dev/null 2>&1 || true
     } || {
         echo "install_zfs_kernel_module : No packages to remove"
     }
@@ -469,7 +468,10 @@ function install_zfs_userspace_packages() {
     if [ -n "$UNINSTALL_PKGS" ]; then
         echo "install_zfs_userspace_packages : Removing:"
         echo "$UNINSTALL_PKGS" | sed -e 's/^/    /'
-        apt autoremove -y $UNINSTALL_PKGS 1>/dev/null 2>&1 || return 1
+        DEBIAN_FRONTEND=noninteractive $APT_CMD autoremove -y $UNINSTALL_PKGS 1>/dev/null 2>&1 || {
+            echo "Package remove failed: $UNINSTALL_PKGS"
+            return 1
+        }
         echo "$UNINSTALL_PKGS" | tr ' ' '\n' >> $UNINSTALLED_TXT
     else
         echo "install_zfs_userspace_packages : No packages to remove"
@@ -492,7 +494,7 @@ function install_zfs_userspace_packages() {
     }
     ZFS_PKG_LIST=$(echo -e "$ZFS_PKG_LIST" | tr '\n' ' ')
     echo '#!/bin/bash' > "$UNINSTALL_ZFS_SCRIPT"
-    echo "sudo apt autoremove --purge -y $ZFS_PKG_LIST" >> "$UNINSTALL_ZFS_SCRIPT"
+    echo "sudo DEBIAN_FRONTEND=noninteractive $APT_CMD autoremove --purge -y $ZFS_PKG_LIST" >> "$UNINSTALL_ZFS_SCRIPT"
     chmod +x "$UNINSTALL_ZFS_SCRIPT"
 }
 

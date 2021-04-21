@@ -6,6 +6,7 @@ PROG_PATH=${PROG_PATH:-$(readlink -e $0)}
 PROG_DIR=${PROG_DIR:-$(dirname ${PROG_PATH})}
 PROG_NAME=${PROG_NAME:-$(basename ${PROG_PATH})}
 
+APT_CMD=apt-get
 REMASTER_DIR=/root/remaster
 LINUXUTILS_DIR=${PROG_DIR}/../linuxutils
 
@@ -30,7 +31,7 @@ do
 done
 if [ -n "$MISSING_PKGS" ]; then
     echo "Installing $MISSING_PKGS"
-    apt-get install --no-install-recommends --no-install-suggests -y $MISSING_PKGS 1>/dev/null 2>&1 || {
+    $APT_CMD install --no-install-recommends --no-install-suggests -y $MISSING_PKGS 1>/dev/null 2>&1 || {
         echo "Install failed: $MISSING_PKGS"
     }
 fi
