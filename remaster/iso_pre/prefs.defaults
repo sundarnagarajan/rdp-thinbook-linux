@@ -94,7 +94,8 @@ WANT_CUSTOM_ZFS=yes
 # Used by: chroot/commands/320_linux_firmware.sh
 # ------------------------------------------------------------------------
 FIRMWARE_UPDATE_PACKAGE=no
-FIRMWARE_UPDATE_FIRMWARE_GIT=yes
+FIRMWARE_UPDATE_FIRMWARE_GIT_UBUNTU=yes
+FIRMWARE_UPDATE_FIRMWARE_GIT_LINUX=yes
 FIRMWARE_UPDATE_FIRMWARE_GIT_INTEL=yes
 
 
