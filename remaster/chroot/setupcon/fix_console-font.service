@@ -1,0 +1,18 @@
+[Unit]
+Description=Set console font based on monitor DPI
+After=local-fs.target
+Before=console-setup.service 
+Before=fix_tty1_font.service
+ConditionPathExists=/sys/class/drm
+ConditionPathExists=/etc/default/console-setup.default
+ConditionPathExists=/etc/default/console-setup.large
+ConditionPathExists=/usr/local/bin/dpi_meets_threshold.sh
+
+[Service]
+Type=oneshot
+# Following ExecStart commands will run serially
+ExecStart=/usr/local/bin/dpi_meets_threshold.sh 200
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target

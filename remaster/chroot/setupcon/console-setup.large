@@ -1,4 +1,4 @@
 
-# Added while remastering
+# Rest added by fix_console_font.service
 FONTFACE="TerminusBold"
 FONTSIZE="16x32"
