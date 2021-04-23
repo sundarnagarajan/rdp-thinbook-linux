@@ -100,6 +100,13 @@ FIRMWARE_UPDATE_FIRMWARE_GIT_INTEL=yes
 
 
 # ------------------------------------------------------------------------
+# Used by chroot/commands/500_console_font.sh
+# Used by iso_post/commands/05_large_kernel_font.sh
+# ------------------------------------------------------------------------
+CONSOLE_LARGE_FONT=yes
+
+
+# ------------------------------------------------------------------------
 # Used by: chroot/commands/610_untrust_cherrytux_ppa.sh
 # ------------------------------------------------------------------------
 UNTRUST_CHERRYTUX_PPA=yes
@@ -130,6 +137,6 @@ BLUETOOTH_RTL8723BS_BT=yes
 
 
 # ------------------------------------------------------------------------
-# Used by: iso_post/commands/05_disable_squashfs_fsck.sh
+# Used by: iso_post/commands/04_disable_squashfs_fsck.sh
 # ------------------------------------------------------------------------
 DISABLE_SQUASHFS_FSCK=yes
