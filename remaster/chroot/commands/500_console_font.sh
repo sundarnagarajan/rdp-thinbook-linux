@@ -40,7 +40,7 @@ do
     }
 done
 
-[[ -f /etc/console-setup ]] || {
+[[ -f /etc/default/console-setup ]] || {
     echo "File not found: /etc/console-setup"
     exit $FAILED_EXIT_CODE
 }
