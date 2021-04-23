@@ -121,4 +121,7 @@ check_threshold $@ && {
         \cp -f /etc/default/console-setup.default /etc/default/console-setup
         cat /etc/default/console-setup.large >> /etc/default/console-setup
     }
-} || true
+} || {
+    [[ -f /etc/default/console-setup.default ]] && \
+        \cp -f /etc/default/console-setup.default /etc/default/console-setup
+}
