@@ -33,4 +33,4 @@ SCRIPT_DIR=${PROG_DIR}
 GRUB_CFG="$ISO_EXTRACT_DIR"/boot/grub/grub.cfg
 echo "Setting fsck.mode=skip"
 sed -i 's/\(^[[:space:]]*linux.* \)---[[:space:]]*$/\1fsck.mode=skip ---/' $GRUB_CFG
-grep '^[[:space:]]*linux.* fsck.mode=skip ' $GRUB_CFG
+# grep '^[[:space:]]*linux.* fsck.mode=skip ' $GRUB_CFG

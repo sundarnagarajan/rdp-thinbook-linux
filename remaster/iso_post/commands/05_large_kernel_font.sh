@@ -33,4 +33,4 @@ SCRIPT_DIR=${PROG_DIR}
 GRUB_CFG="$ISO_EXTRACT_DIR"/boot/grub/grub.cfg
 echo "Setting fbcon=font:TER16x32"
 sed -i 's/\(^[[:space:]]*linux.* \)---[[:space:]]*$/\1fbcon=font:TER16x32 ---/' $GRUB_CFG
-grep '^[[:space:]]*linux.* fbcon=font:TER16x32 ' $GRUB_CFG
+# grep '^[[:space:]]*linux.* fbcon=font:TER16x32 ' $GRUB_CFG
