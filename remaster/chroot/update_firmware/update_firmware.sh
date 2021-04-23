@@ -362,6 +362,8 @@ function firmware_update_all() {
         printf "Started  with %5d files\n" $TOT_STARTING_FILES
         printf "Finished with %5d files\n" $(find "$FIRMWARE_DIR" -type f | wc -l)
         echo "Original firmware backed up to $FIRMWARE_ORIG_DIR"
+        echo ""
+        echo "Now you NEED to run 'update-initramfs -u -k all'"
     } || {
         \rm -rf "$FIRMWARE_NEW_DIR" "$FIRMWARE_ORIG_DIR"
     }
