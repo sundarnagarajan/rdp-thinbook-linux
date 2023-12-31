@@ -1,6 +1,4 @@
-### How to report a problem
-- Open an issue on github
-- You will need a github account
+
 
 **AT LEAST** provide the following information when you open an issue:
 1. Did you use one of the pre-compiled remastered ISOs? If so, which one?
